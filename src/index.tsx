@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import './assets/styles/ress.css'
 
 import App from './components/App'
 
