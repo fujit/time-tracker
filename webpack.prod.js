@@ -12,10 +12,5 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 
 module.exports = merge(common, {
   mode: 'production',
-
-  devServer: {
-    historyApiFallback: true,
-  },
-
   plugins: [htmlWebpackPlugin, new MiniCssExtractPlugin()],
 })
