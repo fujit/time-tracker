@@ -1,0 +1,17 @@
+@use '../../assets/styles/Colors.scss';
+
+.input {
+  border: 1px solid Colors.$border;
+  border-radius: 6px;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 1rem;
+  height: 42px;
+  padding: 4px 12px;
+
+  &:focus {
+    border: 1px solid Colors.$darkGreen;
+    background-color: Colors.$primary;
+  }
+}
+

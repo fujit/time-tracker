@@ -1,0 +1,17 @@
+.listGroup {
+  margin-top: 36px;;
+
+}
+
+.list {
+  display: flex;
+  align-items: center;
+
+  > *:not(:last-child) {
+    margin-right: 18px;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 26px;
+  }
+}
