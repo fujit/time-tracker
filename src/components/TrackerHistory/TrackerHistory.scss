@@ -4,14 +4,28 @@
 }
 
 .list {
+  &:not(:last-child) {
+    margin-bottom: 26px;
+  }
+}
+
+.listTracker {
   display: flex;
   align-items: center;
-
   > *:not(:last-child) {
     margin-right: 18px;
   }
+}
 
-  &:not(:last-child) {
-    margin-bottom: 26px;
+.listTimer {
+  > ul {
+    list-style: none;
+  }
+}
+
+.timerStart {
+  &::after {
+    content: '~';
+    margin-left: 2px;
   }
 }

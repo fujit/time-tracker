@@ -7,3 +7,6 @@ export const getTimeFromNow = (
   unit?: dayjs.QUnitType | dayjs.OpUnitType,
   float?: boolean
 ): number => dayjs().diff(date, unit, float)
+
+export const format = (date: dayjs.ConfigType, template = 'YYYY-MM-DD HH:mm:ss'): string =>
+  dayjs(date).format(template)
