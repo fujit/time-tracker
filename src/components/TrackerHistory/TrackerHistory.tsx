@@ -4,31 +4,30 @@ import { StartButton, PauseButton } from '../Button/PlayButton'
 import { Number } from '../Text/Number'
 import * as DateUtil from '../../utils/DateUtil'
 
-type Props = {
+type ContainerProps = {
   trackers: Tracker[]
   restartCount: (name: string) => void
   pauseCount: (name: string) => void
   inprogress: boolean
 }
 
-export const TrackerHistory: React.FC<Props> = ({
+type Props = {
+  calcSum: (timers: Timer[]) => number
+} & ContainerProps
+
+const Component: React.FC<Props> = ({
   trackers,
   restartCount,
   pauseCount,
   inprogress,
+  calcSum,
 }) => (
   <div className={styles.listGroup}>
     {trackers.map((tracker) => (
       <div key={tracker.name} className={styles.list}>
         <div className={styles.listTracker}>
           <p>{tracker.name}</p>
-          <Number
-            value={tracker.timers.reduce(
-              (accumulator, currentValue) => accumulator + currentValue.duration,
-              0
-            )}
-            type="round"
-          />
+          <Number value={calcSum(tracker.timers)} type="round" />
           {tracker.inProgress ? (
             <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.name)} />
           ) : (
@@ -54,3 +53,10 @@ export const TrackerHistory: React.FC<Props> = ({
     ))}
   </div>
 )
+
+export const TrackerHistory: React.FC<ContainerProps> = (props) => {
+  const calcSum = (timers: Timer[]) =>
+    timers.reduce((accumulator, current) => accumulator + current.duration, 0)
+
+  return <Component {...props} calcSum={calcSum} />
+}
