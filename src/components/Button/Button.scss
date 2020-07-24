@@ -2,3 +2,8 @@
   cursor: pointer;
   user-select: none;
 }
+
+.disable {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

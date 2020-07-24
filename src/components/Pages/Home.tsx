@@ -11,6 +11,7 @@ type Props = {
   restartCount: (name: string) => void
   pauseCount: (name: string) => void
   trackers: Tracker[]
+  inprogress: boolean
 } & JSX.IntrinsicElements['input']
 
 const Component: React.FC<Props> = ({
@@ -18,14 +19,25 @@ const Component: React.FC<Props> = ({
   restartCount,
   pauseCount,
   trackers,
+  inprogress,
   ...props
 }) => (
   <div>
     <div className={styles.main}>
       <TextInput {...props} />
-      <StartButton width={42} height={42} onClick={startCount} />
+      <StartButton
+        width={42}
+        height={42}
+        onClick={startCount}
+        className={inprogress ? 'disable' : ''}
+      />
     </div>
-    <TrackerHistory trackers={trackers} restartCount={restartCount} pauseCount={pauseCount} />
+    <TrackerHistory
+      trackers={trackers}
+      restartCount={restartCount}
+      pauseCount={pauseCount}
+      inprogress={inprogress}
+    />
   </div>
 )
 
@@ -136,6 +148,7 @@ export const Home: React.FC = () => {
       restartCount={restartCount}
       pauseCount={pauseCount}
       trackers={trackers}
+      inprogress={inprogress}
       onChange={changeValue}
       value={trackerName}
     />

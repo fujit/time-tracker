@@ -8,9 +8,15 @@ type Props = {
   trackers: Tracker[]
   restartCount: (name: string) => void
   pauseCount: (name: string) => void
+  inprogress: boolean
 }
 
-export const TrackerHistory: React.FC<Props> = ({ trackers, restartCount, pauseCount }) => (
+export const TrackerHistory: React.FC<Props> = ({
+  trackers,
+  restartCount,
+  pauseCount,
+  inprogress,
+}) => (
   <div className={styles.listGroup}>
     {trackers.map((tracker) => (
       <div key={tracker.name} className={styles.list}>
@@ -26,7 +32,12 @@ export const TrackerHistory: React.FC<Props> = ({ trackers, restartCount, pauseC
           {tracker.inProgress ? (
             <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.name)} />
           ) : (
-            <StartButton width={36} height={36} onClick={() => restartCount(tracker.name)} />
+            <StartButton
+              width={36}
+              height={36}
+              onClick={() => restartCount(tracker.name)}
+              className={inprogress ? 'disable' : ''}
+            />
           )}
         </div>
         <div className={styles.listTimer}>
