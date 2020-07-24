@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as styles from './Button.scss'
-import start from '../../assets/img/start.svg'
-import pause from '../../assets/img/pause.svg'
+import start from '../../assets/img/play-circle-outline.svg'
+import pause from '../../assets/img/pause-circle-outline.svg'
 
 type Props = {
   className?: string
