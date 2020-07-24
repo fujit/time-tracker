@@ -1,9 +1,9 @@
 import * as React from 'react'
-import dayjs from 'dayjs'
 import * as styles from './Home.scss'
 import { TrackerHistory } from '../TrackerHistory/TrackerHistory'
 import { TextInput } from '../Input/TextInput'
 import { StartButton } from '../Button/PlayButton'
+import * as DateUtil from '../../utils/DateUtil'
 
 type Props = {
   startCount: () => void
@@ -59,7 +59,7 @@ export const Home: React.FC = () => {
       return
     }
 
-    setStart(dayjs().toDate())
+    setStart(DateUtil.getCurrentDate())
 
     const target = trackers.filter((tracker) => tracker.name === name)[0]
     const newTrackers = trackers.map((tracker) =>
@@ -92,7 +92,7 @@ export const Home: React.FC = () => {
       timers: [] as Timer[],
     }
 
-    setStart(dayjs().toDate())
+    setStart(DateUtil.getCurrentDate())
 
     setTrackers([...trackers, currentTracker])
     setTrackerName('')
@@ -110,11 +110,10 @@ export const Home: React.FC = () => {
       return
     }
 
-    const end = dayjs()
     const timer = {
       start,
-      end: end.toDate(),
-      duration: end.diff(start, 'minute', true),
+      end: DateUtil.getCurrentDate(),
+      duration: DateUtil.getTimeFromNow(start, 'minute', true),
     }
 
     const timers = [...targetTracker.timers, timer]
