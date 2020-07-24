@@ -4,10 +4,10 @@ import { TrackerHistory } from '../TrackerHistory/TrackerHistory'
 import { TextInput } from '../Input/TextInput'
 import { StartButton } from '../Button/PlayButton'
 import * as DateUtil from '../../utils/DateUtil'
+import { keycode } from '../../utils/Constants'
 
 type Props = {
   startCount: () => void
-  // TODO: id のほうが良さそう
   restartCount: (name: string) => void
   pauseCount: (name: string) => void
   trackers: Tracker[]
@@ -66,7 +66,6 @@ export const Home: React.FC = () => {
   }
 
   const restartCount = (name: string) => {
-    // TODO: UI で判断させたい
     if (inprogress) {
       return
     }
@@ -111,7 +110,6 @@ export const Home: React.FC = () => {
   }
 
   const pauseCount = (name: string) => {
-    // id 指定
     const targetTracker = trackers.filter((tracker) => tracker.name === name)[0]
 
     if (!targetTracker.inProgress) {
@@ -142,6 +140,12 @@ export const Home: React.FC = () => {
     setTrackers(newTrackers)
   }
 
+  const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === keycode.enter) {
+      startCount()
+    }
+  }
+
   return (
     <Component
       startCount={startCount}
@@ -150,6 +154,7 @@ export const Home: React.FC = () => {
       trackers={trackers}
       inprogress={inprogress}
       onChange={changeValue}
+      onKeyDown={keyDown}
       value={trackerName}
     />
   )
