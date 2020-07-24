@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
 const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
@@ -17,5 +18,5 @@ module.exports = merge(common, {
   },
   mode: 'production',
   devtool: 'source-map',
-  plugins: [htmlWebpackPlugin, new MiniCssExtractPlugin()],
+  plugins: [htmlWebpackPlugin, new MiniCssExtractPlugin(), new CleanWebpackPlugin()],
 })
