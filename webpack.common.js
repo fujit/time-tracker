@@ -14,12 +14,14 @@ module.exports = {
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.wasm', '.json', '.jsx', '.css'],
+    symlinks: false,
   },
 
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
+        include: src,
         exclude: /node_modules/,
         use: [
           {
@@ -30,6 +32,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.ts(x?)$/,
+        include: src,
         exclude: /node_modules/,
         use: [
           {
@@ -40,6 +43,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
+        include: src,
         use: [
           {
             loader: 'source-map-loader',
@@ -48,6 +52,7 @@ module.exports = {
       },
       {
         test: /\.css/,
+        include: src,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -64,6 +69,7 @@ module.exports = {
       },
       {
         test: /\.scss/,
+        include: src,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -83,6 +89,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
+        include: `${src}/assets/img`,
         use: [
           {
             loader: 'url-loader',

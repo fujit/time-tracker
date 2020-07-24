@@ -16,5 +16,6 @@ module.exports = merge(common, {
     minimizer: [new OptimizeCSSAssetsPlugin({})],
   },
   mode: 'production',
+  devtool: 'source-map',
   plugins: [htmlWebpackPlugin, new MiniCssExtractPlugin()],
 })

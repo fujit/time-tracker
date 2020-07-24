@@ -8,14 +8,16 @@ const src = path.resolve(__dirname, 'src')
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: `${src}/development.html`,
   filename: 'index.html',
+  showErrors: true,
 })
 
 module.exports = merge(common, {
   mode: 'development',
-  devtool: 'source-map',
+  devtool: 'eval-cheap-module-source-map',
 
   devServer: {
     historyApiFallback: true,
+    hot: true,
   },
 
   plugins: [htmlWebpackPlugin, new MiniCssExtractPlugin()],
