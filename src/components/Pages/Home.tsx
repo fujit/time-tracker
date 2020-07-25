@@ -1,18 +1,19 @@
 import * as React from 'react'
-import * as styles from './Home.scss'
+import { TrackerForm } from '../TrackerForm/TrackerForm'
 import { TrackerHistory } from '../TrackerHistory/TrackerHistory'
-import { TextInput } from '../Input/TextInput'
-import { StartButton } from '../Button/PlayButton'
 import * as DateUtil from '../../utils/DateUtil'
-import { keycode } from '../../utils/Constants'
 
 type Props = {
-  startCount: () => void
+  startCount: (name: string) => void
   restartCount: (name: string) => void
   pauseCount: (name: string) => void
   trackers: Tracker[]
   inprogress: boolean
-} & JSX.IntrinsicElements['input']
+}
+
+type ContainerProps = {
+  initialData: Tracker[]
+}
 
 const Component: React.FC<Props> = ({
   startCount,
@@ -20,18 +21,9 @@ const Component: React.FC<Props> = ({
   pauseCount,
   trackers,
   inprogress,
-  ...props
 }) => (
   <div>
-    <div className={styles.main}>
-      <TextInput {...props} />
-      <StartButton
-        width={42}
-        height={42}
-        onClick={startCount}
-        className={inprogress ? 'disable' : ''}
-      />
-    </div>
+    <TrackerForm inprogress={inprogress} startCount={startCount} />
     <TrackerHistory
       trackers={trackers}
       restartCount={restartCount}
@@ -41,29 +33,11 @@ const Component: React.FC<Props> = ({
   </div>
 )
 
-export const Home: React.FC = () => {
-  const initialData: Tracker[] = [
-    {
-      name: 'initial',
-      inProgress: false,
-      timers: [
-        {
-          start: new Date(),
-          end: new Date(),
-          duration: 62,
-        },
-      ],
-    },
-  ]
-  const [trackerName, setTrackerName] = React.useState('')
+export const Home: React.FC<ContainerProps> = ({ initialData }) => {
   const [start, setStart] = React.useState<Date | undefined>(undefined)
   const [trackers, setTrackers] = React.useState(initialData)
 
   const inprogress = React.useMemo(() => trackers.some((tracker) => tracker.inProgress), [trackers])
-
-  const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTrackerName(event.target.value)
-  }
 
   const restartCount = (name: string) => {
     if (inprogress) {
@@ -80,20 +54,10 @@ export const Home: React.FC = () => {
     setTrackers(newTrackers)
   }
 
-  const startCount = () => {
-    if (inprogress) {
-      return
-    }
-
-    // TODO: バリデーション
-    if (!trackerName) {
-      return
-    }
-
+  const startCount = (trackerName: string) => {
     const registerdName = trackers.filter((tracker) => tracker.name === trackerName)
     if (registerdName.length > 0) {
       restartCount(registerdName[0].name)
-      setTrackerName('')
       return
     }
 
@@ -106,7 +70,6 @@ export const Home: React.FC = () => {
     setStart(DateUtil.getCurrentDate())
 
     setTrackers([...trackers, currentTracker])
-    setTrackerName('')
   }
 
   const pauseCount = (name: string) => {
@@ -140,12 +103,6 @@ export const Home: React.FC = () => {
     setTrackers(newTrackers)
   }
 
-  const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.keyCode === keycode.enter) {
-      startCount()
-    }
-  }
-
   return (
     <Component
       startCount={startCount}
@@ -153,9 +110,6 @@ export const Home: React.FC = () => {
       pauseCount={pauseCount}
       trackers={trackers}
       inprogress={inprogress}
-      onChange={changeValue}
-      onKeyDown={keyDown}
-      value={trackerName}
     />
   )
 }
