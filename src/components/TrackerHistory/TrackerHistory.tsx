@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as styles from './TrackerHistory.scss'
 import { StartButton, PauseButton } from '../Button/PlayButton'
-import { Number } from '../Text/Number'
+import { DecimalText } from '../Text/Number'
 import * as DateUtil from '../../utils/DateUtil'
 
 type ContainerProps = {
@@ -32,12 +32,12 @@ const Component: React.FC<Props> = ({
           <p>{tracker.name}</p>
           {tracker.inProgress ? (
             <>
-              <Number value={calcSum(tracker.timers) + currentCount} type="round" />
+              <DecimalText value={(calcSum(tracker.timers) + currentCount) / 60} type="round" />
               <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.name)} />
             </>
           ) : (
             <>
-              <Number value={calcSum(tracker.timers)} type="round" />
+              <DecimalText value={calcSum(tracker.timers) / 60} type="round" />
               <StartButton
                 width={36}
                 height={36}
