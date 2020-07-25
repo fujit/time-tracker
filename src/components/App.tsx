@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Header } from './Pages/Header'
 import { Home } from './Pages/Home'
 
 const App: React.FC = () => {
@@ -15,7 +16,12 @@ const App: React.FC = () => {
       ],
     },
   ]
-  return <Home initialData={initialData} />
+  return (
+    <>
+      <Header title="time-tracker" />
+      <Home initialData={initialData} />
+    </>
+  )
 }
 
 export default App
