@@ -10,7 +10,7 @@ const App: React.FC = () => {
         {
           start: new Date(),
           end: new Date(),
-          duration: 62,
+          minute: 62,
         },
       ],
     },

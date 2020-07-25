@@ -102,7 +102,7 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
     const timer = {
       start,
       end: DateUtil.getCurrentDate(),
-      duration: DateUtil.getTimeFromNow(start, 'minute', true),
+      minute: DateUtil.getTimeFromNow(start, 'minute', true),
     }
 
     const timers = [...targetTracker.timers, timer]

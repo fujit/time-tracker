@@ -64,7 +64,7 @@ const Component: React.FC<Props> = ({
 
 export const TrackerHistory: React.FC<ContainerProps> = (props) => {
   const calcSum = (timers: Timer[]) =>
-    timers.reduce((accumulator, current) => accumulator + current.duration, 0)
+    timers.reduce((accumulator, current) => accumulator + current.minute, 0)
 
   return <Component {...props} calcSum={calcSum} />
 }
