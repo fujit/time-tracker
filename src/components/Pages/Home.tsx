@@ -9,6 +9,7 @@ type Props = {
   pauseCount: (name: string) => void
   trackers: Tracker[]
   inprogress: boolean
+  currentCount: number
 }
 
 type ContainerProps = {
@@ -21,6 +22,7 @@ const Component: React.FC<Props> = ({
   pauseCount,
   trackers,
   inprogress,
+  currentCount,
 }) => (
   <div>
     <TrackerForm inprogress={inprogress} startCount={startCount} />
@@ -29,6 +31,7 @@ const Component: React.FC<Props> = ({
       restartCount={restartCount}
       pauseCount={pauseCount}
       inprogress={inprogress}
+      currentCount={currentCount}
     />
   </div>
 )
@@ -36,15 +39,26 @@ const Component: React.FC<Props> = ({
 export const Home: React.FC<ContainerProps> = ({ initialData }) => {
   const [start, setStart] = React.useState<Date | undefined>(undefined)
   const [trackers, setTrackers] = React.useState(initialData)
+  const [currentCount, setCurrentCount] = React.useState(0)
+  const [timerId, setTimerId] = React.useState(0)
 
   const inprogress = React.useMemo(() => trackers.some((tracker) => tracker.inProgress), [trackers])
+
+  const calcCurrentCount = (startTime: Date) => {
+    const id = window.setInterval(() => {
+      setCurrentCount(DateUtil.getTimeFromNow(startTime, 'minute', true))
+    }, 1000 * 60)
+    setTimerId(id)
+  }
 
   const restartCount = (name: string) => {
     if (inprogress) {
       return
     }
 
-    setStart(DateUtil.getCurrentDate())
+    const currentDate = DateUtil.getCurrentDate()
+    setStart(currentDate)
+    calcCurrentCount(currentDate)
 
     const target = trackers.filter((tracker) => tracker.name === name)[0]
     const newTrackers = trackers.map((tracker) =>
@@ -67,7 +81,9 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
       timers: [] as Timer[],
     }
 
-    setStart(DateUtil.getCurrentDate())
+    const currentDate = DateUtil.getCurrentDate()
+    setStart(currentDate)
+    calcCurrentCount(currentDate)
 
     setTrackers([...trackers, currentTracker])
   }
@@ -101,6 +117,7 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
       tracker.name === name ? currentTracker : tracker
     )
     setTrackers(newTrackers)
+    clearInterval(timerId)
   }
 
   return (
@@ -110,6 +127,7 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
       pauseCount={pauseCount}
       trackers={trackers}
       inprogress={inprogress}
+      currentCount={currentCount}
     />
   )
 }

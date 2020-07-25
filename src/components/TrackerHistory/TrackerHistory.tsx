@@ -9,6 +9,7 @@ type ContainerProps = {
   restartCount: (name: string) => void
   pauseCount: (name: string) => void
   inprogress: boolean
+  currentCount: number
 }
 
 type Props = {
@@ -21,22 +22,29 @@ const Component: React.FC<Props> = ({
   pauseCount,
   inprogress,
   calcSum,
+  currentCount,
 }) => (
   <div className={styles.listGroup}>
+    {/* TODO: key の値修正 */}
     {trackers.map((tracker) => (
       <div key={tracker.name} className={styles.list}>
         <div className={styles.listTracker}>
           <p>{tracker.name}</p>
-          <Number value={calcSum(tracker.timers)} type="round" />
           {tracker.inProgress ? (
-            <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.name)} />
+            <>
+              <Number value={calcSum(tracker.timers) + currentCount} type="round" />
+              <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.name)} />
+            </>
           ) : (
-            <StartButton
-              width={36}
-              height={36}
-              onClick={() => restartCount(tracker.name)}
-              className={inprogress ? 'disable' : ''}
-            />
+            <>
+              <Number value={calcSum(tracker.timers)} type="round" />
+              <StartButton
+                width={36}
+                height={36}
+                onClick={() => restartCount(tracker.name)}
+                className={inprogress ? 'disable' : ''}
+              />
+            </>
           )}
         </div>
         <div className={styles.listTimer}>
