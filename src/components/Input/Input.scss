@@ -13,5 +13,9 @@
     border: 1px solid Colors.$darkGreen;
     background-color: Colors.$primary;
   }
-}
 
+  &:disabled {
+    cursor: not-allowed;
+    background-color: Colors.$disabled;
+  }
+}

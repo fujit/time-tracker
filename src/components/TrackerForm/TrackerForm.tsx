@@ -17,7 +17,7 @@ type ContainerProps = {
 
 const Component: React.FC<Props> = ({ startCount, inprogress, isValidName, ...props }) => (
   <div className={styles.main}>
-    <TextInput {...props} />
+    <TextInput {...props} disabled={inprogress} />
     <StartButton
       width={42}
       height={42}
@@ -38,7 +38,6 @@ export const TrackerForm: React.FC<ContainerProps> = (props) => {
   }
 
   const startCount = () => {
-    setTrackerName('')
     if (props.inprogress) {
       return
     }
@@ -46,6 +45,8 @@ export const TrackerForm: React.FC<ContainerProps> = (props) => {
     if (!trackerName) {
       return
     }
+
+    setTrackerName('')
     props.startCount(trackerName)
   }
 
