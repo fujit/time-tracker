@@ -49,6 +49,7 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
   const inprogress = React.useMemo(() => trackers.some((tracker) => tracker.inProgress), [trackers])
 
   const calculateCurrentCount = (startTime: Date) => {
+    setCurrentCount(DateUtil.getTimeFromNow(startTime, 'minute', true))
     const id = window.setInterval(() => {
       setCurrentCount(DateUtil.getTimeFromNow(startTime, 'minute', true))
     }, 1000 * 60)
@@ -145,6 +146,17 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
     store.save(today, newTrackers)
     clearInterval(timerId)
   }
+
+  React.useEffect(() => {
+    if (!inprogress || timerId !== 0) {
+      return
+    }
+
+    const inprogressTracker = trackers.filter((tracker) => tracker.inProgress)[0]
+    const inprogressTimer = inprogressTracker.timers.filter((timer) => !timer.end)[0]
+
+    calculateCurrentCount(inprogressTimer.start)
+  }, [])
 
   return (
     <Component
