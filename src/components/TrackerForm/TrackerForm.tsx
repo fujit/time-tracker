@@ -12,7 +12,7 @@ type Props = {
 
 type ContainerProps = {
   inprogress: boolean
-  startCount: (name: string) => void
+  startCount: (trackerName: string) => void
 } & JSX.IntrinsicElements['input']
 
 const Component: React.FC<Props> = ({ startCount, inprogress, isValidName, ...props }) => (

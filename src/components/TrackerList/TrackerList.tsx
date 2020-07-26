@@ -6,8 +6,8 @@ import * as DateUtil from '../../utils/DateUtil'
 
 type ContainerProps = {
   trackers: Tracker[]
-  restartCount: (name: string) => void
-  pauseCount: (name: string) => void
+  restartCount: (trackerId: string) => void
+  pauseCount: (trackerId: string) => void
   inprogress: boolean
   currentCount: number
 }
@@ -32,7 +32,7 @@ const Component: React.FC<Props> = ({
           {tracker.inProgress ? (
             <>
               <DecimalText value={(calculateSum(tracker.timers) + currentCount) / 60} digits={1} />
-              <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.name)} />
+              <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.id)} />
             </>
           ) : (
             <>
@@ -40,7 +40,7 @@ const Component: React.FC<Props> = ({
               <StartButton
                 width={36}
                 height={36}
-                onClick={() => restartCount(tracker.name)}
+                onClick={() => restartCount(tracker.id)}
                 className={inprogress ? 'disable' : ''}
               />
             </>
