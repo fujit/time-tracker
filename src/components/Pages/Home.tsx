@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as styles from './Home.scss'
+import { Store } from '../../Store'
 import { TrackerForm } from '../TrackerForm/TrackerForm'
 import { TrackerHistory } from '../TrackerHistory/TrackerHistory'
 import * as DateUtil from '../../utils/DateUtil'
@@ -16,6 +17,7 @@ type Props = {
 
 type ContainerProps = {
   initialData: Tracker[]
+  store: Store
 }
 
 const Component: React.FC<Props> = ({
@@ -38,13 +40,13 @@ const Component: React.FC<Props> = ({
   </div>
 )
 
-export const Home: React.FC<ContainerProps> = ({ initialData }) => {
-  const [start, setStart] = React.useState<Date | undefined>(undefined)
+export const Home: React.FC<ContainerProps> = ({ initialData, store }) => {
   const [trackers, setTrackers] = React.useState(initialData)
   const [currentCount, setCurrentCount] = React.useState(0)
   const [timerId, setTimerId] = React.useState(0)
 
   const inprogress = React.useMemo(() => trackers.some((tracker) => tracker.inProgress), [trackers])
+  const today = DateUtil.getCurrentDay()
 
   const calcCurrentCount = (startTime: Date) => {
     const id = window.setInterval(() => {
@@ -59,15 +61,17 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
     }
 
     const currentDate = DateUtil.getCurrentDate()
-    setStart(currentDate)
     calcCurrentCount(currentDate)
 
     const target = trackers.filter((tracker) => tracker.name === name)[0]
     const newTrackers = trackers.map((tracker) =>
-      tracker.name === name ? { ...target, inProgress: true } : tracker
+      tracker.name === name
+        ? { ...target, inProgress: true, timers: [...target.timers, { start: currentDate }] }
+        : tracker
     )
 
     setTrackers(newTrackers)
+    store.save(today, newTrackers)
   }
 
   const startCount = (trackerName: string) => {
@@ -77,39 +81,54 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
       return
     }
 
+    const currentDate = DateUtil.getCurrentDate()
     const currentTracker: Tracker = {
       id: StringUtil.generateTrackerId(),
       name: trackerName,
       inProgress: true,
       day: DateUtil.getCurrentDay(),
-      timers: [] as Timer[],
+      timers: [
+        {
+          start: currentDate,
+        },
+      ],
     }
 
-    const currentDate = DateUtil.getCurrentDate()
-    setStart(currentDate)
     calcCurrentCount(currentDate)
 
-    setTrackers([...trackers, currentTracker])
+    const newTrackers = [...trackers, currentTracker]
+    setTrackers(newTrackers)
+    store.save(today, newTrackers)
   }
 
   const pauseCount = (name: string) => {
-    const targetTracker = trackers.filter((tracker) => tracker.name === name)[0]
+    const targetTrackers = trackers.filter((tracker) => tracker.name === name)
+
+    if (targetTrackers.length !== 1) {
+      return
+    }
+
+    const targetTracker = targetTrackers[0]
 
     if (!targetTracker.inProgress) {
       return
     }
 
-    if (!start) {
+    const countingTimer = targetTracker.timers.filter((timer) => !timer.end)
+
+    if (countingTimer.length !== 1) {
       return
     }
 
-    const timer = {
-      start,
+    const newTimer = {
+      start: countingTimer[0].start,
       end: DateUtil.getCurrentDate(),
-      minute: DateUtil.getTimeFromNow(start, 'minute', true),
+      minute: DateUtil.getTimeFromNow(countingTimer[0].start, 'minute', true),
     }
 
-    const timers = [...targetTracker.timers, timer]
+    const timers = targetTracker.timers.map((timer) =>
+      timer.start === newTimer.start ? newTimer : timer
+    )
 
     const currentTracker = {
       ...targetTracker,
@@ -121,6 +140,7 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
       tracker.name === name ? currentTracker : tracker
     )
     setTrackers(newTrackers)
+    store.save(today, newTrackers)
     clearInterval(timerId)
   }
 

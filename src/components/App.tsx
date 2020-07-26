@@ -1,29 +1,17 @@
 import * as React from 'react'
 import { Header } from './Pages/Header'
 import { Home } from './Pages/Home'
-import * as StringUtil from '../utils/StringUtil'
 import * as DateUtil from '../utils/DateUtil'
+import { Store } from '../Store'
 
 const App: React.FC = () => {
-  const initialData: Tracker[] = [
-    {
-      id: StringUtil.generateTrackerId(),
-      name: 'initial',
-      inProgress: false,
-      day: DateUtil.getCurrentDay(),
-      timers: [
-        {
-          start: new Date(),
-          end: new Date(),
-          minute: 62,
-        },
-      ],
-    },
-  ]
+  const store = Store.instance
+  const initialData = store.fetchAllByDay(DateUtil.getCurrentDay())
+
   return (
     <>
       <Header title="time-tracker" />
-      <Home initialData={initialData} />
+      <Home initialData={initialData} store={store} />
     </>
   )
 }

@@ -8,6 +8,8 @@ type Tracker = {
 
 type Timer = {
   start: Date
-  end: Date
-  minute: number
+  end?: Date
+  minute?: number
 }
+
+type CalculatedTimer = Required<Timer>
