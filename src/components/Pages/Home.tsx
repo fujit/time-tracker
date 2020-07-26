@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as styles from './Home.scss'
 import { Store } from '../../Store'
 import { TrackerForm } from '../TrackerForm/TrackerForm'
-import { TrackerHistory } from '../TrackerHistory/TrackerHistory'
+import { TrackerList } from '../TrackerList/TrackerList'
 import * as DateUtil from '../../utils/DateUtil'
 import * as StringUtil from '../../utils/StringUtil'
 
@@ -31,7 +31,7 @@ const Component: React.FC<Props> = ({
 }) => (
   <div className={styles.home}>
     <TrackerForm inprogress={inprogress} startCount={startCount} />
-    <TrackerHistory
+    <TrackerList
       trackers={trackers}
       restartCount={restartCount}
       pauseCount={pauseCount}

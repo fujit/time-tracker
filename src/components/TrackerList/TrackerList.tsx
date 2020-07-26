@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as styles from './TrackerHistory.scss'
+import * as styles from './TrackerList.scss'
 import { StartButton, PauseButton } from '../Button/PlayButton'
 import { DecimalText } from '../Text/Number'
 import * as DateUtil from '../../utils/DateUtil'
@@ -61,7 +61,7 @@ const Component: React.FC<Props> = ({
   </div>
 )
 
-export const TrackerHistory: React.FC<ContainerProps> = (props) => {
+export const TrackerList: React.FC<ContainerProps> = (props) => {
   const calculateSum = (timers: Timer[]) =>
     timers
       .filter((timer): timer is CalculatedTimer => !!timer.minute)
