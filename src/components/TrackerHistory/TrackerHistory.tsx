@@ -25,9 +25,8 @@ const Component: React.FC<Props> = ({
   currentCount,
 }) => (
   <div className={styles.listGroup}>
-    {/* TODO: key の値修正 */}
     {trackers.map((tracker) => (
-      <div key={tracker.name} className={styles.list}>
+      <div key={tracker.id} className={styles.list}>
         <div className={styles.listTracker}>
           <p>{tracker.name}</p>
           {tracker.inProgress ? (
@@ -50,7 +49,7 @@ const Component: React.FC<Props> = ({
         <div className={styles.listTimer}>
           <ul>
             {tracker.timers.map((timer) => (
-              <li key={timer.start.toString()}>
+              <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')}>
                 <span className={styles.timerStart}>{DateUtil.format(timer.start, 'HH:mm')}</span>
                 <span>{timer.end && DateUtil.format(timer.end, 'HH:mm')}</span>
               </li>

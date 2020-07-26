@@ -3,6 +3,7 @@ import * as styles from './Home.scss'
 import { TrackerForm } from '../TrackerForm/TrackerForm'
 import { TrackerHistory } from '../TrackerHistory/TrackerHistory'
 import * as DateUtil from '../../utils/DateUtil'
+import * as StringUtil from '../../utils/StringUtil'
 
 type Props = {
   startCount: (name: string) => void
@@ -77,8 +78,10 @@ export const Home: React.FC<ContainerProps> = ({ initialData }) => {
     }
 
     const currentTracker: Tracker = {
+      id: StringUtil.generateTrackerId(),
       name: trackerName,
       inProgress: true,
+      day: DateUtil.getCurrentDay(),
       timers: [] as Timer[],
     }
 
