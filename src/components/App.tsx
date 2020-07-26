@@ -5,13 +5,14 @@ import * as DateUtil from '../utils/DateUtil'
 import { Store } from '../Store'
 
 const App: React.FC = () => {
+  const today = DateUtil.getCurrentDay()
   const store = Store.instance
-  const initialData = store.fetchAllByDay(DateUtil.getCurrentDay())
+  const todaysTrackers = store.fetchAllByDay(today)
 
   return (
     <>
       <Header title="time-tracker" />
-      <Home initialData={initialData} store={store} />
+      <Home todaysTrackers={todaysTrackers} store={store} today={today} />
     </>
   )
 }

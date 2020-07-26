@@ -13,7 +13,7 @@ type ContainerProps = {
 }
 
 type Props = {
-  calcSum: (timers: Timer[]) => number
+  calculateSum: (timers: Timer[]) => number
 } & ContainerProps
 
 const Component: React.FC<Props> = ({
@@ -21,7 +21,7 @@ const Component: React.FC<Props> = ({
   restartCount,
   pauseCount,
   inprogress,
-  calcSum,
+  calculateSum,
   currentCount,
 }) => (
   <div className={styles.listGroup}>
@@ -31,12 +31,12 @@ const Component: React.FC<Props> = ({
           <p>{tracker.name}</p>
           {tracker.inProgress ? (
             <>
-              <DecimalText value={(calcSum(tracker.timers) + currentCount) / 60} digits={1} />
+              <DecimalText value={(calculateSum(tracker.timers) + currentCount) / 60} digits={1} />
               <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.name)} />
             </>
           ) : (
             <>
-              <DecimalText value={calcSum(tracker.timers) / 60} digits={1} />
+              <DecimalText value={calculateSum(tracker.timers) / 60} digits={1} />
               <StartButton
                 width={36}
                 height={36}
@@ -62,9 +62,9 @@ const Component: React.FC<Props> = ({
 )
 
 export const TrackerHistory: React.FC<ContainerProps> = (props) => {
-  const calcSum = (timers: Timer[]) =>
+  const calculateSum = (timers: Timer[]) =>
     timers
       .filter((timer): timer is CalculatedTimer => !!timer.minute)
       .reduce((accumulator, current) => accumulator + current.minute, 0)
-  return <Component {...props} calcSum={calcSum} />
+  return <Component {...props} calculateSum={calculateSum} />
 }

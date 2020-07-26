@@ -22,7 +22,7 @@ const Component: React.FC<Props> = ({ startCount, inprogress, isValidName, ...pr
       width={42}
       height={42}
       onClick={startCount}
-      className={inprogress || isValidName ? 'disable' : ''}
+      className={inprogress || !isValidName ? 'disable' : ''}
     />
   </div>
 )
@@ -31,7 +31,7 @@ export const TrackerForm: React.FC<ContainerProps> = (props) => {
   const [trackerName, setTrackerName] = React.useState('')
 
   // TODO: バリデーション
-  const isValidName = React.useMemo(() => !trackerName, [trackerName])
+  const isValidName = React.useMemo(() => !!trackerName, [trackerName])
 
   const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTrackerName(event.target.value)
@@ -42,7 +42,7 @@ export const TrackerForm: React.FC<ContainerProps> = (props) => {
       return
     }
 
-    if (!trackerName) {
+    if (!isValidName) {
       return
     }
 
