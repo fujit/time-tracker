@@ -15,7 +15,13 @@ type ContainerProps = {
 }
 
 const Component: React.FC<Props> = ({ tracker, isShow, modalStyles, closeBreakdown }) => (
-  <ReactModal isOpen={isShow} style={modalStyles}>
+  <ReactModal
+    isOpen={isShow}
+    style={modalStyles}
+    shouldCloseOnEsc
+    shouldCloseOnOverlayClick
+    onRequestClose={closeBreakdown}
+  >
     <div>
       <h1>{tracker.name}</h1>
       <CloseIcon onClick={closeBreakdown} />
