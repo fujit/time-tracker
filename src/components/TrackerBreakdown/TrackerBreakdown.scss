@@ -1,0 +1,12 @@
+.listTimer {
+  > ul {
+    list-style: none;
+  }
+}
+
+.timerStart {
+  &::after {
+    content: '~';
+    margin-left: 2px;
+  }
+}

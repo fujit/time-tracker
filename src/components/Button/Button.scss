@@ -1,3 +1,9 @@
+.icon {
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+}
+
 .play {
   cursor: pointer;
   user-select: none;
@@ -6,4 +12,10 @@
 .disable {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.close {
+  position: absolute;
+  top: 2%;
+  right: 4%;
 }

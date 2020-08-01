@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as styles from './TrackerList.scss'
 import { StartButton, PauseButton } from '../Button/PlayButton'
 import { DecimalText } from '../Text/Number'
-import * as DateUtil from '../../utils/DateUtil'
+import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
 
 type ContainerProps = {
   trackers: Tracker[]
@@ -14,6 +14,10 @@ type ContainerProps = {
 
 type Props = {
   calculateSum: (timers: Timer[]) => number
+  showBreakdown: (tracker: Tracker) => void
+  closeBreakdown: () => void
+  isShowBreakdown: boolean
+  breakdownTracker?: Tracker
 } & ContainerProps
 
 const Component: React.FC<Props> = ({
@@ -21,14 +25,26 @@ const Component: React.FC<Props> = ({
   restartCount,
   pauseCount,
   inprogress,
-  calculateSum,
   currentCount,
+  calculateSum,
+  showBreakdown,
+  closeBreakdown,
+  isShowBreakdown,
+  breakdownTracker,
 }) => (
   <div className={styles.listGroup}>
+    {breakdownTracker && isShowBreakdown && (
+      <TrackerBreakdown
+        isShow={isShowBreakdown}
+        tracker={breakdownTracker}
+        closeBreakdown={closeBreakdown}
+      />
+    )}
     {trackers.map((tracker) => (
       <div key={tracker.id} className={styles.list}>
         <div className={styles.listTracker}>
           <p>{tracker.name}</p>
+          <button onClick={() => showBreakdown(tracker)}>内訳を見る</button>
           {tracker.inProgress ? (
             <>
               <DecimalText value={(calculateSum(tracker.timers) + currentCount) / 60} digits={1} />
@@ -46,25 +62,37 @@ const Component: React.FC<Props> = ({
             </>
           )}
         </div>
-        <div className={styles.listTimer}>
-          <ul>
-            {tracker.timers.map((timer) => (
-              <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')}>
-                <span className={styles.timerStart}>{DateUtil.format(timer.start, 'HH:mm')}</span>
-                <span>{timer.end && DateUtil.format(timer.end, 'HH:mm')}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     ))}
   </div>
 )
 
 export const TrackerList: React.FC<ContainerProps> = (props) => {
+  const [isShowBreakdown, setIsShowBreakdown] = React.useState(false)
+  const [breakdownTracker, setBreakdownTracker] = React.useState<Tracker | undefined>(undefined)
+
+  const showBreakdown = (tracker: Tracker) => {
+    setIsShowBreakdown(true)
+    setBreakdownTracker(tracker)
+  }
+
+  const closeBreakdown = () => {
+    setIsShowBreakdown(false)
+    setBreakdownTracker(undefined)
+  }
+
   const calculateSum = (timers: Timer[]) =>
     timers
       .filter((timer): timer is CalculatedTimer => !!timer.minute)
       .reduce((accumulator, current) => accumulator + current.minute, 0)
-  return <Component {...props} calculateSum={calculateSum} />
+  return (
+    <Component
+      {...props}
+      calculateSum={calculateSum}
+      showBreakdown={showBreakdown}
+      closeBreakdown={closeBreakdown}
+      isShowBreakdown={isShowBreakdown}
+      breakdownTracker={breakdownTracker}
+    />
+  )
 }
