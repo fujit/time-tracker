@@ -12,7 +12,9 @@ type Props = {
   value: string
 }
 
-const Component: React.FC<Props> = ({ value }) => <span>{value}</span>
+const Component: React.FC<Props> = ({ className, value }) => (
+  <span className={className}>{value}</span>
+)
 
 export const DecimalText: React.FC<ContainerProps> = ({ className, value, digits, unit }) => {
   const calculatedValue = value.toFixed(digits)

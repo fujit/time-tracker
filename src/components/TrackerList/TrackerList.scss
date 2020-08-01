@@ -2,8 +2,14 @@
   margin-top: 36px;
 }
 
+.listHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
 .listTitle {
-  margin-bottom: 16px;
+  margin-right: 1rem;
 }
 
 .listTracker {

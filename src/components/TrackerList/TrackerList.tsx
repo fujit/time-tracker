@@ -1,9 +1,11 @@
 import * as React from 'react'
+import classNames from 'classnames/bind'
 import * as styles from './TrackerList.scss'
 import { StartIcon, PauseIcon } from '../Icon/PlayIcon'
 import { Button } from '../Button/Button'
 import { DecimalText } from '../Text/Number'
 import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
+import { CopyIcon } from '../Icon/CopyIcon'
 
 type ContainerProps = {
   trackers: Tracker[]
@@ -43,16 +45,19 @@ const Component: React.FC<Props> = ({
         closeBreakdown={closeBreakdown}
       />
     )}
-    <h2 className={styles.listTitle}>{today} の作業内容</h2>
+    <div className={styles.listHeader}>
+      <h2 className={styles.listTitle}>{today} の作業内容</h2>
+      <CopyIcon />
+    </div>
     <div>
       {trackers.map((tracker) => (
         <div key={tracker.id} className={styles.listTracker}>
-          <p className={styles.listTrackerName}>{tracker.name}</p>
+          <p className={classNames(styles.listTrackerName, 'trackerName')}>{tracker.name}</p>
           <Button onClick={() => showBreakdown(tracker)}>内訳を見る</Button>
           {tracker.inProgress ? (
             <>
               <DecimalText
-                className={styles.listTrackerTime}
+                className={classNames(styles.listTrackerTime, 'trackerTime')}
                 value={(calculateSum(tracker.timers) + currentCount) / 60}
                 digits={1}
                 unit="h"
@@ -62,7 +67,7 @@ const Component: React.FC<Props> = ({
           ) : (
             <>
               <DecimalText
-                className={styles.listTrackerTime}
+                className={classNames(styles.listTrackerTime, 'trackerTime')}
                 value={calculateSum(tracker.timers) / 60}
                 digits={1}
                 unit="h"
