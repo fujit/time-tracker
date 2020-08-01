@@ -13,6 +13,7 @@ type Props = {
   trackers: Tracker[]
   inprogress: boolean
   currentCount: number
+  today: string
 }
 
 type ContainerProps = {
@@ -28,6 +29,7 @@ const Component: React.FC<Props> = ({
   trackers,
   inprogress,
   currentCount,
+  today,
 }) => (
   <div className={styles.home}>
     <TrackerForm inprogress={inprogress} startCount={startCount} />
@@ -37,6 +39,7 @@ const Component: React.FC<Props> = ({
       pauseCount={pauseCount}
       inprogress={inprogress}
       currentCount={currentCount}
+      today={today}
     />
   </div>
 )
@@ -166,6 +169,7 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
       trackers={trackers}
       inprogress={inprogress}
       currentCount={currentCount}
+      today={today}
     />
   )
 }

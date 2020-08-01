@@ -11,6 +11,7 @@ type ContainerProps = {
   pauseCount: (trackerId: string) => void
   inprogress: boolean
   currentCount: number
+  today: string
 }
 
 type Props = {
@@ -32,6 +33,7 @@ const Component: React.FC<Props> = ({
   closeBreakdown,
   isShowBreakdown,
   breakdownTracker,
+  today,
 }) => (
   <div className={styles.listGroup}>
     {breakdownTracker && isShowBreakdown && (
@@ -41,19 +43,30 @@ const Component: React.FC<Props> = ({
         closeBreakdown={closeBreakdown}
       />
     )}
-    {trackers.map((tracker) => (
-      <div key={tracker.id} className={styles.list}>
-        <div className={styles.listTracker}>
-          <p>{tracker.name}</p>
+    <h2 className={styles.listTitle}>{today} の作業内容</h2>
+    <div>
+      {trackers.map((tracker) => (
+        <div key={tracker.id} className={styles.listTracker}>
+          <p className={styles.listTrackerName}>{tracker.name}</p>
           <Button onClick={() => showBreakdown(tracker)}>内訳を見る</Button>
           {tracker.inProgress ? (
             <>
-              <DecimalText value={(calculateSum(tracker.timers) + currentCount) / 60} digits={1} />
+              <DecimalText
+                className={styles.listTrackerTime}
+                value={(calculateSum(tracker.timers) + currentCount) / 60}
+                digits={1}
+                unit="h"
+              />
               <PauseIcon width={36} height={36} onClick={() => pauseCount(tracker.id)} />
             </>
           ) : (
             <>
-              <DecimalText value={calculateSum(tracker.timers) / 60} digits={1} />
+              <DecimalText
+                className={styles.listTrackerTime}
+                value={calculateSum(tracker.timers) / 60}
+                digits={1}
+                unit="h"
+              />
               <StartIcon
                 width={36}
                 height={36}
@@ -63,8 +76,8 @@ const Component: React.FC<Props> = ({
             </>
           )}
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
 )
 
