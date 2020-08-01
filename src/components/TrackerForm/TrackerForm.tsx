@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as styles from './TrackerForm.scss'
 import { TextInput } from '../Input/TextInput'
-import { StartButton } from '../Button/PlayButton'
+import { StartIcon } from '../Icon/PlayIcon'
 import { keycode } from '../../utils/Constants'
 
 type Props = {
@@ -18,7 +18,7 @@ type ContainerProps = {
 const Component: React.FC<Props> = ({ startCount, inprogress, isValidName, ...props }) => (
   <div className={styles.main}>
     <TextInput {...props} disabled={inprogress} />
-    <StartButton
+    <StartIcon
       width={42}
       height={42}
       onClick={startCount}

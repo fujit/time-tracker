@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ReactModal from 'react-modal'
 import * as styles from './TrackerBreakdown.scss'
-import { CloseButton } from '../Button/CloseButton'
+import { CloseIcon } from '../Icon/CloseIcon'
 import * as DateUtil from '../../utils/DateUtil'
 
 type Props = {
@@ -18,7 +18,7 @@ const Component: React.FC<Props> = ({ tracker, isShow, modalStyles, closeBreakdo
   <ReactModal isOpen={isShow} style={modalStyles}>
     <div>
       <h1>{tracker.name}</h1>
-      <CloseButton onClick={closeBreakdown} />
+      <CloseIcon onClick={closeBreakdown} />
     </div>
     <div className={styles.listTimer}>
       <ul>

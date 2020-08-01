@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as styles from './TrackerList.scss'
-import { StartButton, PauseButton } from '../Button/PlayButton'
+import { StartIcon, PauseIcon } from '../Icon/PlayIcon'
 import { DecimalText } from '../Text/Number'
 import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
 
@@ -48,12 +48,12 @@ const Component: React.FC<Props> = ({
           {tracker.inProgress ? (
             <>
               <DecimalText value={(calculateSum(tracker.timers) + currentCount) / 60} digits={1} />
-              <PauseButton width={36} height={36} onClick={() => pauseCount(tracker.id)} />
+              <PauseIcon width={36} height={36} onClick={() => pauseCount(tracker.id)} />
             </>
           ) : (
             <>
               <DecimalText value={calculateSum(tracker.timers) / 60} digits={1} />
-              <StartButton
+              <StartIcon
                 width={36}
                 height={36}
                 onClick={() => restartCount(tracker.id)}

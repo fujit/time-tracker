@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classNames from 'classnames/bind'
-import * as styles from './Button.scss'
+import * as styles from './Icon.scss'
 import start from '../../assets/img/play-circle-outline.svg'
 import pause from '../../assets/img/pause-circle-outline.svg'
 
@@ -16,24 +16,24 @@ type ContainerProps = {
 
 const Component: React.FC<Props> = ({ alt, ...props }) => <img {...props} alt={alt} />
 
-export const StartButton: React.FC<ContainerProps> = (props) => {
+export const StartIcon: React.FC<ContainerProps> = (props) => {
   return (
     <Component
       {...props}
       src={start}
       alt="start"
-      className={classNames.bind(styles)('play', props.className)}
+      className={classNames.bind(styles)('icon', props.className)}
     />
   )
 }
 
-export const PauseButton: React.FC<ContainerProps> = (props) => {
+export const PauseIcon: React.FC<ContainerProps> = (props) => {
   return (
     <Component
       {...props}
       src={pause}
       alt="pause"
-      className={classNames.bind(styles)('play', props.className)}
+      className={classNames.bind(styles)('icon', props.className)}
     />
   )
 }
