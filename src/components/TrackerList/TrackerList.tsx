@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as styles from './TrackerList.scss'
 import { StartIcon, PauseIcon } from '../Icon/PlayIcon'
+import { Button } from '../Button/Button'
 import { DecimalText } from '../Text/Number'
 import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
 
@@ -44,7 +45,7 @@ const Component: React.FC<Props> = ({
       <div key={tracker.id} className={styles.list}>
         <div className={styles.listTracker}>
           <p>{tracker.name}</p>
-          <button onClick={() => showBreakdown(tracker)}>内訳を見る</button>
+          <Button onClick={() => showBreakdown(tracker)}>内訳を見る</Button>
           {tracker.inProgress ? (
             <>
               <DecimalText value={(calculateSum(tracker.timers) + currentCount) / 60} digits={1} />
