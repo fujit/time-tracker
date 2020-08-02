@@ -1,11 +1,17 @@
 import * as React from 'react'
 import classNames from 'classnames/bind'
 import * as styles from './TrackerList.scss'
+import { clipboardCopy } from '../../utils/Util'
 import { StartIcon, PauseIcon } from '../Icon/PlayIcon'
 import { Button } from '../Button/Button'
 import { DecimalText } from '../Text/Number'
 import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
 import { CopyIcon } from '../Icon/CopyIcon'
+
+type TrackerSummary = {
+  name: string | null
+  time: string | null
+}
 
 type ContainerProps = {
   trackers: Tracker[]
@@ -22,6 +28,7 @@ type Props = {
   closeBreakdown: () => void
   isShowBreakdown: boolean
   breakdownTracker?: Tracker
+  copySummary: () => void
 } & ContainerProps
 
 const Component: React.FC<Props> = ({
@@ -35,6 +42,7 @@ const Component: React.FC<Props> = ({
   closeBreakdown,
   isShowBreakdown,
   breakdownTracker,
+  copySummary,
   today,
 }) => (
   <div className={styles.listGroup}>
@@ -47,7 +55,7 @@ const Component: React.FC<Props> = ({
     )}
     <div className={styles.listHeader}>
       <h2 className={styles.listTitle}>{today} の作業内容</h2>
-      <CopyIcon />
+      <CopyIcon width={35} height={35} onClick={copySummary} />
     </div>
     <div>
       {trackers.map((tracker) => (
@@ -104,6 +112,38 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
     timers
       .filter((timer): timer is CalculatedTimer => !!timer.minute)
       .reduce((accumulator, current) => accumulator + current.minute, 0)
+
+  const arrangeTrackerData = (summary: TrackerSummary[]) => {
+    // TODO: 複数種類
+    const copyData = summary.reduce(
+      (previous, current) => `${previous}${current.name}: ${current.time} \n`,
+      ''
+    )
+
+    return copyData
+  }
+
+  const copySummary = () => {
+    // 値取得
+    const nameList = Array.from(document.getElementsByClassName('trackerName'))
+    const timeList = Array.from(document.getElementsByClassName('trackerTime'))
+
+    // TODO: エラーハンドリング
+
+    if (nameList.length !== timeList.length) {
+      return
+    }
+
+    const trackerSummary: TrackerSummary[] = nameList.map((name, index) => ({
+      name: name.textContent,
+      time: timeList[index].textContent,
+    }))
+
+    const copyData = arrangeTrackerData(trackerSummary)
+    clipboardCopy(copyData)
+
+    // TODO: メッセージ
+  }
   return (
     <Component
       {...props}
@@ -112,6 +152,7 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
       closeBreakdown={closeBreakdown}
       isShowBreakdown={isShowBreakdown}
       breakdownTracker={breakdownTracker}
+      copySummary={copySummary}
     />
   )
 }
