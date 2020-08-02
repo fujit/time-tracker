@@ -1,5 +1,6 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const autoprefixer = require('autoprefixer')
 
 const src = path.resolve(__dirname, 'src')
 const dist = path.resolve(__dirname, 'dist')
@@ -79,7 +80,18 @@ module.exports = {
               modules: {
                 localIdentName: '[name]__[local]--[hash:base64:5]',
               },
-              importLoaders: 1,
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins: [
+                autoprefixer({
+                  grid: true,
+                }),
+              ],
             },
           },
           {
