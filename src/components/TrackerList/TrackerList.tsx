@@ -29,6 +29,7 @@ type Props = {
   isShowBreakdown: boolean
   breakdownTracker?: Tracker
   copySummary: () => void
+  isDisplayCopiedMessage: boolean
 } & ContainerProps
 
 const Component: React.FC<Props> = ({
@@ -44,6 +45,7 @@ const Component: React.FC<Props> = ({
   breakdownTracker,
   copySummary,
   today,
+  isDisplayCopiedMessage,
 }) => (
   <div className={styles.listGroup}>
     {breakdownTracker && isShowBreakdown && (
@@ -56,6 +58,14 @@ const Component: React.FC<Props> = ({
     <div className={styles.listHeader}>
       <h2 className={styles.listTitle}>{today} の作業内容</h2>
       <CopyIcon width={35} height={35} onClick={copySummary} />
+      <p
+        className={classNames(
+          styles.copiedMessage,
+          isDisplayCopiedMessage ? '' : styles.copiedMessageHidden
+        )}
+      >
+        Copied
+      </p>
     </div>
     <div>
       {trackers.map((tracker) => (
@@ -97,6 +107,7 @@ const Component: React.FC<Props> = ({
 export const TrackerList: React.FC<ContainerProps> = (props) => {
   const [isShowBreakdown, setIsShowBreakdown] = React.useState(false)
   const [breakdownTracker, setBreakdownTracker] = React.useState<Tracker | undefined>(undefined)
+  const [isDisplayCopiedMessage, setIsDisplayCopiedMessage] = React.useState(false)
 
   const showBreakdown = (tracker: Tracker) => {
     setIsShowBreakdown(true)
@@ -140,10 +151,17 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
     }))
 
     const copyData = arrangeTrackerData(trackerSummary)
-    clipboardCopy(copyData)
+    const result = clipboardCopy(copyData)
 
-    // TODO: メッセージ
+    if (result) {
+      setIsDisplayCopiedMessage(true)
+
+      setTimeout(() => {
+        setIsDisplayCopiedMessage(false)
+      }, 1000 * 5)
+    }
   }
+
   return (
     <Component
       {...props}
@@ -153,6 +171,7 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
       isShowBreakdown={isShowBreakdown}
       breakdownTracker={breakdownTracker}
       copySummary={copySummary}
+      isDisplayCopiedMessage={isDisplayCopiedMessage}
     />
   )
 }
