@@ -58,14 +58,7 @@ const Component: React.FC<Props> = ({
     <div className={styles.listHeader}>
       <h2 className={styles.listTitle}>{today} の作業内容</h2>
       <CopyIcon width={35} height={35} onClick={copySummary} />
-      <p
-        className={classNames(
-          styles.copiedMessage,
-          isDisplayCopiedMessage ? '' : styles.copiedMessageHidden
-        )}
-      >
-        Copied
-      </p>
+      {isDisplayCopiedMessage && <p className={styles.copiedMessage}>Copied</p>}
     </div>
     <div>
       {trackers.map((tracker) => (
