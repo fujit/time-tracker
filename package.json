@@ -62,5 +62,18 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.0.9",
     "yarn": "^1.22.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint src -c .eslintrc.json --ext ts,ts"
+    ],
+    "src/**/*.{.css,scss}": [
+      "stylelint src/**/*.{scss,css}"
+    ]
   }
 }
