@@ -120,7 +120,7 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
   const arrangeTrackerData = (summary: TrackerSummary[]) => {
     // TODO: 複数種類
     const copyData = summary.reduce(
-      (previous, current) => `${previous}${current.name}: ${current.time} \n`,
+      (previous, current) => `・${previous}${current.name}: ${current.time} \n`,
       ''
     )
 
