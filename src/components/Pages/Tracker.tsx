@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as styles from './Home.scss'
+import * as styles from './Tracker.scss'
 import { Store } from '../../Store'
 import { TrackerForm } from '../TrackerForm/TrackerForm'
 import { TrackerList } from '../TrackerList/TrackerList'
@@ -47,7 +47,7 @@ const Component: React.FC<Props> = ({
   </div>
 )
 
-export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today }) => {
+export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, store, today }) => {
   const [trackers, setTrackers] = React.useState(todaysTrackers)
   const [currentCount, setCurrentCount] = React.useState(0)
   const [timerId, setTimerId] = React.useState(0)

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Header } from './Pages/Header'
-import { Home } from './Pages/Home'
+import { Tracker } from './Pages/Tracker'
 import * as DateUtil from '../utils/DateUtil'
 import { Store } from '../Store'
 
@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <>
       <Header title="time-tracker" />
-      <Home todaysTrackers={todaysTrackers} store={store} today={today} />
+      <Tracker todaysTrackers={todaysTrackers} store={store} today={today} />
     </>
   )
 }
