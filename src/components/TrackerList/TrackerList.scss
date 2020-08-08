@@ -1,3 +1,5 @@
+@use '../../assets/styles/Colors.scss';
+
 .listGroup {
   margin-top: 36px;
 }
@@ -18,22 +20,28 @@
 
 .listTracker {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  height: 5rem;
 
   &:not(:last-child) {
     margin-bottom: 26px;
   }
 
-  > *:not(:last-child) {
-    margin-right: 1rem;
-  }
+  &Content {
+    display: flex;
+    align-items: center;
 
-  &Name {
-    width: 16rem;
-    word-break: break-all;
-  }
+    > *:not(:last-child) {
+      margin-right: 1rem;
+    }
 
-  &Time {
-    width: 2rem;
+    &Time {
+      width: 2rem;
+    }
   }
+}
+
+.error {
+  margin-top: 0.4rem;
+  color: Colors.$error;
 }

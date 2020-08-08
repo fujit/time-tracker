@@ -10,14 +10,18 @@
   padding: 4px 12px;
 
   &:focus {
-    border: 1px solid Colors.$darkGreen;
-    background-color: Colors.$primary;
+    border: 1px solid Colors.$green;
+    background-color: Colors.$lightGreen;
   }
 
   &:disabled {
     cursor: not-allowed;
     background-color: Colors.$disabled;
   }
+}
+
+.long {
+  width: 32rem;
 }
 
 .noFrame {
@@ -29,4 +33,8 @@
     background-color: Colors.$white;
     cursor: unset;
   }
+}
+
+.error {
+  border: 1px solid Colors.$error !important;
 }

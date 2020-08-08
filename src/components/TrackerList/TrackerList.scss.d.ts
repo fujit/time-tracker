@@ -3,5 +3,6 @@ export const listHeader: string
 export const listTitle: string
 export const copiedMessage: string
 export const listTracker: string
-export const listTrackerName: string
-export const listTrackerTime: string
+export const listTrackerContent: string
+export const listTrackerContentTime: string
+export const error: string

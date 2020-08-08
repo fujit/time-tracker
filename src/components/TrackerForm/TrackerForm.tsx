@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as styles from './TrackerForm.scss'
 import { TextInput } from '../Input/TextInput'
 import { StartIcon } from '../Icon/PlayIcon'
-import { keycode } from '../../utils/Constants'
+import { keycode, validate } from '../../utils/Constants'
 
 type Props = {
   startCount: () => void
@@ -17,7 +17,7 @@ type ContainerProps = {
 
 const Component: React.FC<Props> = ({ startCount, inProgress, isValidName, ...props }) => (
   <div className={styles.main}>
-    <TextInput {...props} disabled={inProgress} />
+    <TextInput {...props} disabled={inProgress} size={60} maxLength={validate.trackerName.length} />
     <StartIcon
       width={42}
       height={42}
@@ -30,8 +30,10 @@ const Component: React.FC<Props> = ({ startCount, inProgress, isValidName, ...pr
 export const TrackerForm: React.FC<ContainerProps> = (props) => {
   const [trackerName, setTrackerName] = React.useState('')
 
-  // TODO: バリデーション
-  const isValidName = React.useMemo(() => !!trackerName, [trackerName])
+  const isValidName = React.useMemo(
+    () => !!trackerName && trackerName.length <= validate.trackerName.length,
+    [trackerName]
+  )
 
   const changeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTrackerName(event.target.value)
