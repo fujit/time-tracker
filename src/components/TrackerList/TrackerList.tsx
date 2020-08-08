@@ -48,7 +48,7 @@ const Component: React.FC<Props> = ({
   isDisplayCopiedMessage,
 }) => (
   <div className={styles.listGroup}>
-    {breakdownTracker && isShowBreakdown && (
+    {breakdownTracker && (
       <TrackerBreakdown
         isShow={isShowBreakdown}
         tracker={breakdownTracker}
