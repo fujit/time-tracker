@@ -10,6 +10,7 @@ type Props = {
   startCount: (trackerName: string) => void
   restartCount: (trackerId: string) => void
   pauseCount: (trackerId: string) => void
+  updateTrackerName: (trackerId: string, trackerName: string) => void
   trackers: Tracker[]
   inprogress: boolean
   currentCount: number
@@ -26,6 +27,7 @@ const Component: React.FC<Props> = ({
   startCount,
   restartCount,
   pauseCount,
+  updateTrackerName,
   trackers,
   inprogress,
   currentCount,
@@ -37,9 +39,10 @@ const Component: React.FC<Props> = ({
       trackers={trackers}
       restartCount={restartCount}
       pauseCount={pauseCount}
-      inprogress={inprogress}
+      inProgress={inprogress}
       currentCount={currentCount}
       today={today}
+      updateTrackerName={updateTrackerName}
     />
   </div>
 )
@@ -150,6 +153,14 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
     clearInterval(timerId)
   }
 
+  const updateTrackerName = (trackerId: string, trackerName: string) => {
+    const currentTracker = store.fetchAllByDay(today)
+    const newTracker = currentTracker.map((tracker) =>
+      tracker.id === trackerId ? { ...tracker, name: trackerName } : tracker
+    )
+    store.save(today, newTracker)
+  }
+
   React.useEffect(() => {
     if (!inprogress || timerId !== 0) {
       return
@@ -170,6 +181,7 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
       inprogress={inprogress}
       currentCount={currentCount}
       today={today}
+      updateTrackerName={updateTrackerName}
     />
   )
 }

@@ -19,3 +19,14 @@
     background-color: Colors.$disabled;
   }
 }
+
+.noFrame {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+
+  &:focus {
+    background-color: Colors.$white;
+    cursor: unset;
+  }
+}
