@@ -6,23 +6,23 @@ import { keycode } from '../../utils/Constants'
 
 type Props = {
   startCount: () => void
-  inprogress: boolean
+  inProgress: boolean
   isValidName: boolean
 } & JSX.IntrinsicElements['input']
 
 type ContainerProps = {
-  inprogress: boolean
+  inProgress: boolean
   startCount: (trackerName: string) => void
 } & JSX.IntrinsicElements['input']
 
-const Component: React.FC<Props> = ({ startCount, inprogress, isValidName, ...props }) => (
+const Component: React.FC<Props> = ({ startCount, inProgress, isValidName, ...props }) => (
   <div className={styles.main}>
-    <TextInput {...props} disabled={inprogress} />
+    <TextInput {...props} disabled={inProgress} />
     <StartIcon
       width={42}
       height={42}
       onClick={startCount}
-      className={inprogress || !isValidName ? 'disable' : ''}
+      className={inProgress || !isValidName ? 'disable' : ''}
     />
   </div>
 )
@@ -38,7 +38,7 @@ export const TrackerForm: React.FC<ContainerProps> = (props) => {
   }
 
   const startCount = () => {
-    if (props.inprogress) {
+    if (props.inProgress) {
       return
     }
 

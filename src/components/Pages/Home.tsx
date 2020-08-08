@@ -12,7 +12,7 @@ type Props = {
   pauseCount: (trackerId: string) => void
   updateTrackerName: (trackerId: string, trackerName: string) => void
   trackers: Tracker[]
-  inprogress: boolean
+  inProgress: boolean
   currentCount: number
   today: string
 }
@@ -29,17 +29,17 @@ const Component: React.FC<Props> = ({
   pauseCount,
   updateTrackerName,
   trackers,
-  inprogress,
+  inProgress,
   currentCount,
   today,
 }) => (
   <div className={styles.home}>
-    <TrackerForm inprogress={inprogress} startCount={startCount} />
+    <TrackerForm inProgress={inProgress} startCount={startCount} />
     <TrackerList
       trackers={trackers}
       restartCount={restartCount}
       pauseCount={pauseCount}
-      inProgress={inprogress}
+      inProgress={inProgress}
       currentCount={currentCount}
       today={today}
       updateTrackerName={updateTrackerName}
@@ -52,7 +52,7 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
   const [currentCount, setCurrentCount] = React.useState(0)
   const [timerId, setTimerId] = React.useState(0)
 
-  const inprogress = React.useMemo(() => trackers.some((tracker) => tracker.inProgress), [trackers])
+  const inProgress = React.useMemo(() => trackers.some((tracker) => tracker.inProgress), [trackers])
 
   const calculateCurrentCount = (startTime: Date) => {
     setCurrentCount(DateUtil.getTimeFromNow(startTime, 'minute', true))
@@ -63,7 +63,7 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
   }
 
   const restartCount = (trackerId: string) => {
-    if (inprogress) {
+    if (inProgress) {
       return
     }
 
@@ -85,9 +85,9 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
   }
 
   const startCount = (trackerName: string) => {
-    const registerdTracker = trackers.filter((tracker) => tracker.name === trackerName)
-    if (registerdTracker.length > 0) {
-      restartCount(registerdTracker[0].name)
+    const registeredTracker = trackers.filter((tracker) => tracker.name === trackerName)
+    if (registeredTracker.length > 0) {
+      restartCount(registeredTracker[0].name)
       return
     }
 
@@ -162,14 +162,14 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
   }
 
   React.useEffect(() => {
-    if (!inprogress || timerId !== 0) {
+    if (!inProgress || timerId !== 0) {
       return
     }
 
-    const inprogressTracker = trackers.filter((tracker) => tracker.inProgress)[0]
-    const inprogressTimer = inprogressTracker.timers.filter((timer) => !timer.end)[0]
+    const inProgressTracker = trackers.filter((tracker) => tracker.inProgress)[0]
+    const inProgressTimer = inProgressTracker.timers.filter((timer) => !timer.end)[0]
 
-    calculateCurrentCount(inprogressTimer.start)
+    calculateCurrentCount(inProgressTimer.start)
   }, [])
 
   return (
@@ -178,7 +178,7 @@ export const Home: React.FC<ContainerProps> = ({ todaysTrackers, store, today })
       restartCount={restartCount}
       pauseCount={pauseCount}
       trackers={trackers}
-      inprogress={inprogress}
+      inProgress={inProgress}
       currentCount={currentCount}
       today={today}
       updateTrackerName={updateTrackerName}
