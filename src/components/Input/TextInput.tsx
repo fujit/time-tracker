@@ -4,12 +4,13 @@ import * as styles from './Input.scss'
 
 type Props = {
   className?: string
+  hasFrame?: boolean
 } & JSX.IntrinsicElements['input']
 
-const Component: React.FC<Props> = ({ className, ...props }) => (
-  <input className={classNames.bind(styles)('input', className)} {...props} />
-)
+const Component: React.FC<Props> = (props) => <input {...props} />
 
-export const TextInput: React.FC<Props> = (props) => {
-  return <Component {...props} />
+export const TextInput: React.FC<Props> = ({ hasFrame = true, ...props }) => {
+  const cx = classNames.bind(styles)
+  const className = cx(styles.input, hasFrame ? '' : styles.noFrame, props.className)
+  return <Component {...props} className={className} />
 }

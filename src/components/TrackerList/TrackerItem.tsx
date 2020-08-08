@@ -7,7 +7,7 @@ import { TextInput } from '../Input/TextInput'
 import { DecimalText } from '../Text/Number'
 
 const Title: React.FC<JSX.IntrinsicElements['input']> = (props) => (
-  <TextInput {...props} className="noFrame" />
+  <TextInput {...props} className="trackerName" hasFrame={false} />
 )
 
 const BreakdownButton: React.FC<JSX.IntrinsicElements['a']> = (props) => (
