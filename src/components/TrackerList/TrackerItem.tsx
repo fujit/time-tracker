@@ -1,22 +1,22 @@
 import * as React from 'react'
 import classNames from 'classnames/bind'
 import * as styles from './TrackerList.scss'
+import { State, Actions } from '../../reducer'
 import { StartIcon, PauseIcon } from '../Icon/PlayIcon'
 import { Button } from '../Button/Button'
 import { TextInput } from '../Input/TextInput'
 import { DecimalText } from '../Text/Number'
 import { validate } from '../../utils/Constants'
+import { restart, changeName, pause } from '../../actionCreators'
 
-type ContainerProps = {
+type Props = {
   tracker: Tracker
-  inProgress: boolean
+  state: State
+  dispatch: React.Dispatch<Actions>
   showBreakdown: (tracker: Tracker) => void
-  pauseCount: (trackerId: string) => void
-  restartCount: (trackerId: string) => void
-  updateTrackerName: (trackerId: string, trackerName: string) => void
 }
 
-export const TrackerItem: React.FC<ContainerProps> = (props) => {
+export const TrackerItem: React.FC<Props> = (props) => {
   const [trackerName, setTrackerName] = React.useState(props.tracker.name)
 
   const isValidName = React.useMemo(
@@ -34,15 +34,14 @@ export const TrackerItem: React.FC<ContainerProps> = (props) => {
   }
 
   const updateTrackerName = () => {
-    if (!isValidName) {
-      return
+    if (isValidName) {
+      props.dispatch(changeName(props.tracker.id, trackerName))
     }
-    props.updateTrackerName(props.tracker.id, trackerName)
   }
 
-  const restartCount = () => {
+  const restartMeasure = () => {
     if (isValidName) {
-      props.restartCount(props.tracker.id)
+      props.dispatch(restart(props.tracker.id))
     }
   }
 
@@ -68,13 +67,17 @@ export const TrackerItem: React.FC<ContainerProps> = (props) => {
           unit="h"
         />
         {props.tracker.inProgress ? (
-          <PauseIcon width={36} height={36} onClick={() => props.pauseCount(props.tracker.id)} />
+          <PauseIcon
+            width={36}
+            height={36}
+            onClick={() => props.dispatch(pause(props.tracker.id))}
+          />
         ) : (
           <StartIcon
             width={36}
             height={36}
-            onClick={restartCount}
-            className={props.inProgress || !isValidName ? 'disable' : ''}
+            onClick={restartMeasure}
+            className={props.state.inProgress || !isValidName ? 'disable' : ''}
           />
         )}
       </div>

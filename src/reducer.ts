@@ -7,15 +7,17 @@ import * as DateUtil from './utils/DateUtil'
 
 const store = Store.instance
 
-type State = {
+export type State = {
   trackers: Tracker[]
+  inProgress: boolean
 }
 
-type Actions = CreatorsToActions<typeof creators>
+export type Actions = CreatorsToActions<typeof creators>
 
 function initialState(injects?: Partial<State>): State {
   return {
     trackers: [] as Tracker[],
+    inProgress: false,
     ...injects,
   }
 }
@@ -23,6 +25,10 @@ function initialState(injects?: Partial<State>): State {
 function reducer(state: State, action: Actions): State {
   switch (action.type) {
     case types.START: {
+      if (state.inProgress) {
+        return state
+      }
+
       const currentDate = DateUtil.getCurrentDate()
       const newTracker: Tracker = {
         id: StringUtil.generateTrackerId(),
@@ -43,10 +49,15 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
+        inProgress: true,
       }
     }
 
     case types.RESTART: {
+      if (state.inProgress) {
+        return state
+      }
+
       const currentDate = DateUtil.getCurrentDate()
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id
@@ -63,10 +74,15 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
+        inProgress: true,
       }
     }
 
     case types.PAUSE: {
+      if (!state.inProgress) {
+        return state
+      }
+
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id && tracker.inProgress
           ? {
@@ -90,6 +106,7 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
+        inProgress: false,
       }
     }
 

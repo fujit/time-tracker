@@ -1,15 +1,13 @@
 import * as React from 'react'
 import * as styles from './TrackerList.scss'
+import { State, Actions } from '../../reducer'
 import { TrackerItem } from './TrackerItem'
 import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
 import { TrackerCopy } from './TrackerCopy'
 
 type ContainerProps = {
-  trackers: Tracker[]
-  restartCount: (trackerId: string) => void
-  pauseCount: (trackerId: string) => void
-  updateTrackerName: (trackerId: string, trackerName: string) => void
-  inProgress: boolean
+  state: State
+  dispatch: React.Dispatch<Actions>
   today: string
 }
 
@@ -22,15 +20,12 @@ type Props = {
 
 const Component: React.FC<Props> = ({
   isShowBreakdown,
+  showBreakdown,
   breakdownTracker,
   closeBreakdown,
+  state,
+  dispatch,
   today,
-  trackers,
-  restartCount,
-  pauseCount,
-  showBreakdown,
-  inProgress,
-  updateTrackerName,
 }) => (
   <div className={styles.listGroup}>
     {breakdownTracker && (
@@ -45,15 +40,13 @@ const Component: React.FC<Props> = ({
       <TrackerCopy />
     </div>
     <div>
-      {trackers.map((tracker) => (
+      {state.trackers.map((tracker) => (
         <TrackerItem
           key={tracker.id}
           tracker={tracker}
-          restartCount={restartCount}
-          pauseCount={pauseCount}
+          state={state}
+          dispatch={dispatch}
           showBreakdown={showBreakdown}
-          inProgress={inProgress}
-          updateTrackerName={updateTrackerName}
         />
       ))}
     </div>
