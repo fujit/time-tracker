@@ -54,7 +54,7 @@
       "error",
       {
         "selector": "variable",
-        "format": ["PascalCase", "camelCase"]
+        "format": ["PascalCase", "camelCase", "UPPER_CASE"]
       },
       {
         "selector": "parameter",

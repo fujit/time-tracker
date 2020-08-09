@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <>
       <Header title="time-tracker" />
-      <Tracker todaysTrackers={todaysTrackers} store={store} today={today} />
+      <Tracker todaysTrackers={todaysTrackers} today={today} />
     </>
   )
 }

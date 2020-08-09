@@ -9,7 +9,6 @@ import { validate } from '../../utils/Constants'
 
 type ContainerProps = {
   tracker: Tracker
-  currentCount: number
   inProgress: boolean
   showBreakdown: (tracker: Tracker) => void
   pauseCount: (trackerId: string) => void
@@ -28,8 +27,6 @@ export const TrackerItem: React.FC<ContainerProps> = (props) => {
   const elapsedTime = props.tracker.timers
     .filter((timer): timer is CalculatedTimer => !!timer.minute)
     .reduce((previous, current) => previous + current.minute, 0)
-
-  const totalTime = props.tracker.inProgress ? elapsedTime + props.currentCount : elapsedTime
 
   const changeTrackerName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value
@@ -53,21 +50,20 @@ export const TrackerItem: React.FC<ContainerProps> = (props) => {
     <div className={styles.listTracker}>
       <div className={styles.listTrackerContent}>
         <TextInput
+          hasFrame={false}
           value={trackerName}
           onChange={changeTrackerName}
           onBlur={updateTrackerName}
           className="trackerName"
-          hasFrame={false}
           size={60}
           maxLength={validate.trackerName.length}
-          isError={!isValidName}
         />
         <Button onClick={() => props.showBreakdown({ ...props.tracker, name: trackerName })}>
           内訳を見る
         </Button>
         <DecimalText
           className={classNames(styles.listTrackerContentTime, 'trackerTime')}
-          value={totalTime / 60}
+          value={elapsedTime / 60}
           digits={1}
           unit="h"
         />

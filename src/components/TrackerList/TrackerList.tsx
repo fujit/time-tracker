@@ -10,7 +10,6 @@ type ContainerProps = {
   pauseCount: (trackerId: string) => void
   updateTrackerName: (trackerId: string, trackerName: string) => void
   inProgress: boolean
-  currentCount: number
   today: string
 }
 
@@ -29,7 +28,6 @@ const Component: React.FC<Props> = ({
   trackers,
   restartCount,
   pauseCount,
-  currentCount,
   showBreakdown,
   inProgress,
   updateTrackerName,
@@ -53,7 +51,6 @@ const Component: React.FC<Props> = ({
           tracker={tracker}
           restartCount={restartCount}
           pauseCount={pauseCount}
-          currentCount={currentCount}
           showBreakdown={showBreakdown}
           inProgress={inProgress}
           updateTrackerName={updateTrackerName}
