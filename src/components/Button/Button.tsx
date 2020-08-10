@@ -3,12 +3,12 @@ import * as styles from './Button.scss'
 
 type Props = {
   children: string
-} & JSX.IntrinsicElements['a']
+} & JSX.IntrinsicElements['button']
 
 export const Button: React.FC<Props> = ({ children, ...props }) => (
   <>
-    <a className={styles.button} {...props}>
+    <button type="button" className={styles.button} {...props}>
       {children}
-    </a>
+    </button>
   </>
 )
