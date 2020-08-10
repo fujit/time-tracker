@@ -1,17 +1,17 @@
 @use '../../assets/styles/Colors.scss';
 
 .input {
-  border: 1px solid Colors.$border;
-  border-radius: 6px;
   box-sizing: border-box;
-  outline: none;
-  font-size: 1rem;
   height: 42px;
   padding: 4px 12px;
+  font-size: 1rem;
+  border: 1px solid Colors.$border;
+  border-radius: 6px;
+  outline: none;
 
   &:focus {
-    border: 1px solid Colors.$green;
     background-color: Colors.$lightGreen;
+    border: 1px solid Colors.$green;
   }
 
   &:disabled {
@@ -25,13 +25,13 @@
 }
 
 .noFrame {
-  border: none;
-  background-color: inherit;
   cursor: pointer;
+  background-color: inherit;
+  border: none;
 
   &:focus {
-    background-color: Colors.$white;
     cursor: unset;
+    background-color: Colors.$white;
   }
 }
 

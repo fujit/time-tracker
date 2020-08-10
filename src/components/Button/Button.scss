@@ -2,11 +2,10 @@
 
 .button {
   display: inline-block;
-  cursor: pointer;
   padding: 0.4em 1.6em;
   font-size: 0.8em;
   color: Colors.$white;
-  text-decoration: none;
+  cursor: pointer;
   user-select: none;
   background: Colors.$primary;
   border: 1px Colors.$primary solid;
