@@ -20,8 +20,13 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
 
   return (
     <div className={styles.home}>
-      <TrackerForm state={state} dispatch={dispatch} today={today} />
-      <TrackerList state={state} dispatch={dispatch} today={today} />
+      <TrackerForm inProgress={state.inProgress} dispatch={dispatch} today={today} />
+      <TrackerList
+        trackers={state.trackers}
+        inProgress={state.inProgress}
+        dispatch={dispatch}
+        today={today}
+      />
     </div>
   )
 }

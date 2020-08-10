@@ -1,18 +1,18 @@
 import * as React from 'react'
 import * as styles from './TrackerForm.scss'
-import { State, Actions } from '../../reducer'
+import { Actions } from '../../reducer'
 import { TextInput } from '../Input/TextInput'
 import { StartIcon } from '../Icon/PlayIcon'
 import { keycode, validate } from '../../utils/Constants'
 import { start } from '../../actionCreators'
 
 type Props = {
-  state: State
+  inProgress: boolean
   dispatch: React.Dispatch<Actions>
   today: string
 } & JSX.IntrinsicElements['input']
 
-export const TrackerForm: React.FC<Props> = ({ state, dispatch, today, ...props }) => {
+export const TrackerForm: React.FC<Props> = ({ inProgress, dispatch, today, ...props }) => {
   const [trackerName, setTrackerName] = React.useState('')
 
   const isValidName = React.useMemo(
@@ -26,7 +26,7 @@ export const TrackerForm: React.FC<Props> = ({ state, dispatch, today, ...props 
 
   const startMeasure = () => {
     // TODO: 登録済みの名前はだめ
-    if (state.inProgress || !isValidName) {
+    if (inProgress || !isValidName) {
       return
     }
 
@@ -44,7 +44,7 @@ export const TrackerForm: React.FC<Props> = ({ state, dispatch, today, ...props 
     <div className={styles.main}>
       <TextInput
         {...props}
-        disabled={state.inProgress}
+        disabled={inProgress}
         size={60}
         value={trackerName}
         maxLength={validate.trackerName.length}
@@ -55,7 +55,7 @@ export const TrackerForm: React.FC<Props> = ({ state, dispatch, today, ...props 
         width={42}
         height={42}
         onClick={startMeasure}
-        className={state.inProgress || !isValidName ? 'disable' : ''}
+        className={inProgress || !isValidName ? 'disable' : ''}
       />
     </div>
   )

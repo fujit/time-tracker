@@ -1,12 +1,13 @@
 import * as React from 'react'
 import * as styles from './TrackerList.scss'
-import { State, Actions } from '../../reducer'
+import { Actions } from '../../reducer'
 import { TrackerItem } from './TrackerItem'
 import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
 import { TrackerCopy } from './TrackerCopy'
 
 type ContainerProps = {
-  state: State
+  trackers: Tracker[]
+  inProgress: boolean
   dispatch: React.Dispatch<Actions>
   today: string
 }
@@ -23,7 +24,8 @@ const Component: React.FC<Props> = ({
   showBreakdown,
   breakdownTracker,
   closeBreakdown,
-  state,
+  trackers,
+  inProgress,
   dispatch,
   today,
 }) => (
@@ -40,11 +42,11 @@ const Component: React.FC<Props> = ({
       <TrackerCopy />
     </div>
     <div>
-      {state.trackers.map((tracker) => (
+      {trackers.map((tracker) => (
         <TrackerItem
           key={tracker.id}
           tracker={tracker}
-          state={state}
+          inProgress={inProgress}
           dispatch={dispatch}
           showBreakdown={showBreakdown}
         />

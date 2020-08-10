@@ -1,7 +1,7 @@
 import * as React from 'react'
 import classNames from 'classnames/bind'
 import * as styles from './TrackerList.scss'
-import { State, Actions } from '../../reducer'
+import { Actions } from '../../reducer'
 import { StartIcon, PauseIcon } from '../Icon/PlayIcon'
 import { Button } from '../Button/Button'
 import { TextInput } from '../Input/TextInput'
@@ -11,7 +11,7 @@ import { restart, changeName, pause } from '../../actionCreators'
 
 type Props = {
   tracker: Tracker
-  state: State
+  inProgress: boolean
   dispatch: React.Dispatch<Actions>
   showBreakdown: (tracker: Tracker) => void
 }
@@ -77,7 +77,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
             width={36}
             height={36}
             onClick={restartMeasure}
-            className={props.state.inProgress || !isValidName ? 'disable' : ''}
+            className={props.inProgress || !isValidName ? 'disable' : ''}
           />
         )}
       </div>
