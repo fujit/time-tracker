@@ -7,7 +7,7 @@ import { Button } from '../Button/Button'
 import { TextInput } from '../Input/TextInput'
 import { DecimalText } from '../Text/Number'
 import { validate } from '../../utils/Constants'
-import { restart, changeName, pause } from '../../actionCreators'
+import { restart, updateName, pause } from '../../actionCreators'
 
 type Props = {
   tracker: Tracker
@@ -35,7 +35,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
 
   const updateTrackerName = () => {
     if (isValidName) {
-      props.dispatch(changeName(props.tracker.id, trackerName))
+      props.dispatch(updateName(props.tracker.id, trackerName))
     }
   }
 

@@ -12,6 +12,6 @@ export function pause(id: string) {
   return { type: types.PAUSE, payload: { id } }
 }
 
-export function changeName(id: string, name: string) {
-  return { type: types.CHANGE_NAME, payload: { id, name } }
+export function updateName(id: string, name: string) {
+  return { type: types.UPDATE_NAME, payload: { id, name } }
 }
