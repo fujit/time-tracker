@@ -18,6 +18,20 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     })
   )
 
+  const updateTitle = () => {
+    if (state.inProgress) {
+      const inProgressTracker = state.trackers.find((tracker) => tracker.inProgress)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      document.title = inProgressTracker!.name
+    } else {
+      document.title = 'time-tracker'
+    }
+  }
+
+  React.useEffect(() => {
+    updateTitle()
+  }, [state.trackers])
+
   return (
     <div className={styles.home}>
       <TrackerForm inProgress={state.inProgress} dispatch={dispatch} today={today} />
