@@ -49,6 +49,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
     <div className={styles.listTracker}>
       <div className={styles.listTrackerContent}>
         <TextInput
+          isError={!isValidName}
           hasFrame={false}
           value={trackerName}
           onChange={changeTrackerName}
