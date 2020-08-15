@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import * as styles from './TrackerList.scss'
 import { clipboardCopy } from '../../utils/Util'
 import { CopyIcon } from '../Icon/CopyIcon'

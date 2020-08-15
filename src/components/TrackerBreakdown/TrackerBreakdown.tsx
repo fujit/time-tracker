@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import * as styles from './TrackerBreakdown.scss'
 import { Modal } from '../Modal/Modal'
 import { CloseIcon } from '../Icon/CloseIcon'

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import * as styles from './Tracker.scss'
 import { reducer, initialState } from '../../reducer'
 import { TrackerForm } from '../TrackerForm/TrackerForm'

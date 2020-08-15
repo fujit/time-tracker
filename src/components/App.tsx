@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Header } from './Pages/Header'
 import { Tracker } from './Pages/Tracker'
 import * as DateUtil from '../utils/DateUtil'

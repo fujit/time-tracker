@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import classNames from 'classnames/bind'
 import * as styles from './Icon.scss'
 import copy from '../../assets/img/copy.svg'
