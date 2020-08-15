@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ReactModal from 'react-modal'
 import * as styles from './TrackerBreakdown.scss'
+import { Modal } from '../Modal/Modal'
 import { CloseIcon } from '../Icon/CloseIcon'
 import * as DateUtil from '../../utils/DateUtil'
 
@@ -15,13 +15,7 @@ type ContainerProps = {
 }
 
 const Component: React.FC<Props> = ({ tracker, isShow, modalStyles, closeBreakdown }) => (
-  <ReactModal
-    isOpen={isShow}
-    style={modalStyles}
-    shouldCloseOnEsc
-    shouldCloseOnOverlayClick
-    onRequestClose={closeBreakdown}
-  >
+  <Modal id="#app" isOpen={isShow} style={modalStyles} onRequestClose={closeBreakdown}>
     <div>
       <h1>{tracker.name}</h1>
       <CloseIcon onClick={closeBreakdown} />
@@ -36,12 +30,10 @@ const Component: React.FC<Props> = ({ tracker, isShow, modalStyles, closeBreakdo
         ))}
       </ul>
     </div>
-  </ReactModal>
+  </Modal>
 )
 
 export const TrackerBreakdown: React.FC<ContainerProps> = (props) => {
-  ReactModal.setAppElement('#app')
-
   const modalStyles: ReactModal.Styles = {
     content: {
       top: '20%',
