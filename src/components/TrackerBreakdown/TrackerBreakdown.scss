@@ -1,7 +1,16 @@
+.header {
+  width: 90%;
+  margin-bottom: 16px;
+}
+
 .listTimer {
   > ul {
     list-style: none;
   }
+}
+
+.list {
+  margin-bottom: 8px;
 }
 
 .timerStart {

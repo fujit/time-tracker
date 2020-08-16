@@ -16,14 +16,14 @@ type ContainerProps = {
 
 const Component: React.FC<Props> = ({ tracker, isShow, modalStyles, closeBreakdown }) => (
   <Modal id="#app" isOpen={isShow} style={modalStyles} onRequestClose={closeBreakdown}>
-    <div>
+    <div className={styles.header}>
       <h1>{tracker.name}</h1>
       <CloseIcon onClick={closeBreakdown} />
     </div>
     <div className={styles.listTimer}>
       <ul>
         {tracker.timers.map((timer) => (
-          <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')}>
+          <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')} className={styles.list}>
             <span className={styles.timerStart}>{DateUtil.format(timer.start, 'HH:mm')}</span>
             <span>{timer.end && DateUtil.format(timer.end, 'HH:mm')}</span>
           </li>
@@ -42,6 +42,8 @@ export const TrackerBreakdown: React.FC<ContainerProps> = (props) => {
       bottom: 'auto',
       minWidth: '400px',
       minHeight: '400px',
+      maxHeight: '600px',
+      maxWidth: '900px',
     },
   }
   return <Component {...props} modalStyles={modalStyles} />
