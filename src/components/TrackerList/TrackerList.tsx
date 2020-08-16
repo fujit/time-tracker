@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import * as styles from './TrackerList.scss'
 import { Actions } from '../../reducer'
 import { TrackerItem } from './TrackerItem'
@@ -41,6 +41,7 @@ const Component: React.FC<Props> = ({
         isShow={isShowBreakdown}
         tracker={breakdownTracker}
         closeBreakdown={closeBreakdown}
+        dispatch={dispatch}
       />
     )}
     <div className={styles.listHeader}>

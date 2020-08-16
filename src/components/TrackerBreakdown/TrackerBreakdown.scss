@@ -11,6 +11,10 @@
 
 .list {
   margin-bottom: 8px;
+
+  > img {
+    margin-left: 8px;
+  }
 }
 
 .timerStart {
@@ -18,4 +22,17 @@
     margin-left: 2px;
     content: '~';
   }
+}
+
+.editTime {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.editTimeButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 40px;
 }

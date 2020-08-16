@@ -12,3 +12,11 @@ export const getTimeFromNow = (
 
 export const format = (date: dayjs.ConfigType, template = 'YYYY-MM-DD HH:mm:ss'): string =>
   dayjs(date).format(template)
+
+export const updateTime = (date: Date, time: string) => {
+  const times = time.split(':')
+  return dayjs(date)
+    .set('hour', parseInt(times[0], 10))
+    .set('minute', parseInt(times[1], 10))
+    .toDate()
+}

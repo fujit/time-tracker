@@ -14,6 +14,11 @@ export type State = {
 
 export type Actions = CreatorsToActions<typeof creators>
 
+const getNextTimerId = (timers: Timer[]) =>
+  (
+    timers.reduce((previous, current) => Math.max(previous, parseInt(current.id, 10)), 0) + 1
+  ).toString()
+
 function initialState(injects?: Partial<State>): State {
   return {
     trackers: [] as Tracker[],
@@ -29,7 +34,6 @@ function reducer(state: State, action: Actions): State {
         return state
       }
 
-      // const currentDate = DateUtil.getCurrentDate()
       const id = StringUtil.generateTrackerId()
       const newTracker: Tracker = {
         id,
@@ -38,6 +42,7 @@ function reducer(state: State, action: Actions): State {
         day: action.payload.day,
         timers: [
           {
+            id: '0',
             start: action.payload.startTime,
           },
         ],
@@ -59,13 +64,15 @@ function reducer(state: State, action: Actions): State {
         return state
       }
 
-      // const currentDate = DateUtil.getCurrentDate()
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id
           ? {
               ...tracker,
               inProgress: true,
-              timers: [...tracker.timers, { start: action.payload.startTime }],
+              timers: [
+                ...tracker.timers,
+                { id: getNextTimerId(tracker.timers), start: action.payload.startTime },
+              ],
             }
           : tracker
       )
@@ -114,6 +121,32 @@ function reducer(state: State, action: Actions): State {
     case types.UPDATE_NAME: {
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id ? { ...tracker, name: action.payload.name } : tracker
+      )
+
+      store.save(trackers)
+
+      return {
+        ...state,
+        trackers,
+      }
+    }
+
+    case types.UPDATE_TIMER: {
+      const trackers = state.trackers.map((tracker) =>
+        tracker.id === action.payload.trackerId
+          ? {
+              ...tracker,
+              timers: tracker.timers.map((timer) =>
+                timer.id === action.payload.timerId
+                  ? {
+                      ...timer,
+                      start: action.payload.startTimer,
+                      end: action.payload.endTimer,
+                    }
+                  : timer
+              ),
+            }
+          : tracker
       )
 
       store.save(trackers)

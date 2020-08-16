@@ -15,3 +15,7 @@ export function pause(id: string) {
 export function updateName(id: string, name: string) {
   return { type: types.UPDATE_NAME, payload: { id, name } }
 }
+
+export function updateTimer(trackerId: string, timerId: string, startTimer: Date, endTimer: Date) {
+  return { type: types.UPDATE_TIMER, payload: { trackerId, timerId, startTimer, endTimer } }
+}

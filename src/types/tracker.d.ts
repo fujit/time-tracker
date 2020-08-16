@@ -7,6 +7,7 @@ type Tracker = {
 }
 
 type Timer = {
+  id: string
   start: Date
   end?: Date
   minute?: number

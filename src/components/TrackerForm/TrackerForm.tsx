@@ -1,7 +1,7 @@
 import React from 'react'
 import * as styles from './TrackerForm.scss'
 import { Actions } from '../../reducer'
-import { TextInput } from '../Input/TextInput'
+import { TextInput } from '../Input/Input'
 import { StartIcon } from '../Icon/PlayIcon'
 import { keycode, validate } from '../../utils/Constants'
 import * as DateUtil from '../../utils/DateUtil'
