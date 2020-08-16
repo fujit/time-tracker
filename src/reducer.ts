@@ -9,7 +9,7 @@ const store = Store.instance
 
 export type State = {
   trackers: Tracker[]
-  inProgress: boolean
+  inProgressId: string | undefined
 }
 
 export type Actions = CreatorsToActions<typeof creators>
@@ -17,7 +17,7 @@ export type Actions = CreatorsToActions<typeof creators>
 function initialState(injects?: Partial<State>): State {
   return {
     trackers: [] as Tracker[],
-    inProgress: false,
+    inProgressId: undefined,
     ...injects,
   }
 }
@@ -25,19 +25,20 @@ function initialState(injects?: Partial<State>): State {
 function reducer(state: State, action: Actions): State {
   switch (action.type) {
     case types.START: {
-      if (state.inProgress) {
+      if (state.inProgressId) {
         return state
       }
 
-      const currentDate = DateUtil.getCurrentDate()
+      // const currentDate = DateUtil.getCurrentDate()
+      const id = StringUtil.generateTrackerId()
       const newTracker: Tracker = {
-        id: StringUtil.generateTrackerId(),
+        id,
         name: action.payload.name,
         inProgress: true,
         day: action.payload.day,
         timers: [
           {
-            start: currentDate,
+            start: action.payload.startTime,
           },
         ],
       }
@@ -49,22 +50,22 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
-        inProgress: true,
+        inProgressId: id,
       }
     }
 
     case types.RESTART: {
-      if (state.inProgress) {
+      if (state.inProgressId) {
         return state
       }
 
-      const currentDate = DateUtil.getCurrentDate()
+      // const currentDate = DateUtil.getCurrentDate()
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id
           ? {
               ...tracker,
               inProgress: true,
-              timers: [...tracker.timers, { start: currentDate }],
+              timers: [...tracker.timers, { start: action.payload.startTime }],
             }
           : tracker
       )
@@ -74,12 +75,12 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
-        inProgress: true,
+        inProgressId: action.payload.id,
       }
     }
 
     case types.PAUSE: {
-      if (!state.inProgress) {
+      if (!state.inProgressId) {
         return state
       }
 
@@ -106,7 +107,7 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
-        inProgress: false,
+        inProgressId: undefined,
       }
     }
 

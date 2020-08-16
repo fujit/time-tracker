@@ -7,12 +7,16 @@ import { Button } from '../Button/Button'
 import { TextInput } from '../Input/TextInput'
 import { DecimalText } from '../Text/Number'
 import { validate } from '../../utils/Constants'
+import * as DateUtil from '../../utils/DateUtil'
 import { restart, updateName, pause } from '../../actionCreators'
 
 type Props = {
   tracker: Tracker
-  inProgress: boolean
+  inProgressId: string | undefined
+  currentCount?: number
   dispatch: React.Dispatch<Actions>
+  calculateCurrentCount: (currentDate: Date) => void
+  pauseTimer: () => void
   showBreakdown: (tracker: Tracker) => void
 }
 
@@ -28,6 +32,9 @@ export const TrackerItem: React.FC<Props> = (props) => {
     .filter((timer): timer is CalculatedTimer => !!timer.minute)
     .reduce((previous, current) => previous + current.minute, 0)
 
+  const totalTime =
+    props.tracker.inProgress && props.currentCount ? elapsedTime + props.currentCount : elapsedTime
+
   const changeTrackerName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value
     setTrackerName(name)
@@ -41,8 +48,15 @@ export const TrackerItem: React.FC<Props> = (props) => {
 
   const restartMeasure = () => {
     if (isValidName) {
-      props.dispatch(restart(props.tracker.id))
+      const currentDate = DateUtil.getCurrentDate()
+      props.dispatch(restart(props.tracker.id, currentDate))
+      props.calculateCurrentCount(currentDate)
     }
+  }
+
+  const pauseMeasure = () => {
+    props.dispatch(pause(props.tracker.id))
+    props.pauseTimer()
   }
 
   return (
@@ -63,22 +77,18 @@ export const TrackerItem: React.FC<Props> = (props) => {
         </Button>
         <DecimalText
           className={classNames(styles.listTrackerContentTime, 'trackerTime')}
-          value={elapsedTime / 60}
+          value={totalTime / 60}
           digits={1}
           unit="h"
         />
         {props.tracker.inProgress ? (
-          <PauseIcon
-            width={36}
-            height={36}
-            onClick={() => props.dispatch(pause(props.tracker.id))}
-          />
+          <PauseIcon width={36} height={36} onClick={pauseMeasure} />
         ) : (
           <StartIcon
             width={36}
             height={36}
             onClick={restartMeasure}
-            className={props.inProgress || !isValidName ? 'disable' : ''}
+            className={props.inProgressId || !isValidName ? 'disable' : ''}
           />
         )}
       </div>

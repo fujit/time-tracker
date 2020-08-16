@@ -7,8 +7,11 @@ import { TrackerCopy } from './TrackerCopy'
 
 type ContainerProps = {
   trackers: Tracker[]
-  inProgress: boolean
+  inProgressId: string | undefined
+  currentCount?: number
   dispatch: React.Dispatch<Actions>
+  calculateCurrentCount: (currentDate: Date) => void
+  pauseTimer: () => void
   today: string
 }
 
@@ -25,8 +28,11 @@ const Component: React.FC<Props> = ({
   breakdownTracker,
   closeBreakdown,
   trackers,
-  inProgress,
+  inProgressId,
+  currentCount,
   dispatch,
+  calculateCurrentCount,
+  pauseTimer,
   today,
 }) => (
   <div className={styles.listGroup}>
@@ -46,8 +52,11 @@ const Component: React.FC<Props> = ({
         <TrackerItem
           key={tracker.id}
           tracker={tracker}
-          inProgress={inProgress}
+          inProgressId={inProgressId}
+          currentCount={currentCount}
           dispatch={dispatch}
+          calculateCurrentCount={calculateCurrentCount}
+          pauseTimer={pauseTimer}
           showBreakdown={showBreakdown}
         />
       ))}
