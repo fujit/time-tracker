@@ -1,14 +1,50 @@
 import React from 'react'
 import * as styles from './Tracker.scss'
-import { reducer, initialState } from '../../reducer'
+import { reducer, initialState, Actions, State } from '../../reducer'
 import { TrackerForm } from '../TrackerForm/TrackerForm'
 import { TrackerList } from '../TrackerList/TrackerList'
 import * as DateUtil from '../../utils/DateUtil'
+
+type Props = {
+  state: State
+  dispatch: React.Dispatch<Actions>
+  calculateCurrentCount: (startTime: Date) => void
+  today: string
+  currentCount: number
+  pauseTimer: () => void
+}
 
 type ContainerProps = {
   todaysTrackers: Tracker[]
   today: string
 }
+
+const Component: React.FC<Props> = ({
+  state,
+  dispatch,
+  calculateCurrentCount,
+  today,
+  currentCount,
+  pauseTimer,
+}) => (
+  <div className={styles.home}>
+    <TrackerForm
+      inProgressId={state.inProgressId}
+      dispatch={dispatch}
+      calculateCurrentCount={calculateCurrentCount}
+      today={today}
+    />
+    <TrackerList
+      trackers={state.trackers}
+      inProgressId={state.inProgressId}
+      currentCount={currentCount}
+      dispatch={dispatch}
+      calculateCurrentCount={calculateCurrentCount}
+      pauseTimer={pauseTimer}
+      today={today}
+    />
+  </div>
+)
 
 export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => {
   const [state, dispatch] = React.useReducer(
@@ -66,22 +102,13 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
   }, [])
 
   return (
-    <div className={styles.home}>
-      <TrackerForm
-        inProgressId={state.inProgressId}
-        dispatch={dispatch}
-        calculateCurrentCount={calculateCurrentCount}
-        today={today}
-      />
-      <TrackerList
-        trackers={state.trackers}
-        inProgressId={state.inProgressId}
-        currentCount={currentCount}
-        dispatch={dispatch}
-        calculateCurrentCount={calculateCurrentCount}
-        pauseTimer={pauseTimer}
-        today={today}
-      />
-    </div>
+    <Component
+      state={state}
+      dispatch={dispatch}
+      calculateCurrentCount={calculateCurrentCount}
+      today={today}
+      currentCount={currentCount}
+      pauseTimer={pauseTimer}
+    />
   )
 }
