@@ -1,8 +1,8 @@
 import React from 'react'
 import classNames from 'classnames/bind'
 import * as styles from './Icon.scss'
-import start from '../../assets/img/play-circle-outline.svg'
-import pause from '../../assets/img/pause-circle-outline.svg'
+import start from '../../assets/img/start.svg'
+import pause from '../../assets/img/pause.svg'
 
 type Props = {
   className?: string
