@@ -5,7 +5,7 @@
       "jsx": true
     }
   },
-  "plugins": ["prettier", "@typescript-eslint"],
+  "plugins": ["prettier", "@typescript-eslint", "react-hooks"],
   "extends": [
     "airbnb",
     "plugin:prettier/recommended",
@@ -43,6 +43,8 @@
     "react/destructuring-assignment": "off",
     "react/button-has-type": "off",
     "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "import/extensions": "off",
     "import/no-extraneous-dependencies": [
       "error",
