@@ -2,7 +2,8 @@ import React from 'react'
 import * as styles from './TrackerForm.scss'
 import { Actions } from '../../reducer'
 import { TextInput } from '../Input/Input'
-import { StartIcon } from '../Icon/PlayIcon'
+import { StartIcon } from '../Icon/Icon'
+// import { StartIcon } from '../Icon/PlayIcon'
 import { keycode, validate } from '../../utils/Constants'
 import * as DateUtil from '../../utils/DateUtil'
 import { start } from '../../actionCreators'
@@ -66,7 +67,7 @@ export const TrackerForm: React.FC<Props> = ({
         width={42}
         height={42}
         onClick={startMeasure}
-        className={inProgressId || !isValidName ? 'disable' : ''}
+        disabled={!!(inProgressId || !isValidName)}
       />
     </div>
   )

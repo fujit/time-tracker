@@ -5,7 +5,7 @@ import * as styles from './TrackerBreakdown.scss'
 import { Modal } from '../Modal/Modal'
 import { TimerEdit } from './TimerEdit'
 import { CloseIcon } from '../Icon/CloseIcon'
-import { EditIcon } from '../Icon/EditIcon'
+import { EditIcon } from '../Icon/Icon'
 import * as DateUtil from '../../utils/DateUtil'
 
 type Props = {
