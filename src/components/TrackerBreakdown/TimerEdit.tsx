@@ -1,11 +1,39 @@
 import React from 'react'
 import { Actions } from '../../reducer'
+import { useTimePicker } from '../../utils/useTimePicker'
 import * as styles from './TrackerBreakdown.scss'
 import { Modal } from '../Modal/Modal'
 import { Button } from '../Button/Button'
-import { TimeInput } from '../Input/Input'
 import * as DateUtil from '../../utils/DateUtil'
 import { updateTimer } from '../../actionCreators'
+
+type Props = {
+  isValid: boolean
+  renderTimePicker: () => JSX.Element
+  update: () => void
+  isOpen: boolean
+  closeModal: () => void
+  modalStyles: ReactModal.Styles
+}
+
+const Component: React.FC<Props> = ({
+  renderTimePicker,
+  isValid,
+  update,
+  isOpen,
+  modalStyles,
+  closeModal,
+}) => (
+  <Modal id="#app" isOpen={isOpen} style={modalStyles} onRequestClose={closeModal}>
+    <div className={styles.editTime}>{renderTimePicker()}</div>
+    <div className={styles.editTimeButton}>
+      <Button disabled={!isValid} onClick={update}>
+        更新する
+      </Button>
+      <Button colorType="danger">削除する</Button>
+    </div>
+  </Modal>
+)
 
 type ContainerProps = {
   timer: Timer
@@ -15,59 +43,11 @@ type ContainerProps = {
   closeModal: () => void
 }
 
-type Props = {
-  start: string
-  end: string
-  changeStart: (event: React.ChangeEvent<HTMLInputElement>) => void
-  changeEnd: (event: React.ChangeEvent<HTMLInputElement>) => void
-  update: () => void
-  isOpen: boolean
-  closeModal: () => void
-  modalStyles: ReactModal.Styles
-  isValidTimer: boolean
-}
-
-const Component: React.FC<Props> = ({
-  start,
-  end,
-  changeStart,
-  changeEnd,
-  update,
-  isOpen,
-  modalStyles,
-  closeModal,
-  isValidTimer,
-}) => (
-  <Modal id="#app" isOpen={isOpen} style={modalStyles} onRequestClose={closeModal}>
-    <div className={styles.editTime}>
-      <TimeInput value={start} isError={!isValidTimer} onChange={changeStart} />
-      <TimeInput value={end} isError={!isValidTimer} onChange={changeEnd} />
-    </div>
-    <div className={styles.editTimeButton}>
-      <Button disabled={!isValidTimer} onClick={update}>
-        更新する
-      </Button>
-      <Button colorType="danger">削除する</Button>
-    </div>
-  </Modal>
-)
-
 export const TimerEdit: React.FC<ContainerProps> = ({ timer, trackerId, dispatch, ...props }) => {
-  const [start, setStart] = React.useState(DateUtil.format(timer.start, 'HH:mm'))
-  const [end, setEnd] = React.useState(timer.end ? DateUtil.format(timer.end, 'HH:mm') : '')
-
-  const isValidTimer = React.useMemo(() => !!(start && end && start <= end), [start, end])
-
-  const changeStart = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStart(event.target.value)
-  }
-
-  const changeEnd = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEnd(event.target.value)
-  }
+  const [start, end, isValid, renderTimePicker] = useTimePicker(timer.start, timer.end)
 
   const update = () => {
-    if (!isValidTimer || !timer.end) {
+    if (!isValid || !timer.end) {
       return
     }
 
@@ -92,13 +72,10 @@ export const TimerEdit: React.FC<ContainerProps> = ({ timer, trackerId, dispatch
   return (
     <Component
       {...props}
-      start={start}
-      end={end}
-      changeStart={changeStart}
-      changeEnd={changeEnd}
+      isValid={isValid}
+      renderTimePicker={renderTimePicker}
       update={update}
       modalStyles={modalStyles}
-      isValidTimer={isValidTimer}
     />
   )
 }
