@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import * as styles from './TrackerList.scss'
 import { Actions } from '../../reducer'
 import { TrackerItem } from './TrackerItem'

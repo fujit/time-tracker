@@ -72,7 +72,8 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     clearInterval(timerId)
   }
 
-  const updateTitle = () => {
+  // title を更新
+  React.useEffect(() => {
     if (state.inProgressId) {
       const inProgressTracker = state.trackers.find((tracker) => tracker.inProgress)
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -80,11 +81,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     } else {
       document.title = 'time-tracker'
     }
-  }
-
-  React.useEffect(() => {
-    updateTitle()
-  }, [state.trackers])
+  }, [state.trackers, state.inProgressId])
 
   React.useEffect(() => {
     if (!state.inProgressId || timerId) {
@@ -99,6 +96,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     }
 
     calculateCurrentCount(inProgressTimer.start)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
