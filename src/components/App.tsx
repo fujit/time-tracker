@@ -1,6 +1,6 @@
 import React from 'react'
-import { Header } from './Pages/Header'
-import { Tracker } from './Pages/Tracker'
+import { Header } from '../Pages/Header'
+import { Tracker } from '../Pages/Tracker'
 import * as DateUtil from '../utils/DateUtil'
 import { Store } from '../Store'
 

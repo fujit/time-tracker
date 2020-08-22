@@ -1,9 +1,9 @@
 import React from 'react'
 import * as styles from './Tracker.scss'
-import { reducer, initialState, Actions, State } from '../../reducer'
-import { TrackerForm } from '../TrackerForm/TrackerForm'
-import { TrackerList } from '../TrackerList/TrackerList'
-import * as DateUtil from '../../utils/DateUtil'
+import { reducer, initialState, Actions, State } from '../reducer'
+import { TrackerForm } from '../components/TrackerForm/TrackerForm'
+import { TrackerList } from '../components/TrackerList/TrackerList'
+import * as DateUtil from '../utils/DateUtil'
 
 type Props = {
   state: State
