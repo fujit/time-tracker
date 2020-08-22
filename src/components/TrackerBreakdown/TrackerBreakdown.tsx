@@ -1,5 +1,6 @@
 import React from 'react'
 import { Actions } from '../../reducer'
+import { useModal } from '../../utils/useModal'
 import * as styles from './TrackerBreakdown.scss'
 import { Modal } from '../Modal/Modal'
 import { TimerEdit } from './TimerEdit'
@@ -9,35 +10,28 @@ import * as DateUtil from '../../utils/DateUtil'
 
 type Props = {
   modalStyles: ReactModal.Styles
-  isTimerEdit: boolean
+  isOpen: boolean
   openTimerEdit: (timer: Timer) => void
   closeTimerEdit: () => void
   editableTimer?: Timer
 } & ContainerProps
 
-type ContainerProps = {
-  tracker: Tracker
-  isShow: boolean
-  closeBreakdown: () => void
-  dispatch: React.Dispatch<Actions>
-}
-
 const Component: React.FC<Props> = ({
-  tracker,
-  isShow,
   modalStyles,
   closeBreakdown,
-  isTimerEdit,
-  openTimerEdit,
+  isBreakdownOpen,
+  tracker,
+  isOpen,
   closeTimerEdit,
   editableTimer,
   dispatch,
+  openTimerEdit,
 }) => (
-  <Modal id="#app" isOpen={isShow} style={modalStyles} onRequestClose={closeBreakdown}>
+  <Modal id="#app" isOpen={isBreakdownOpen} style={modalStyles} onRequestClose={closeBreakdown}>
     {editableTimer && (
       <TimerEdit
         trackerId={tracker.id}
-        isOpen={isTimerEdit}
+        isOpen={isOpen}
         closeModal={closeTimerEdit}
         timer={editableTimer}
         dispatch={dispatch}
@@ -61,19 +55,26 @@ const Component: React.FC<Props> = ({
   </Modal>
 )
 
+type ContainerProps = {
+  tracker: Tracker
+  isBreakdownOpen: boolean
+  closeBreakdown: () => void
+  dispatch: React.Dispatch<Actions>
+}
+
 export const TrackerBreakdown: React.FC<ContainerProps> = (props) => {
-  const [isTimerEdit, setIsTimerEdit] = React.useState(false)
   const [editableTimer, setEditableTimer] = React.useState<undefined | Timer>(undefined)
+  const [isOpen, openModal, closeModal] = useModal()
 
   const openTimerEdit = (timer: Timer) => {
     if (timer.end) {
-      setIsTimerEdit(true)
+      openModal()
       setEditableTimer(timer)
     }
   }
 
   const closeTimerEdit = () => {
-    setIsTimerEdit(false)
+    closeModal()
     setEditableTimer(undefined)
   }
 
@@ -93,7 +94,7 @@ export const TrackerBreakdown: React.FC<ContainerProps> = (props) => {
     <Component
       {...props}
       modalStyles={modalStyles}
-      isTimerEdit={isTimerEdit}
+      isOpen={isOpen}
       openTimerEdit={openTimerEdit}
       closeTimerEdit={closeTimerEdit}
       editableTimer={editableTimer}

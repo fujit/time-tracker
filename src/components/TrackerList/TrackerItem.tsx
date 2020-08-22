@@ -17,7 +17,7 @@ type Props = {
   dispatch: React.Dispatch<Actions>
   calculateCurrentCount: (currentDate: Date) => void
   pauseTimer: () => void
-  showBreakdown: (tracker: Tracker) => void
+  openBreakdown: (tracker: Tracker) => void
 }
 
 export const TrackerItem: React.FC<Props> = (props) => {
@@ -72,7 +72,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
           size={60}
           maxLength={validate.trackerName.length}
         />
-        <Button onClick={() => props.showBreakdown({ ...props.tracker, name: trackerName })}>
+        <Button onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}>
           内訳を見る
         </Button>
         <DecimalText

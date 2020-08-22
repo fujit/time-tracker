@@ -1,4 +1,5 @@
 import React from 'react'
+import { useModal } from '../../utils/useModal'
 import * as styles from './TrackerList.scss'
 import { Actions } from '../../reducer'
 import { TrackerItem } from './TrackerItem'
@@ -16,15 +17,15 @@ type ContainerProps = {
 }
 
 type Props = {
-  showBreakdown: (tracker: Tracker) => void
+  openBreakdown: (tracker: Tracker) => void
   closeBreakdown: () => void
-  isShowBreakdown: boolean
+  isOpen: boolean
   breakdownTracker?: Tracker
 } & ContainerProps
 
 const Component: React.FC<Props> = ({
-  isShowBreakdown,
-  showBreakdown,
+  isOpen,
+  openBreakdown,
   breakdownTracker,
   closeBreakdown,
   trackers,
@@ -38,7 +39,7 @@ const Component: React.FC<Props> = ({
   <div className={styles.listGroup}>
     {breakdownTracker && (
       <TrackerBreakdown
-        isShow={isShowBreakdown}
+        isBreakdownOpen={isOpen}
         tracker={breakdownTracker}
         closeBreakdown={closeBreakdown}
         dispatch={dispatch}
@@ -58,7 +59,7 @@ const Component: React.FC<Props> = ({
           dispatch={dispatch}
           calculateCurrentCount={calculateCurrentCount}
           pauseTimer={pauseTimer}
-          showBreakdown={showBreakdown}
+          openBreakdown={openBreakdown}
         />
       ))}
     </div>
@@ -66,26 +67,26 @@ const Component: React.FC<Props> = ({
 )
 
 export const TrackerList: React.FC<ContainerProps> = (props) => {
-  const [isShowBreakdown, setIsShowBreakdown] = React.useState(false)
   const [breakdownTracker, setBreakdownTracker] = React.useState<Tracker | undefined>(undefined)
+  const [isOpen, openModal, closeModal] = useModal()
 
-  const showBreakdown = (tracker: Tracker) => {
-    setIsShowBreakdown(true)
+  const openBreakdown = (tracker: Tracker) => {
+    openModal()
     setBreakdownTracker(tracker)
   }
 
   const closeBreakdown = () => {
-    setIsShowBreakdown(false)
+    closeModal()
     setBreakdownTracker(undefined)
   }
 
   return (
     <Component
       {...props}
-      showBreakdown={showBreakdown}
+      openBreakdown={openBreakdown}
       closeBreakdown={closeBreakdown}
-      isShowBreakdown={isShowBreakdown}
       breakdownTracker={breakdownTracker}
+      isOpen={isOpen}
     />
   )
 }

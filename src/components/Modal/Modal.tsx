@@ -3,7 +3,7 @@ import ReactModal from 'react-modal'
 
 type Props = {
   isOpen: boolean
-  style: ReactModal.Styles
+  style?: ReactModal.Styles
   onRequestClose: () => void
 }
 
