@@ -57,13 +57,12 @@ export const TrackerItem: React.FC<Props> = (props) => {
           isError: !isValid,
           hasFrame: false,
           onBlur: updateTrackerName,
-          className: 'trackerName',
         })}
         <Button onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}>
           内訳を見る
         </Button>
         <DecimalText
-          className={classNames(styles.listTrackerContentTime, 'trackerTime')}
+          className={classNames(styles.listTrackerContentTime)}
           value={totalTime / 60}
           digits={1}
           unit="h"
