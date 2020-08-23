@@ -1,7 +1,7 @@
 import React from 'react'
 import * as styles from './TrackerList.scss'
-import { clipboardCopy } from '../../utils/Util'
 import { useTrackerCalc } from '../../utils/useTrackerCalc'
+import { useClipBoard } from '../../utils/useClipBoard'
 import { CopyIcon } from '../Icon/Icon'
 
 type TrackerSummary = {
@@ -10,14 +10,14 @@ type TrackerSummary = {
 }
 
 type Props = {
-  isDisplayCopiedMessage: boolean
-  copySummary: () => void
+  isCopied: boolean
+  onCopy: () => void
 }
 
-const Component: React.FC<Props> = ({ isDisplayCopiedMessage, copySummary }) => (
+const Component: React.FC<Props> = ({ isCopied, onCopy }) => (
   <>
-    <CopyIcon width={35} height={35} onClick={copySummary} />
-    {isDisplayCopiedMessage && <p className={styles.copiedMessage}>Copied</p>}
+    <CopyIcon width={35} height={35} onClick={onCopy} />
+    {isCopied && <p className={styles.copiedMessage}>Copied</p>}
   </>
 )
 
@@ -26,8 +26,8 @@ type ContainerProps = {
 }
 
 export const TrackerCopy: React.FC<ContainerProps> = ({ trackers }) => {
-  const [isDisplayCopiedMessage, setIsDisplayCopiedMessage] = React.useState(false)
   const [calcSum] = useTrackerCalc()
+  const [onCopy, isCopied] = useClipBoard()
 
   const summary: TrackerSummary[] = React.useMemo(
     () =>
@@ -46,18 +46,10 @@ export const TrackerCopy: React.FC<ContainerProps> = ({ trackers }) => {
     return copyData
   }, [])
 
-  const copySummary = () => {
-    const copyData = arrangeTrackerData(summary)
-    const result = clipboardCopy(copyData)
+  const copySummary = React.useCallback(() => {
+    onCopy(arrangeTrackerData(summary))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [summary, arrangeTrackerData])
 
-    if (result) {
-      setIsDisplayCopiedMessage(true)
-
-      setTimeout(() => {
-        setIsDisplayCopiedMessage(false)
-      }, 1000 * 5)
-    }
-  }
-
-  return <Component isDisplayCopiedMessage={isDisplayCopiedMessage} copySummary={copySummary} />
+  return <Component isCopied={isCopied} onCopy={copySummary} />
 }
