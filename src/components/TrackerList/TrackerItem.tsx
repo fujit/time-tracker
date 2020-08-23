@@ -2,13 +2,12 @@ import React from 'react'
 import classNames from 'classnames/bind'
 import * as styles from './TrackerList.scss'
 import { Actions } from '../../reducer'
+import { restart, updateName, pause } from '../../actionCreators'
+import { useTrackerForm } from '../../utils/useTrackerForm'
+import * as DateUtil from '../../utils/DateUtil'
 import { StartIcon, PauseIcon } from '../Icon/Icon'
 import { Button } from '../Button/Button'
-import { TextInput } from '../Input/Input'
 import { DecimalText } from '../Text/Number'
-import { validate } from '../../utils/Constants'
-import * as DateUtil from '../../utils/DateUtil'
-import { restart, updateName, pause } from '../../actionCreators'
 
 type Props = {
   tracker: Tracker
@@ -21,12 +20,7 @@ type Props = {
 }
 
 export const TrackerItem: React.FC<Props> = (props) => {
-  const [trackerName, setTrackerName] = React.useState(props.tracker.name)
-
-  const isValidName = React.useMemo(
-    () => !!trackerName && trackerName.length <= validate.trackerName.length,
-    [trackerName]
-  )
+  const [trackerName, isValid, renderTrackerForm] = useTrackerForm(props.tracker.name)
 
   const elapsedTime = props.tracker.timers
     .filter((timer): timer is CalculatedTimer => !!timer.minute)
@@ -35,19 +29,14 @@ export const TrackerItem: React.FC<Props> = (props) => {
   const totalTime =
     props.tracker.inProgress && props.currentCount ? elapsedTime + props.currentCount : elapsedTime
 
-  const changeTrackerName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.value
-    setTrackerName(name)
-  }
-
   const updateTrackerName = () => {
-    if (isValidName) {
+    if (isValid) {
       props.dispatch(updateName(props.tracker.id, trackerName))
     }
   }
 
   const restartMeasure = () => {
-    if (isValidName) {
+    if (isValid) {
       const currentDate = DateUtil.getCurrentDate()
       props.dispatch(restart(props.tracker.id, currentDate))
       props.calculateCurrentCount(currentDate)
@@ -62,16 +51,12 @@ export const TrackerItem: React.FC<Props> = (props) => {
   return (
     <div className={styles.listTracker}>
       <div className={styles.listTrackerContent}>
-        <TextInput
-          isError={!isValidName}
-          hasFrame={false}
-          value={trackerName}
-          onChange={changeTrackerName}
-          onBlur={updateTrackerName}
-          className="trackerName"
-          size={60}
-          maxLength={validate.trackerName.length}
-        />
+        {renderTrackerForm({
+          isError: !isValid,
+          hasFrame: false,
+          onBlur: updateTrackerName,
+          className: 'trackerName',
+        })}
         <Button onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}>
           内訳を見る
         </Button>
@@ -88,11 +73,11 @@ export const TrackerItem: React.FC<Props> = (props) => {
             width={36}
             height={36}
             onClick={restartMeasure}
-            disabled={!!(props.inProgressId || !isValidName)}
+            disabled={!!(props.inProgressId || !isValid)}
           />
         )}
       </div>
-      {!isValidName && <p className={styles.error}>validate error</p>}
+      {!isValid && <p className={styles.error}>validate error</p>}
     </div>
   )
 }
