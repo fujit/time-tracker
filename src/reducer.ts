@@ -91,6 +91,7 @@ function reducer(state: State, action: Actions): State {
         return state
       }
 
+      const currentDate = DateUtil.getCurrentDate()
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id && tracker.inProgress
           ? {
@@ -100,8 +101,8 @@ function reducer(state: State, action: Actions): State {
                 !timer.end
                   ? {
                       ...timer,
-                      end: DateUtil.getCurrentDate(),
-                      minute: DateUtil.getTimeFromNow(timer.start, 'minute', true),
+                      end: currentDate,
+                      minute: DateUtil.getDiff(timer.start, currentDate, 'minute', true),
                     }
                   : timer
               ),
@@ -142,6 +143,12 @@ function reducer(state: State, action: Actions): State {
                       ...timer,
                       start: action.payload.startTimer,
                       end: action.payload.endTimer,
+                      minute: DateUtil.getDiff(
+                        action.payload.startTimer,
+                        action.payload.endTimer,
+                        'minute',
+                        true
+                      ),
                     }
                   : timer
               ),
