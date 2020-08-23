@@ -4,6 +4,7 @@ import * as styles from './TrackerList.scss'
 import { Actions } from '../../reducer'
 import { restart, updateName, pause } from '../../actionCreators'
 import { useTrackerForm } from '../../utils/useTrackerForm'
+import { useTrackerCalc } from '../../utils/useTrackerCalc'
 import * as DateUtil from '../../utils/DateUtil'
 import { StartIcon, PauseIcon } from '../Icon/Icon'
 import { Button } from '../Button/Button'
@@ -21,13 +22,14 @@ type Props = {
 
 export const TrackerItem: React.FC<Props> = (props) => {
   const [trackerName, isValid, renderTrackerForm] = useTrackerForm(props.tracker.name)
+  const [calcSum] = useTrackerCalc()
 
-  const elapsedTime = props.tracker.timers
-    .filter((timer): timer is CalculatedTimer => !!timer.minute)
-    .reduce((previous, current) => previous + current.minute, 0)
+  const sum = React.useMemo(() => calcSum(props.tracker.timers), [props.tracker.timers, calcSum])
 
-  const totalTime =
-    props.tracker.inProgress && props.currentCount ? elapsedTime + props.currentCount : elapsedTime
+  const totalTime = React.useMemo(
+    () => (props.tracker.inProgress && props.currentCount ? sum + props.currentCount : sum),
+    [sum, props.currentCount, props.tracker.inProgress]
+  )
 
   const updateTrackerName = () => {
     if (isValid) {

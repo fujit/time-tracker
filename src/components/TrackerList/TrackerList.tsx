@@ -47,7 +47,7 @@ const Component: React.FC<Props> = ({
     )}
     <div className={styles.listHeader}>
       <h2 className={styles.listTitle}>{today} の作業内容</h2>
-      <TrackerCopy />
+      <TrackerCopy trackers={trackers} />
     </div>
     <div>
       {trackers.map((tracker) => (

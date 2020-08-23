@@ -1,11 +1,12 @@
 import React from 'react'
 import * as styles from './TrackerList.scss'
 import { clipboardCopy } from '../../utils/Util'
+import { useTrackerCalc } from '../../utils/useTrackerCalc'
 import { CopyIcon } from '../Icon/Icon'
 
 type TrackerSummary = {
-  name: string | null
-  time: string | null
+  name: string
+  time: string
 }
 
 type Props = {
@@ -20,35 +21,33 @@ const Component: React.FC<Props> = ({ isDisplayCopiedMessage, copySummary }) => 
   </>
 )
 
-export const TrackerCopy: React.FC = () => {
-  const [isDisplayCopiedMessage, setIsDisplayCopiedMessage] = React.useState(false)
+type ContainerProps = {
+  trackers: Tracker[]
+}
 
-  const arrangeTrackerData = (summary: TrackerSummary[]) => {
-    // TODO: 複数種類
-    const copyData = summary.reduce(
+export const TrackerCopy: React.FC<ContainerProps> = ({ trackers }) => {
+  const [isDisplayCopiedMessage, setIsDisplayCopiedMessage] = React.useState(false)
+  const [calcSum] = useTrackerCalc()
+
+  const summary: TrackerSummary[] = React.useMemo(
+    () =>
+      trackers.map((tracker) => ({
+        name: tracker.name,
+        time: (calcSum(tracker.timers) / 60).toFixed(1),
+      })),
+    [trackers, calcSum]
+  )
+
+  const arrangeTrackerData = React.useCallback((trackerSummary: TrackerSummary[]) => {
+    const copyData = trackerSummary.reduce(
       (previous, current) => `${previous}・ ${current.name}: ${current.time} \n`,
       ''
     )
-
     return copyData
-  }
+  }, [])
+
   const copySummary = () => {
-    // 値取得
-    const nameList = Array.from(document.getElementsByClassName('trackerName'))
-    const timeList = Array.from(document.getElementsByClassName('trackerTime'))
-
-    // TODO: エラーハンドリング
-
-    if (nameList.length !== timeList.length) {
-      return
-    }
-
-    const trackerSummary: TrackerSummary[] = nameList.map((name, index) => ({
-      name: name.getAttribute('value'),
-      time: timeList[index].textContent,
-    }))
-
-    const copyData = arrangeTrackerData(trackerSummary)
+    const copyData = arrangeTrackerData(summary)
     const result = clipboardCopy(copyData)
 
     if (result) {
