@@ -7,14 +7,20 @@ import { TimerEdit } from './TimerEdit'
 import { CloseIcon } from '../Icon/CloseIcon'
 import { EditIcon } from '../Icon/Icon'
 import * as DateUtil from '../../utils/DateUtil'
+import { updateTimer } from '../../actionCreators'
 
 type Props = {
   modalStyles: ReactModal.Styles
   isOpen: boolean
-  openTimerEdit: (timer: Timer) => void
+  openTimerEdit: (timer: CalculatedTimer) => void
   closeTimerEdit: () => void
-  editableTimer?: Timer
-} & ContainerProps
+  editableTimer?: CalculatedTimer
+  updatePastTime: (start: string, end: string) => void
+  isCalculatedTimer: (timer: Timer) => timer is CalculatedTimer
+  tracker: Tracker
+  isBreakdownOpen: boolean
+  closeBreakdown: () => void
+}
 
 const Component: React.FC<Props> = ({
   modalStyles,
@@ -24,17 +30,17 @@ const Component: React.FC<Props> = ({
   isOpen,
   closeTimerEdit,
   editableTimer,
-  dispatch,
   openTimerEdit,
+  updatePastTime,
+  isCalculatedTimer,
 }) => (
   <Modal id="#app" isOpen={isBreakdownOpen} style={modalStyles} onRequestClose={closeBreakdown}>
     {editableTimer && (
       <TimerEdit
-        trackerId={tracker.id}
         isOpen={isOpen}
         closeModal={closeTimerEdit}
         timer={editableTimer}
-        dispatch={dispatch}
+        updatePastTime={updatePastTime}
       />
     )}
     <div className={styles.header}>
@@ -47,7 +53,9 @@ const Component: React.FC<Props> = ({
           <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')} className={styles.list}>
             <span className={styles.timerStart}>{DateUtil.format(timer.start, 'HH:mm')}</span>
             <span>{timer.end && DateUtil.format(timer.end, 'HH:mm')}</span>
-            {timer.end && <EditIcon width={16} height={16} onClick={() => openTimerEdit(timer)} />}
+            {isCalculatedTimer(timer) && (
+              <EditIcon width={16} height={16} onClick={() => openTimerEdit(timer)} />
+            )}
           </li>
         ))}
       </ul>
@@ -62,11 +70,11 @@ type ContainerProps = {
   dispatch: React.Dispatch<Actions>
 }
 
-export const TrackerBreakdown: React.FC<ContainerProps> = (props) => {
-  const [editableTimer, setEditableTimer] = React.useState<undefined | Timer>(undefined)
+export const TrackerBreakdown: React.FC<ContainerProps> = ({ tracker, dispatch, ...props }) => {
+  const [editableTimer, setEditableTimer] = React.useState<undefined | CalculatedTimer>(undefined)
   const [isOpen, openModal, closeModal] = useModal()
 
-  const openTimerEdit = (timer: Timer) => {
+  const openTimerEdit = (timer: CalculatedTimer) => {
     if (timer.end) {
       openModal()
       setEditableTimer(timer)
@@ -77,6 +85,23 @@ export const TrackerBreakdown: React.FC<ContainerProps> = (props) => {
     closeModal()
     setEditableTimer(undefined)
   }
+
+  const updatePastTime = React.useCallback(
+    (start: string, end: string) => {
+      if (!editableTimer) {
+        return
+      }
+
+      const updatedStart = DateUtil.updateTime(editableTimer.start, start)
+      const updatedEnd = DateUtil.updateTime(editableTimer.end, end)
+
+      dispatch(updateTimer(tracker.id, editableTimer.id, updatedStart, updatedEnd))
+      closeTimerEdit()
+      // TODO: state で無理やり更新？？
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [editableTimer, tracker]
+  )
 
   const modalStyles: ReactModal.Styles = {
     content: {
@@ -90,14 +115,22 @@ export const TrackerBreakdown: React.FC<ContainerProps> = (props) => {
       maxWidth: '900px',
     },
   }
+
+  const isCalculatedTimer = (timer: Timer): timer is CalculatedTimer => {
+    return timer.end !== undefined && timer.minute !== undefined
+  }
+
   return (
     <Component
       {...props}
+      tracker={tracker}
       modalStyles={modalStyles}
       isOpen={isOpen}
       openTimerEdit={openTimerEdit}
       closeTimerEdit={closeTimerEdit}
       editableTimer={editableTimer}
+      updatePastTime={updatePastTime}
+      isCalculatedTimer={isCalculatedTimer}
     />
   )
 }

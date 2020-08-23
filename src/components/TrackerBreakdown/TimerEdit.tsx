@@ -1,11 +1,8 @@
 import React from 'react'
-import { Actions } from '../../reducer'
 import { useTimePicker } from '../../utils/useTimePicker'
 import * as styles from './TrackerBreakdown.scss'
 import { Modal } from '../Modal/Modal'
 import { Button } from '../Button/Button'
-import * as DateUtil from '../../utils/DateUtil'
-import { updateTimer } from '../../actionCreators'
 
 type Props = {
   isValid: boolean
@@ -37,13 +34,12 @@ const Component: React.FC<Props> = ({
 
 type ContainerProps = {
   timer: Timer
-  trackerId: string
-  dispatch: React.Dispatch<Actions>
+  updatePastTime: (s: string, e: string) => void
   isOpen: boolean
   closeModal: () => void
 }
 
-export const TimerEdit: React.FC<ContainerProps> = ({ timer, trackerId, dispatch, ...props }) => {
+export const TimerEdit: React.FC<ContainerProps> = ({ timer, updatePastTime, ...props }) => {
   const [start, end, isValid, renderTimePicker] = useTimePicker(timer.start, timer.end)
 
   const update = () => {
@@ -51,11 +47,7 @@ export const TimerEdit: React.FC<ContainerProps> = ({ timer, trackerId, dispatch
       return
     }
 
-    const updatedStart = DateUtil.updateTime(timer.start, start)
-    const updatedEnd = DateUtil.updateTime(timer.end, end)
-
-    dispatch(updateTimer(trackerId, timer.id, updatedStart, updatedEnd))
-    props.closeModal()
+    updatePastTime(start, end)
   }
 
   const modalStyles: ReactModal.Styles = {
