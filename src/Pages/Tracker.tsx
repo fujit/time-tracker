@@ -1,8 +1,7 @@
 import React from 'react'
-import * as styles from './Tracker.scss'
 import { reducer, initialState, Actions, State } from '../reducer'
-import { TrackerForm } from '../components/TrackerForm/TrackerForm'
-import { TrackerList } from '../components/TrackerList/TrackerList'
+import { TrackerForm } from '../components/TrackerForm'
+import { TrackerList } from '../components/TrackerList'
 import * as DateUtil from '../utils/DateUtil'
 
 type Props = {
@@ -27,7 +26,7 @@ const Component: React.FC<Props> = ({
   currentCount,
   pauseTimer,
 }) => (
-  <div className={styles.home}>
+  <div className="pl-4">
     <TrackerForm
       inProgressId={state.inProgressId}
       dispatch={dispatch}

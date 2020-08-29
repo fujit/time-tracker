@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput } from '../components/Input/Input'
+import { Input } from '../components/Input'
 import { validate } from './Constants'
 
 type RenderProps = {
@@ -33,11 +33,12 @@ export const useTrackerForm = (name: string): UseTrackerFormResult => {
   )
 
   const renderTrackerForm = (props: RenderProps) => (
-    <TextInput
+    <Input
       value={trackerName}
       onChange={changeTrackerName}
       size={60}
       maxLength={validate.trackerName.length}
+      type="text"
       {...props}
     />
   )

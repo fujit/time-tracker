@@ -1,6 +1,7 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
+const tailwindcss = require('tailwindcss')
 
 const src = path.resolve(__dirname, 'src')
 const dist = path.resolve(__dirname, 'dist')
@@ -52,46 +53,20 @@ module.exports = {
         ],
       },
       {
-        test: /\.css/,
+        test: /\.(scss|css)/,
         include: src,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-              },
-              importLoaders: 1,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.scss/,
-        include: src,
-        exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-              },
-              importLoaders: 2,
-            },
           },
           {
             loader: 'postcss-loader',
+            ident: 'postcss',
             options: {
               sourceMap: true,
-              plugins: [
-                autoprefixer({
-                  grid: true,
-                }),
-              ],
+              plugins: [tailwindcss, autoprefixer],
             },
           },
           {

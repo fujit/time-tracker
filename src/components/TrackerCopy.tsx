@@ -1,8 +1,7 @@
 import React from 'react'
-import * as styles from './TrackerList.scss'
-import { useTrackerCalc } from '../../utils/useTrackerCalc'
-import { useClipBoard } from '../../utils/useClipBoard'
-import { CopyIcon } from '../Icon/Icon'
+import { useTrackerCalc } from '../utils/useTrackerCalc'
+import { useClipBoard } from '../utils/useClipBoard'
+import { CopyIcon } from './Icon'
 
 type TrackerSummary = {
   name: string
@@ -17,7 +16,7 @@ type Props = {
 const Component: React.FC<Props> = ({ isCopied, onCopy }) => (
   <>
     <CopyIcon width={35} height={35} onClick={onCopy} />
-    {isCopied && <p className={styles.copiedMessage}>Copied</p>}
+    {isCopied && <p className="text-sm">Copied</p>}
   </>
 )
 

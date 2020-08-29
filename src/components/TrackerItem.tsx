@@ -1,14 +1,12 @@
 import React from 'react'
-import classNames from 'classnames/bind'
-import * as styles from './TrackerList.scss'
-import { Actions } from '../../reducer'
-import { restart, updateName, pause } from '../../actionCreators'
-import { useTrackerForm } from '../../utils/useTrackerForm'
-import { useTrackerCalc } from '../../utils/useTrackerCalc'
-import * as DateUtil from '../../utils/DateUtil'
-import { StartIcon, PauseIcon } from '../Icon/Icon'
-import { Button } from '../Button/Button'
-import { DecimalText } from '../Text/Number'
+import { Actions } from '../reducer'
+import { restart, updateName, pause } from '../actionCreators'
+import { useTrackerForm } from '../utils/useTrackerForm'
+import { useTrackerCalc } from '../utils/useTrackerCalc'
+import * as DateUtil from '../utils/DateUtil'
+import { StartIcon, PauseIcon } from './Icon'
+import { Button } from './Button'
+import { DecimalText } from './Number'
 
 type Props = {
   tracker: Tracker
@@ -51,22 +49,21 @@ export const TrackerItem: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={styles.listTracker}>
-      <div className={styles.listTrackerContent}>
+    <div className="flex flex-col h-16">
+      <div className="flex items-center mb-4">
         {renderTrackerForm({
           isError: !isValid,
           hasFrame: false,
           onBlur: updateTrackerName,
+          className: 'mr-4',
         })}
-        <Button onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}>
+        <Button
+          className="mr-4"
+          onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
+        >
           内訳を見る
         </Button>
-        <DecimalText
-          className={classNames(styles.listTrackerContentTime)}
-          value={totalTime / 60}
-          digits={1}
-          unit="h"
-        />
+        <DecimalText className="w-8 mr-4" value={totalTime / 60} digits={1} unit="h" />
         {props.tracker.inProgress ? (
           <PauseIcon width={36} height={36} onClick={pauseMeasure} />
         ) : (
@@ -78,7 +75,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
           />
         )}
       </div>
-      {!isValid && <p className={styles.error}>validate error</p>}
+      {!isValid && <p className="mt-2 text-red-500">validate error</p>}
     </div>
   )
 }

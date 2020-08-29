@@ -1,6 +1,6 @@
 import React from 'react'
 import * as DateUtil from './DateUtil'
-import { TimeInput } from '../components/Input/Input'
+import { Input } from '../components/Input'
 
 type UseTimerPickerResult = [string, string, boolean, () => JSX.Element]
 
@@ -20,8 +20,8 @@ export const useTimePicker = (startTime?: Date, endTime?: Date): UseTimerPickerR
 
   const renderTimePicker = () => (
     <>
-      <TimeInput value={start} onChange={changeStart} isError={!isValid} />
-      <TimeInput value={end} onChange={changeEnd} isError={!isValid} />
+      <Input type="time" value={start} onChange={changeStart} isError={!isValid} />
+      <Input type="time" value={end} onChange={changeEnd} isError={!isValid} />
     </>
   )
 

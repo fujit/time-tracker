@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
+    "build": "NODE_ENV=production webpack --config webpack.prod.js",
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "fix": "eslint --fix src -c .eslintrc.json --ext ts,tsx",
     "fix:css": "stylelint --fix src/**/*.{scss,css}",
@@ -13,7 +13,8 @@
     "dayjs": "^1.8.29",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-modal": "^3.11.2"
+    "react-modal": "^3.11.2",
+    "tailwindcss": "^1.7.3"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.10.4",
@@ -59,7 +60,6 @@
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.18.0",
     "ts-loader": "^8.0.1",
-    "typed-scss-modules": "^2.0.1",
     "typescript": "^3.9.7",
     "url-loader": "^4.1.0",
     "webpack": "^4.43.0",

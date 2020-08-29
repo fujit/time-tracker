@@ -1,12 +1,11 @@
 import React from 'react'
-import * as styles from './Header.scss'
 
 type Props = {
   title: string
 }
 
 export const Header: React.FC<Props> = ({ title }) => (
-  <div className={styles.header}>
-    <h1>{title}</h1>
+  <div className="container max-w-full p-4 mb-4 bg-green-300">
+    <h1 className="text-2xl">{title}</h1>
   </div>
 )

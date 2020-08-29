@@ -1,12 +1,11 @@
 import React from 'react'
-import * as styles from './TrackerList.scss'
-import { Actions } from '../../reducer'
-import { useModal } from '../../utils/useModal'
-import { useTrackerCalc } from '../../utils/useTrackerCalc'
+import { Actions } from '../reducer'
+import { useModal } from '../utils/useModal'
+import { useTrackerCalc } from '../utils/useTrackerCalc'
 import { TrackerItem } from './TrackerItem'
-import { TrackerBreakdown } from '../TrackerBreakdown/TrackerBreakdown'
+import { TrackerBreakdown } from './TrackerBreakdown'
 import { TrackerCopy } from './TrackerCopy'
-import { DecimalText } from '../Text/Number'
+import { DecimalText } from './Number'
 
 type Props = {
   openBreakdown: (tracker: Tracker) => void
@@ -30,7 +29,7 @@ const Component: React.FC<Props> = ({
   today,
   totalTime,
 }) => (
-  <div className={styles.listGroup}>
+  <div className="mt-12">
     {breakdownTracker && (
       <TrackerBreakdown
         isBreakdownOpen={isOpen}
@@ -39,9 +38,9 @@ const Component: React.FC<Props> = ({
         dispatch={dispatch}
       />
     )}
-    <div className={styles.listHeader}>
-      <h2>{today} の作業内容</h2>
-      <DecimalText value={totalTime / 60} digits={1} unit="h" />
+    <div className="flex items-center mb-8">
+      <h2 className="mr-4 text-xl">{today} の作業内容</h2>
+      <DecimalText value={totalTime / 60} digits={1} unit="h" className="mr-4" />
       <TrackerCopy trackers={trackers} />
     </div>
     <div>

@@ -1,13 +1,12 @@
 import React from 'react'
-import { Actions } from '../../reducer'
-import { useModal } from '../../utils/useModal'
-import * as styles from './TrackerBreakdown.scss'
-import { Modal } from '../Modal/Modal'
+import { Actions } from '../reducer'
+import { useModal } from '../utils/useModal'
+import { Modal } from './Modal'
 import { TimerEdit } from './TimerEdit'
-import { CloseIcon } from '../Icon/CloseIcon'
-import { EditIcon } from '../Icon/Icon'
-import * as DateUtil from '../../utils/DateUtil'
-import { updateTimer } from '../../actionCreators'
+import { CloseIcon } from './CloseIcon'
+import { EditIcon } from './Icon'
+import * as DateUtil from '../utils/DateUtil'
+import { updateTimer } from '../actionCreators'
 
 type Props = {
   modalStyles: ReactModal.Styles
@@ -43,18 +42,23 @@ const Component: React.FC<Props> = ({
         updatePastTime={updatePastTime}
       />
     )}
-    <div className={styles.header}>
-      <h1>{tracker.name}</h1>
+    <div className="w-11/12">
+      <h1 className="text-xl">{tracker.name}</h1>
       <CloseIcon onClick={closeBreakdown} />
     </div>
-    <div className={styles.listTimer}>
-      <ul>
+    <div>
+      <ul className="list-none">
         {tracker.timers.map((timer) => (
-          <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')} className={styles.list}>
-            <span className={styles.timerStart}>{DateUtil.format(timer.start, 'HH:mm')}</span>
+          <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')} className="m-3 flex">
+            <span className="timer-start">{DateUtil.format(timer.start, 'HH:mm')}</span>
             <span>{timer.end && DateUtil.format(timer.end, 'HH:mm')}</span>
             {isCalculatedTimer(timer) && (
-              <EditIcon width={16} height={16} onClick={() => openTimerEdit(timer)} />
+              <EditIcon
+                className="ml-4"
+                width={16}
+                height={16}
+                onClick={() => openTimerEdit(timer)}
+              />
             )}
           </li>
         ))}

@@ -1,8 +1,7 @@
 import React from 'react'
-import { useTimePicker } from '../../utils/useTimePicker'
-import * as styles from './TrackerBreakdown.scss'
-import { Modal } from '../Modal/Modal'
-import { Button } from '../Button/Button'
+import { useTimePicker } from '../utils/useTimePicker'
+import { Modal } from './Modal'
+import { Button } from './Button'
 
 type Props = {
   isValid: boolean
@@ -22,8 +21,8 @@ const Component: React.FC<Props> = ({
   closeModal,
 }) => (
   <Modal id="#app" isOpen={isOpen} style={modalStyles} onRequestClose={closeModal}>
-    <div className={styles.editTime}>{renderTimePicker()}</div>
-    <div className={styles.editTimeButton}>
+    <div className="flex items-center justify-around">{renderTimePicker()}</div>
+    <div className="flex items-center justify-around mt-4">
       <Button disabled={!isValid} onClick={update}>
         更新する
       </Button>

@@ -1,11 +1,10 @@
 import React from 'react'
-import * as styles from './TrackerForm.scss'
-import { Actions } from '../../reducer'
-import { start } from '../../actionCreators'
-import { useTrackerForm } from '../../utils/useTrackerForm'
-import { keycode } from '../../utils/Constants'
-import * as DateUtil from '../../utils/DateUtil'
-import { StartIcon } from '../Icon/Icon'
+import { Actions } from '../reducer'
+import { start } from '../actionCreators'
+import { useTrackerForm } from '../utils/useTrackerForm'
+import { keycode } from '../utils/Constants'
+import * as DateUtil from '../utils/DateUtil'
+import { StartIcon } from './Icon'
 
 type Props = {
   inProgressId: string | undefined
@@ -41,10 +40,11 @@ export const TrackerForm: React.FC<Props> = ({
   }
 
   return (
-    <div className={styles.main}>
+    <div className="flex items-start">
       {renderTrackerForm({
         disabled: !!inProgressId,
         onKeyDown: keyDown,
+        className: 'mr-4',
         ...props,
       })}
       <StartIcon
