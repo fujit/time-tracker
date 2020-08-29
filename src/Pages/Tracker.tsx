@@ -78,7 +78,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       document.title = inProgressTracker!.name
     } else {
-      document.title = 'time-tracker'
+      document.title = 'timer'
     }
   }, [state.trackers, state.inProgressId])
 

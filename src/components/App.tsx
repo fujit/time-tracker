@@ -11,7 +11,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Header title="time-tracker" />
+      <Header title="timer" />
       <Tracker todaysTrackers={todaysTrackers} today={today} />
     </>
   )
