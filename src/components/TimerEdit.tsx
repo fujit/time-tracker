@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTimePicker } from '../utils/useTimePicker'
+import { useTimePicker } from '../utils/hooks/useTimePicker'
 import { Modal } from './Modal'
 import { Button } from './Button'
 

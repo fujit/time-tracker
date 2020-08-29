@@ -1,6 +1,6 @@
 import React from 'react'
-import * as DateUtil from './DateUtil'
-import { Input } from '../components/Input'
+import * as DateUtil from '../DateUtil'
+import { Input } from '../../components/Input'
 
 type UseTimerPickerResult = [string, string, boolean, () => JSX.Element]
 

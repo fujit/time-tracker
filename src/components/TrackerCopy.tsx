@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTrackerCalc } from '../utils/useTrackerCalc'
-import { useClipBoard } from '../utils/useClipBoard'
+import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
+import { useClipBoard } from '../utils/hooks/useClipBoard'
 import { CopyIcon } from './Icon'
 
 type TrackerSummary = {

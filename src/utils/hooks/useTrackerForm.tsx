@@ -1,6 +1,6 @@
 import React from 'react'
-import { Input } from '../components/Input'
-import { validate } from './Constants'
+import { Input } from '../../components/Input'
+import { validate } from '../Constants'
 
 type RenderProps = {
   isError?: boolean

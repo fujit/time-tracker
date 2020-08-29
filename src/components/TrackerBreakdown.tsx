@@ -1,6 +1,6 @@
 import React from 'react'
 import { Actions } from '../reducer'
-import { useModal } from '../utils/useModal'
+import { useModal } from '../utils/hooks/useModal'
 import { Modal } from './Modal'
 import { TimerEdit } from './TimerEdit'
 import { CloseIcon } from './CloseIcon'
@@ -49,7 +49,7 @@ const Component: React.FC<Props> = ({
     <div>
       <ul className="list-none">
         {tracker.timers.map((timer) => (
-          <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')} className="m-3 flex">
+          <li key={DateUtil.format(timer.start, 'YYYYMMDDHHmmssSSS')} className="flex m-3">
             <span className="timer-start">{DateUtil.format(timer.start, 'HH:mm')}</span>
             <span>{timer.end && DateUtil.format(timer.end, 'HH:mm')}</span>
             {isCalculatedTimer(timer) && (
