@@ -72,7 +72,7 @@ type ContainerProps = {
 
 export const TrackerList: React.FC<ContainerProps> = (props) => {
   const [breakdownTracker, setBreakdownTracker] = React.useState<Tracker | undefined>(undefined)
-  const [isOpen, openModal, closeModal] = useModal()
+  const [isOpen, toggleModal] = useModal()
   const [calcSum] = useTrackerCalc()
 
   const totalTime = React.useMemo(
@@ -81,12 +81,12 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
   )
 
   const openBreakdown = (tracker: Tracker) => {
-    openModal()
+    toggleModal(true)
     setBreakdownTracker(tracker)
   }
 
   const closeBreakdown = () => {
-    closeModal()
+    toggleModal(false)
     setBreakdownTracker(undefined)
   }
 

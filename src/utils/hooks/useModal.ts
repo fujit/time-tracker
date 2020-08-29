@@ -1,17 +1,13 @@
 import React from 'react'
 
-type UseModalResult = [boolean, () => void, () => void]
+type UseModalResult = [boolean, (open: boolean) => void]
 
 export const useModal = (): UseModalResult => {
   const [isOpen, setIsOpen] = React.useState(false)
 
-  const openModal = React.useCallback(() => {
-    setIsOpen(true)
+  const toggleModal = React.useCallback((open: boolean) => {
+    setIsOpen(open)
   }, [])
 
-  const closeModal = React.useCallback(() => {
-    setIsOpen(false)
-  }, [])
-
-  return [isOpen, openModal, closeModal]
+  return [isOpen, toggleModal]
 }

@@ -76,17 +76,17 @@ type ContainerProps = {
 
 export const TrackerBreakdown: React.FC<ContainerProps> = ({ tracker, dispatch, ...props }) => {
   const [editableTimer, setEditableTimer] = React.useState<undefined | CalculatedTimer>(undefined)
-  const [isOpen, openModal, closeModal] = useModal()
+  const [isOpen, toggleModal] = useModal()
 
   const openTimerEdit = (timer: CalculatedTimer) => {
     if (timer.end) {
-      openModal()
+      toggleModal(true)
       setEditableTimer(timer)
     }
   }
 
   const closeTimerEdit = () => {
-    closeModal()
+    toggleModal(false)
     setEditableTimer(undefined)
   }
 
