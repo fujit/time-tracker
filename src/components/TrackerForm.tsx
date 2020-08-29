@@ -20,16 +20,16 @@ export const TrackerForm: React.FC<Props> = ({
   today,
   ...props
 }) => {
-  const [trackerName, isValid, renderTrackerForm, changeTrackerName] = useTrackerForm('')
+  const [result, renderTrackerForm, changeTrackerName] = useTrackerForm('')
 
   const startMeasure = () => {
-    if (inProgressId || !isValid) {
+    if (inProgressId || !result.isValid) {
       return
     }
     changeTrackerName()
 
     const currentDate = DateUtil.getCurrentDate()
-    dispatch(start(trackerName, today, currentDate))
+    dispatch(start(result.updatedValue.trackerName, today, currentDate))
     calculateCurrentCount(currentDate)
   }
 
@@ -51,7 +51,7 @@ export const TrackerForm: React.FC<Props> = ({
         width={42}
         height={42}
         onClick={startMeasure}
-        disabled={!!(inProgressId || !isValid)}
+        disabled={!!(inProgressId || !result.isValid)}
       />
     </div>
   )

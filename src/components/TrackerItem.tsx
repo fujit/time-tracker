@@ -19,7 +19,7 @@ type Props = {
 }
 
 export const TrackerItem: React.FC<Props> = (props) => {
-  const [trackerName, isValid, renderTrackerForm] = useTrackerForm(props.tracker.name)
+  const [result, renderTrackerForm] = useTrackerForm(props.tracker.name)
   const [calcSum] = useTrackerCalc()
 
   const sum = React.useMemo(() => calcSum(props.tracker.timers), [props.tracker.timers, calcSum])
@@ -30,13 +30,13 @@ export const TrackerItem: React.FC<Props> = (props) => {
   )
 
   const updateTrackerName = () => {
-    if (isValid) {
-      props.dispatch(updateName(props.tracker.id, trackerName))
+    if (result.isValid) {
+      props.dispatch(updateName(props.tracker.id, result.updatedValue.trackerName))
     }
   }
 
   const restartMeasure = () => {
-    if (isValid) {
+    if (result.isValid) {
       const currentDate = DateUtil.getCurrentDate()
       props.dispatch(restart(props.tracker.id, currentDate))
       props.calculateCurrentCount(currentDate)
@@ -52,14 +52,16 @@ export const TrackerItem: React.FC<Props> = (props) => {
     <div className="flex flex-col h-16">
       <div className="flex items-center mb-4">
         {renderTrackerForm({
-          isError: !isValid,
+          isError: !result.isValid,
           hasFrame: false,
           onBlur: updateTrackerName,
           className: 'mr-4',
         })}
         <Button
           className="mr-4"
-          onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
+          onClick={() =>
+            props.openBreakdown({ ...props.tracker, name: result.updatedValue.trackerName })
+          }
         >
           内訳を見る
         </Button>
@@ -71,11 +73,11 @@ export const TrackerItem: React.FC<Props> = (props) => {
             width={36}
             height={36}
             onClick={restartMeasure}
-            disabled={!!(props.inProgressId || !isValid)}
+            disabled={!!(props.inProgressId || !result.isValid)}
           />
         )}
       </div>
-      {!isValid && <p className="mt-2 text-red-500">validate error</p>}
+      {!result.isValid && <p className="mt-2 text-red-500">validate error</p>}
     </div>
   )
 }

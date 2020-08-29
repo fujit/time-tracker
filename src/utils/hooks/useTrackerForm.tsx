@@ -8,8 +8,7 @@ type RenderProps = {
 } & JSX.IntrinsicElements['input']
 
 type UseTrackerFormResult = [
-  string,
-  boolean,
+  { updatedValue: { trackerName: string }; isValid: boolean },
   (props: RenderProps) => JSX.Element,
   (event?: React.ChangeEvent<HTMLInputElement>) => void
 ]
@@ -43,5 +42,12 @@ export const useTrackerForm = (name: string): UseTrackerFormResult => {
     />
   )
 
-  return [trackerName, isValid, renderTrackerForm, changeTrackerName]
+  const result = {
+    updatedValue: {
+      trackerName,
+    },
+    isValid,
+  }
+
+  return [result, renderTrackerForm, changeTrackerName]
 }
