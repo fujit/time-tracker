@@ -2,7 +2,10 @@ import React from 'react'
 import * as DateUtil from '../DateUtil'
 import { Input } from '../../components/Input'
 
-type UseTimerPickerResult = [string, string, boolean, () => JSX.Element]
+type UseTimerPickerResult = [
+  { updatedValue: { start: string; end: string }; isValid: boolean },
+  () => JSX.Element
+]
 
 export const useTimePicker = (startTime?: Date, endTime?: Date): UseTimerPickerResult => {
   const [start, setStart] = React.useState(startTime ? DateUtil.format(startTime, 'HH:mm') : '')
@@ -25,5 +28,13 @@ export const useTimePicker = (startTime?: Date, endTime?: Date): UseTimerPickerR
     </>
   )
 
-  return [start, end, isValid, renderTimePicker]
+  const result = {
+    updatedValue: {
+      start,
+      end,
+    },
+    isValid,
+  }
+
+  return [result, renderTimePicker]
 }

@@ -39,14 +39,14 @@ type ContainerProps = {
 }
 
 export const TimerEdit: React.FC<ContainerProps> = ({ timer, updatePastTime, ...props }) => {
-  const [start, end, isValid, renderTimePicker] = useTimePicker(timer.start, timer.end)
+  const [result, renderTimePicker] = useTimePicker(timer.start, timer.end)
 
   const update = () => {
-    if (!isValid || !timer.end) {
+    if (!result.isValid || !timer.end) {
       return
     }
 
-    updatePastTime(start, end)
+    updatePastTime(result.updatedValue.start, result.updatedValue.end)
   }
 
   const modalStyles: ReactModal.Styles = {
@@ -63,7 +63,7 @@ export const TimerEdit: React.FC<ContainerProps> = ({ timer, updatePastTime, ...
   return (
     <Component
       {...props}
-      isValid={isValid}
+      isValid={result.isValid}
       renderTimePicker={renderTimePicker}
       update={update}
       modalStyles={modalStyles}
