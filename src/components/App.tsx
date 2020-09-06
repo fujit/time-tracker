@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header } from '../Pages/Header'
+import { Header } from './Header'
 import { Tracker } from '../Pages/Tracker'
 import * as DateUtil from '../utils/DateUtil'
 import { Store } from '../Store'
