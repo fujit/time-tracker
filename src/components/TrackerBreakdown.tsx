@@ -85,10 +85,10 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ tracker, ...props }
     }
   }
 
-  const closeTimerEdit = () => {
+  const closeTimerEdit = React.useCallback(() => {
     toggleModal(false)
     setEditableTimer(undefined)
-  }
+  }, [toggleModal])
 
   const updatePastTime = React.useCallback(
     (start: string, end: string) => {
@@ -101,10 +101,8 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ tracker, ...props }
 
       dispatch(updateTimer(tracker.id, editableTimer.id, updatedStart, updatedEnd))
       closeTimerEdit()
-      // TODO: state で無理やり更新？？
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [editableTimer, tracker]
+    [editableTimer, tracker, closeTimerEdit, dispatch]
   )
 
   const modalStyles: ReactModal.Styles = {
