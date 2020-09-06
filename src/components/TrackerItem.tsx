@@ -1,5 +1,5 @@
 import React from 'react'
-import { Actions } from '../reducer'
+import { DispatchContext, StateContext } from '../utils/contexts/StoreContext'
 import { restart, updateName, pause } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
@@ -10,9 +10,7 @@ import { DecimalText } from './Number'
 
 type Props = {
   tracker: Tracker
-  inProgressId: string | undefined
   currentCount?: number
-  dispatch: React.Dispatch<Actions>
   calculateCurrentCount: (currentDate: Date) => void
   pauseTimer: () => void
   openBreakdown: (tracker: Tracker) => void
@@ -21,6 +19,8 @@ type Props = {
 export const TrackerItem: React.FC<Props> = (props) => {
   const [result, renderTrackerForm] = useTrackerForm(props.tracker.name)
   const [calcSum] = useTrackerCalc()
+  const dispatch = React.useContext(DispatchContext)
+  const state = React.useContext(StateContext)
 
   const sum = React.useMemo(() => calcSum(props.tracker.timers), [props.tracker.timers, calcSum])
 
@@ -31,20 +31,20 @@ export const TrackerItem: React.FC<Props> = (props) => {
 
   const updateTrackerName = () => {
     if (result.isValid) {
-      props.dispatch(updateName(props.tracker.id, result.updatedValue.trackerName))
+      dispatch(updateName(props.tracker.id, result.updatedValue.trackerName))
     }
   }
 
   const restartMeasure = () => {
     if (result.isValid) {
       const currentDate = DateUtil.getCurrentDate()
-      props.dispatch(restart(props.tracker.id, currentDate))
+      dispatch(restart(props.tracker.id, currentDate))
       props.calculateCurrentCount(currentDate)
     }
   }
 
   const pauseMeasure = () => {
-    props.dispatch(pause(props.tracker.id))
+    dispatch(pause(props.tracker.id))
     props.pauseTimer()
   }
 
@@ -73,7 +73,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
             width={36}
             height={36}
             onClick={restartMeasure}
-            disabled={!!(props.inProgressId || !result.isValid)}
+            disabled={!!(state.inProgressId || !result.isValid)}
           />
         )}
       </div>

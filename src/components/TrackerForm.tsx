@@ -1,5 +1,5 @@
 import React from 'react'
-import { Actions } from '../reducer'
+import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { start } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
 import { keycode } from '../utils/Constants'
@@ -7,23 +7,17 @@ import * as DateUtil from '../utils/DateUtil'
 import { StartIcon } from './Icon'
 
 type Props = {
-  inProgressId: string | undefined
-  dispatch: React.Dispatch<Actions>
   calculateCurrentCount: (currentDate: Date) => void
   today: string
 } & JSX.IntrinsicElements['input']
 
-export const TrackerForm: React.FC<Props> = ({
-  inProgressId,
-  dispatch,
-  calculateCurrentCount,
-  today,
-  ...props
-}) => {
+export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...props }) => {
   const [result, renderTrackerForm, changeTrackerName] = useTrackerForm('')
+  const state = React.useContext(StateContext)
+  const dispatch = React.useContext(DispatchContext)
 
   const startMeasure = () => {
-    if (inProgressId || !result.isValid) {
+    if (state.inProgressId || !result.isValid) {
       return
     }
     changeTrackerName()
@@ -42,7 +36,7 @@ export const TrackerForm: React.FC<Props> = ({
   return (
     <div className="flex items-start">
       {renderTrackerForm({
-        disabled: !!inProgressId,
+        disabled: !!state.inProgressId,
         onKeyDown: keyDown,
         className: 'mr-4',
         ...props,
@@ -51,7 +45,7 @@ export const TrackerForm: React.FC<Props> = ({
         width={42}
         height={42}
         onClick={startMeasure}
-        disabled={!!(inProgressId || !result.isValid)}
+        disabled={!!(state.inProgressId || !result.isValid)}
       />
     </div>
   )

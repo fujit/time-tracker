@@ -1,5 +1,5 @@
 import React from 'react'
-import { Actions } from '../reducer'
+import { StateContext } from '../utils/contexts/StoreContext'
 import { useModal } from '../utils/hooks/useModal'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
 import { TrackerItem } from './TrackerItem'
@@ -8,6 +8,7 @@ import { TrackerCopy } from './TrackerCopy'
 import { DecimalText } from './Number'
 
 type Props = {
+  trackers: Tracker[]
   openBreakdown: (tracker: Tracker) => void
   closeBreakdown: () => void
   isOpen: boolean
@@ -21,9 +22,7 @@ const Component: React.FC<Props> = ({
   breakdownTracker,
   closeBreakdown,
   trackers,
-  inProgressId,
   currentCount,
-  dispatch,
   calculateCurrentCount,
   pauseTimer,
   today,
@@ -35,22 +34,19 @@ const Component: React.FC<Props> = ({
         isBreakdownOpen={isOpen}
         tracker={breakdownTracker}
         closeBreakdown={closeBreakdown}
-        dispatch={dispatch}
       />
     )}
     <div className="flex items-center mb-8">
       <h2 className="mr-4 text-xl">{today} の作業内容</h2>
       <DecimalText value={totalTime / 60} digits={1} unit="h" className="mr-4" />
-      <TrackerCopy trackers={trackers} />
+      <TrackerCopy />
     </div>
     <div>
       {trackers.map((tracker) => (
         <TrackerItem
           key={tracker.id}
           tracker={tracker}
-          inProgressId={inProgressId}
           currentCount={currentCount}
-          dispatch={dispatch}
           calculateCurrentCount={calculateCurrentCount}
           pauseTimer={pauseTimer}
           openBreakdown={openBreakdown}
@@ -61,10 +57,7 @@ const Component: React.FC<Props> = ({
 )
 
 type ContainerProps = {
-  trackers: Tracker[]
-  inProgressId: string | undefined
   currentCount?: number
-  dispatch: React.Dispatch<Actions>
   calculateCurrentCount: (currentDate: Date) => void
   pauseTimer: () => void
   today: string
@@ -74,10 +67,11 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
   const [breakdownTracker, setBreakdownTracker] = React.useState<Tracker | undefined>(undefined)
   const [isOpen, toggleModal] = useModal()
   const [calcSum] = useTrackerCalc()
+  const state = React.useContext(StateContext)
 
   const totalTime = React.useMemo(
-    () => props.trackers.reduce((previous, current) => previous + calcSum(current.timers), 0),
-    [props.trackers, calcSum]
+    () => state.trackers.reduce((previous, current) => previous + calcSum(current.timers), 0),
+    [state.trackers, calcSum]
   )
 
   const openBreakdown = (tracker: Tracker) => {
@@ -93,6 +87,7 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
   return (
     <Component
       {...props}
+      trackers={state.trackers}
       openBreakdown={openBreakdown}
       closeBreakdown={closeBreakdown}
       breakdownTracker={breakdownTracker}

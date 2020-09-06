@@ -1,49 +1,33 @@
 import React from 'react'
-import { reducer, initialState, Actions, State } from '../reducer'
+import { reducer, initialState } from '../reducer'
+import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { TrackerForm } from '../components/TrackerForm'
 import { TrackerList } from '../components/TrackerList'
 import * as DateUtil from '../utils/DateUtil'
 
 type Props = {
-  state: State
-  dispatch: React.Dispatch<Actions>
   calculateCurrentCount: (startTime: Date) => void
   today: string
   currentCount: number
   pauseTimer: () => void
 }
 
-type ContainerProps = {
-  todaysTrackers: Tracker[]
-  today: string
-}
-
-const Component: React.FC<Props> = ({
-  state,
-  dispatch,
-  calculateCurrentCount,
-  today,
-  currentCount,
-  pauseTimer,
-}) => (
+const Component: React.FC<Props> = ({ calculateCurrentCount, today, currentCount, pauseTimer }) => (
   <div className="pl-4">
-    <TrackerForm
-      inProgressId={state.inProgressId}
-      dispatch={dispatch}
-      calculateCurrentCount={calculateCurrentCount}
-      today={today}
-    />
+    <TrackerForm calculateCurrentCount={calculateCurrentCount} today={today} />
     <TrackerList
-      trackers={state.trackers}
-      inProgressId={state.inProgressId}
       currentCount={currentCount}
-      dispatch={dispatch}
       calculateCurrentCount={calculateCurrentCount}
       pauseTimer={pauseTimer}
       today={today}
     />
   </div>
 )
+
+type ContainerProps = {
+  todaysTrackers: Tracker[]
+  today: string
+}
 
 export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => {
   const [state, dispatch] = React.useReducer(
@@ -99,13 +83,15 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
   }, [])
 
   return (
-    <Component
-      state={state}
-      dispatch={dispatch}
-      calculateCurrentCount={calculateCurrentCount}
-      today={today}
-      currentCount={currentCount}
-      pauseTimer={pauseTimer}
-    />
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        <Component
+          calculateCurrentCount={calculateCurrentCount}
+          today={today}
+          currentCount={currentCount}
+          pauseTimer={pauseTimer}
+        />
+      </DispatchContext.Provider>
+    </StateContext.Provider>
   )
 }

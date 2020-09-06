@@ -1,4 +1,5 @@
 import React from 'react'
+import { StateContext } from '../utils/contexts/StoreContext'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
 import { useClipBoard } from '../utils/hooks/useClipBoard'
 import { CopyIcon } from './Icon'
@@ -20,21 +21,18 @@ const Component: React.FC<Props> = ({ isCopied, onCopy }) => (
   </>
 )
 
-type ContainerProps = {
-  trackers: Tracker[]
-}
-
-export const TrackerCopy: React.FC<ContainerProps> = ({ trackers }) => {
+export const TrackerCopy: React.FC = () => {
   const [calcSum] = useTrackerCalc()
   const [onCopy, isCopied] = useClipBoard()
+  const state = React.useContext(StateContext)
 
   const summary: TrackerSummary[] = React.useMemo(
     () =>
-      trackers.map((tracker) => ({
+      state.trackers.map((tracker) => ({
         name: tracker.name,
         time: (calcSum(tracker.timers) / 60).toFixed(1),
       })),
-    [trackers, calcSum]
+    [state.trackers, calcSum]
   )
 
   const arrangeTrackerData = React.useCallback((trackerSummary: TrackerSummary[]) => {

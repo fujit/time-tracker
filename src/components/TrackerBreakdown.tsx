@@ -1,5 +1,5 @@
 import React from 'react'
-import { Actions } from '../reducer'
+import { DispatchContext } from '../utils/contexts/StoreContext'
 import { useModal } from '../utils/hooks/useModal'
 import { Modal } from './Modal'
 import { TimerEdit } from './TimerEdit'
@@ -71,12 +71,12 @@ type ContainerProps = {
   tracker: Tracker
   isBreakdownOpen: boolean
   closeBreakdown: () => void
-  dispatch: React.Dispatch<Actions>
 }
 
-export const TrackerBreakdown: React.FC<ContainerProps> = ({ tracker, dispatch, ...props }) => {
+export const TrackerBreakdown: React.FC<ContainerProps> = ({ tracker, ...props }) => {
   const [editableTimer, setEditableTimer] = React.useState<undefined | CalculatedTimer>(undefined)
   const [isOpen, toggleModal] = useModal()
+  const dispatch = React.useContext(DispatchContext)
 
   const openTimerEdit = (timer: CalculatedTimer) => {
     if (timer.end) {
