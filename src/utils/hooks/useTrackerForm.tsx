@@ -22,7 +22,7 @@ export const useTrackerForm = (name: string): UseTrackerFormResult => {
       return
     }
 
-    setTrackerName(event.target.value)
+    setTrackerName(event.target.value.replace(/\s/g, ' '))
   }, [])
 
   // TODO: 登録済みの名前制御
