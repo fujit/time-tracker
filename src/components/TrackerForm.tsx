@@ -5,6 +5,7 @@ import { useTrackerForm } from '../utils/hooks/useTrackerForm'
 import { keycode } from '../utils/Constants'
 import * as DateUtil from '../utils/DateUtil'
 import { StartIcon } from './Icon'
+import { Input } from './Input'
 
 type Props = {
   calculateCurrentCount: (currentDate: Date) => void
@@ -12,18 +13,18 @@ type Props = {
 } & JSX.IntrinsicElements['input']
 
 export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...props }) => {
-  const [result, renderTrackerForm, changeTrackerName] = useTrackerForm('')
+  const [trackerName, isValid, changeTrackerName] = useTrackerForm('')
   const state = React.useContext(StateContext)
   const dispatch = React.useContext(DispatchContext)
 
   const startMeasure = () => {
-    if (state.inProgressId || !result.isValid) {
+    if (state.inProgressId || !isValid) {
       return
     }
-    changeTrackerName()
+    changeTrackerName('')
 
     const currentDate = DateUtil.getCurrentDate()
-    dispatch(start(result.updatedValue.trackerName, today, currentDate))
+    dispatch(start(trackerName, today, currentDate))
     calculateCurrentCount(currentDate)
   }
 
@@ -35,17 +36,24 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
 
   return (
     <div className="flex items-start">
-      {renderTrackerForm({
-        disabled: !!state.inProgressId,
-        onKeyDown: keyDown,
-        className: 'mr-4',
-        ...props,
-      })}
+      <Input
+        value={trackerName}
+        type="text"
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          changeTrackerName(event.target.value)
+        }
+        onKeyDown={keyDown}
+        className="mr-4"
+        disabled={!!state.inProgressId}
+        size={60}
+        maxLength={30}
+        {...props}
+      />
       <StartIcon
         width={42}
         height={42}
         onClick={startMeasure}
-        disabled={!!(state.inProgressId || !result.isValid)}
+        disabled={!!(state.inProgressId || !isValid)}
       />
     </div>
   )

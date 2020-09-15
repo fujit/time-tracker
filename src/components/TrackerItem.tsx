@@ -7,6 +7,8 @@ import * as DateUtil from '../utils/DateUtil'
 import { StartIcon, PauseIcon } from './Icon'
 import { Button } from './Button'
 import { DecimalText } from './Number'
+import { Input } from './Input'
+import { keycode } from '../utils/Constants'
 
 type Props = {
   tracker: Tracker
@@ -17,7 +19,7 @@ type Props = {
 }
 
 export const TrackerItem: React.FC<Props> = (props) => {
-  const [result, renderTrackerForm] = useTrackerForm(props.tracker.name)
+  const [trackerName, isValid, changeTrackerName] = useTrackerForm(props.tracker.name)
   const [calcSum] = useTrackerCalc()
   const dispatch = React.useContext(DispatchContext)
   const state = React.useContext(StateContext)
@@ -30,13 +32,13 @@ export const TrackerItem: React.FC<Props> = (props) => {
   )
 
   const updateTrackerName = () => {
-    if (result.isValid) {
-      dispatch(updateName(props.tracker.id, result.updatedValue.trackerName))
+    if (isValid) {
+      dispatch(updateName(props.tracker.id, trackerName))
     }
   }
 
   const restartMeasure = () => {
-    if (result.isValid) {
+    if (isValid) {
       const currentDate = DateUtil.getCurrentDate()
       dispatch(restart(props.tracker.id, currentDate))
       props.calculateCurrentCount(currentDate)
@@ -48,20 +50,32 @@ export const TrackerItem: React.FC<Props> = (props) => {
     props.pauseTimer()
   }
 
+  const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === keycode.enter) {
+      updateTrackerName()
+    }
+  }
+
   return (
     <div className="flex flex-col h-16">
       <div className="flex items-center mb-4">
-        {renderTrackerForm({
-          isError: !result.isValid,
-          hasFrame: false,
-          onBlur: updateTrackerName,
-          className: 'mr-4',
-        })}
+        <Input
+          type="text"
+          value={trackerName}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            changeTrackerName(event.target.value)
+          }
+          onBlur={updateTrackerName}
+          onKeyDown={keyDown}
+          className="mr-4"
+          size={60}
+          maxLength={30}
+          isError={!isValid}
+          hasFrame={false}
+        />
         <Button
           className="mr-4"
-          onClick={() =>
-            props.openBreakdown({ ...props.tracker, name: result.updatedValue.trackerName })
-          }
+          onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
         >
           内訳を見る
         </Button>
@@ -73,11 +87,11 @@ export const TrackerItem: React.FC<Props> = (props) => {
             width={36}
             height={36}
             onClick={restartMeasure}
-            disabled={!!(state.inProgressId || !result.isValid)}
+            disabled={!!(state.inProgressId || !isValid)}
           />
         )}
       </div>
-      {!result.isValid && <p className="mt-2 text-red-500">validate error</p>}
+      {!isValid && <p className="mt-2 text-red-500">validate error</p>}
     </div>
   )
 }
