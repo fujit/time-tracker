@@ -1,11 +1,15 @@
 import React from 'react'
 import { useTimePicker } from '../utils/hooks/useTimePicker'
 import { Modal } from './Modal'
+import { Input } from './Input'
 import { Button } from './Button'
 
 type Props = {
+  start: string
+  changeStart: (event: React.ChangeEvent<HTMLInputElement>) => void
+  end: string
+  changeEnd: (event: React.ChangeEvent<HTMLInputElement>) => void
   isValid: boolean
-  renderTimePicker: () => JSX.Element
   update: () => void
   isOpen: boolean
   closeModal: () => void
@@ -13,7 +17,10 @@ type Props = {
 }
 
 const Component: React.FC<Props> = ({
-  renderTimePicker,
+  start,
+  changeStart,
+  end,
+  changeEnd,
   isValid,
   update,
   isOpen,
@@ -21,7 +28,10 @@ const Component: React.FC<Props> = ({
   closeModal,
 }) => (
   <Modal id="#app" isOpen={isOpen} style={modalStyles} onRequestClose={closeModal}>
-    <div className="flex items-center justify-around">{renderTimePicker()}</div>
+    <div className="flex items-center justify-around">
+      <Input type="time" value={start} onChange={changeStart} isError={!isValid} />
+      <Input type="time" value={end} onChange={changeEnd} isError={!isValid} />
+    </div>
     <div className="flex items-center justify-around mt-4">
       <Button disabled={!isValid} onClick={update}>
         更新する
@@ -39,14 +49,14 @@ type ContainerProps = {
 }
 
 export const TimerEdit: React.FC<ContainerProps> = ({ timer, updatePastTime, ...props }) => {
-  const [result, renderTimePicker] = useTimePicker(timer.start, timer.end)
+  const [start, changeStart, end, changeEnd, isValid] = useTimePicker(timer.start, timer.end)
 
   const update = () => {
-    if (!result.isValid || !timer.end) {
+    if (!isValid || !timer.end) {
       return
     }
 
-    updatePastTime(result.updatedValue.start, result.updatedValue.end)
+    updatePastTime(start, end)
   }
 
   const modalStyles: ReactModal.Styles = {
@@ -62,11 +72,8 @@ export const TimerEdit: React.FC<ContainerProps> = ({ timer, updatePastTime, ...
 
   return (
     <Component
+      {...{ start, changeStart, end, changeEnd, isValid, update, modalStyles }}
       {...props}
-      isValid={result.isValid}
-      renderTimePicker={renderTimePicker}
-      update={update}
-      modalStyles={modalStyles}
     />
   )
 }
