@@ -10,7 +10,7 @@ type ContainerProps = {
 export const Input: React.FC<ContainerProps> = ({
   hasFrame = true,
   isError = false,
-  className,
+  className = '',
   ...props
 }) => {
   const borderColor = React.useMemo(() => (isError ? 'border-red-500' : 'border-gray-500'), [
