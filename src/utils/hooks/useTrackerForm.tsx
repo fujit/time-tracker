@@ -7,7 +7,7 @@ export const useTrackerForm = (name: string): UseTrackerFormResult => {
   const [trackerName, setTrackerName] = React.useState(name)
 
   const changeTrackerName = React.useCallback((value: string) => {
-    setTrackerName(value.replace(/\s/g, ' '))
+    setTrackerName(value.replace(/\s+/g, ' '))
   }, [])
 
   // TODO: 登録済みの名前制御
