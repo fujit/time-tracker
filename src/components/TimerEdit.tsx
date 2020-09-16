@@ -6,9 +6,9 @@ import { Button } from './Button'
 
 type Props = {
   start: string
-  changeStart: (event: React.ChangeEvent<HTMLInputElement>) => void
+  changeStart: (start: string) => void
   end: string
-  changeEnd: (event: React.ChangeEvent<HTMLInputElement>) => void
+  changeEnd: (end: string) => void
   isValid: boolean
   update: () => void
   isOpen: boolean
@@ -29,8 +29,18 @@ const Component: React.FC<Props> = ({
 }) => (
   <Modal id="#app" isOpen={isOpen} style={modalStyles} onRequestClose={closeModal}>
     <div className="flex items-center justify-around">
-      <Input type="time" value={start} onChange={changeStart} isError={!isValid} />
-      <Input type="time" value={end} onChange={changeEnd} isError={!isValid} />
+      <Input
+        type="time"
+        value={start}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeStart(e.target.value)}
+        isError={!isValid}
+      />
+      <Input
+        type="time"
+        value={end}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeEnd(e.target.value)}
+        isError={!isValid}
+      />
     </div>
     <div className="flex items-center justify-around mt-4">
       <Button disabled={!isValid} onClick={update}>
