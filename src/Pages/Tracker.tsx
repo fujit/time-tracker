@@ -39,7 +39,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
   )
 
   const [currentCount, setCurrentCount] = React.useState(0)
-  const [timerId, setTimerId] = React.useState<number | undefined>(undefined)
+  const intervalRef = React.useRef<number | undefined>(undefined)
 
   const calculateCurrentCount = (currentDate: Date) => {
     setCurrentCount(DateUtil.getTimeFromNow(currentDate, 'minute', true))
@@ -48,11 +48,11 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
       setCurrentCount(DateUtil.getTimeFromNow(currentDate, 'minute', true))
     }, 10000 * 60)
 
-    setTimerId(id)
+    intervalRef.current = id
   }
 
   const pauseTimer = () => {
-    clearInterval(timerId)
+    clearInterval(intervalRef.current)
   }
 
   // title を更新
@@ -67,7 +67,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
   }, [state.trackers, state.inProgressId])
 
   React.useEffect(() => {
-    if (!state.inProgressId || timerId) {
+    if (!state.inProgressId || intervalRef.current) {
       return
     }
 
