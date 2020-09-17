@@ -16,6 +16,7 @@ type Props = {
   calculateCurrentCount: (currentDate: Date) => void
   pauseTimer: () => void
   openBreakdown: (tracker: Tracker) => void
+  removeTracker: (trackerId: string) => void
 }
 
 export const TrackerItem: React.FC<Props> = (props) => {
@@ -56,6 +57,12 @@ export const TrackerItem: React.FC<Props> = (props) => {
     }
   }
 
+  const removeTracker = () => {
+    if (!props.tracker.inProgress) {
+      props.removeTracker(props.tracker.id)
+    }
+  }
+
   return (
     <div className="flex flex-col h-16">
       <div className="flex items-center mb-4">
@@ -78,6 +85,14 @@ export const TrackerItem: React.FC<Props> = (props) => {
           onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
         >
           内訳を見る
+        </Button>
+        <Button
+          className="mr-4"
+          colorType="danger"
+          onClick={removeTracker}
+          disabled={props.tracker.inProgress}
+        >
+          削除する
         </Button>
         <DecimalText className="w-8 mr-4" value={totalTime / 60} digits={1} unit="h" />
         {props.tracker.inProgress ? (

@@ -12,7 +12,10 @@ export class Store {
   }
 
   fetchAllByDay(day: string): Tracker[] {
-    return JSON.parse(this.storage.getItem(`${this.prefix}${day}`) || '[]')
+    const todaysTrackers: Tracker[] = JSON.parse(
+      this.storage.getItem(`${this.prefix}${day}`) || '[]'
+    )
+    return todaysTrackers.filter((tracker) => tracker.isActive)
   }
 
   save(value: Tracker[]) {

@@ -4,6 +4,7 @@ type Tracker = {
   day: string
   inProgress: boolean
   timers: Timer[]
+  isActive: boolean
 }
 
 type Timer = {

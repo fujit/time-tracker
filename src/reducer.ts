@@ -46,6 +46,7 @@ function reducer(state: State, action: Actions): State {
             start: action.payload.startTime,
           },
         ],
+        isActive: true,
       }
 
       const trackers = [...state.trackers, newTracker]
@@ -152,6 +153,42 @@ function reducer(state: State, action: Actions): State {
                     }
                   : timer
               ),
+            }
+          : tracker
+      )
+
+      store.save(trackers)
+
+      return {
+        ...state,
+        trackers,
+      }
+    }
+
+    case types.REMOVE_TRACKER: {
+      const trackers = state.trackers.map((tracker) =>
+        tracker.id === action.payload.trackerId
+          ? {
+              ...tracker,
+              isActive: false,
+            }
+          : tracker
+      )
+
+      store.save(trackers)
+
+      return {
+        ...state,
+        trackers,
+      }
+    }
+
+    case types.RESTORE_TRACKER: {
+      const trackers = state.trackers.map((tracker) =>
+        tracker.id === action.payload.trackerId
+          ? {
+              ...tracker,
+              isActive: true,
             }
           : tracker
       )

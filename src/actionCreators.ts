@@ -19,3 +19,11 @@ export function updateName(id: string, name: string) {
 export function updateTimer(trackerId: string, timerId: string, startTimer: Date, endTimer: Date) {
   return { type: types.UPDATE_TIMER, payload: { trackerId, timerId, startTimer, endTimer } }
 }
+
+export function removeTracker(trackerId: string) {
+  return { type: types.REMOVE_TRACKER, payload: { trackerId } }
+}
+
+export function restoreTracker(trackerId: string) {
+  return { type: types.RESTORE_TRACKER, payload: { trackerId } }
+}
