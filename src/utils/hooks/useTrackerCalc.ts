@@ -7,5 +7,5 @@ export const useTrackerCalc = () => {
       .reduce((previous, current) => previous + current.minute, 0)
   }, [])
 
-  return [calcSum]
+  return calcSum
 }

@@ -21,7 +21,7 @@ type Props = {
 
 export const TrackerItem: React.FC<Props> = (props) => {
   const [trackerName, isValid, changeTrackerName] = useTrackerForm(props.tracker.name)
-  const [calcSum] = useTrackerCalc()
+  const calcSum = useTrackerCalc()
   const dispatch = React.useContext(DispatchContext)
   const state = React.useContext(StateContext)
 

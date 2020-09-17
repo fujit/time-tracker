@@ -22,7 +22,7 @@ const Component: React.FC<Props> = ({ isCopied, onCopy }) => (
 )
 
 export const TrackerCopy: React.FC = () => {
-  const [calcSum] = useTrackerCalc()
+  const calcSum = useTrackerCalc()
   const [onCopy, isCopied] = useClipBoard()
   const state = React.useContext(StateContext)
 

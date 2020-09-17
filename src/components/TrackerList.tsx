@@ -81,7 +81,7 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
   const [breakdownTracker, setBreakdownTracker] = React.useState<Tracker | undefined>(undefined)
   const [deletedTracker, setDeletedTracker] = React.useState<string | undefined>(undefined)
   const [isOpen, toggleModal] = useModal()
-  const [calcSum] = useTrackerCalc()
+  const calcSum = useTrackerCalc()
   const state = React.useContext(StateContext)
   const dispatch = React.useContext(DispatchContext)
 
