@@ -46,7 +46,6 @@ const Component: React.FC<Props> = ({
       <Button disabled={!isValid} onClick={update}>
         更新する
       </Button>
-      <Button colorType="danger">削除する</Button>
     </div>
   </Modal>
 )

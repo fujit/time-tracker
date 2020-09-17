@@ -20,6 +20,10 @@ export function updateTimer(trackerId: string, timerId: string, startTimer: Date
   return { type: types.UPDATE_TIMER, payload: { trackerId, timerId, startTimer, endTimer } }
 }
 
+export function deleteTimer(trackerId: string, timerId: string) {
+  return { type: types.DELETE_TIMER, payload: { trackerId, timerId } }
+}
+
 export function removeTracker(trackerId: string) {
   return { type: types.REMOVE_TRACKER, payload: { trackerId } }
 }

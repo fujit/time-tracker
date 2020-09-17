@@ -42,7 +42,7 @@ const Component: React.FC<Props> = ({
       {breakdownTracker && (
         <TrackerBreakdown
           isBreakdownOpen={isOpen}
-          tracker={breakdownTracker}
+          trackerId={breakdownTracker.id}
           closeBreakdown={closeBreakdown}
         />
       )}

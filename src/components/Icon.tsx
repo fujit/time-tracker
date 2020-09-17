@@ -1,5 +1,6 @@
 import React from 'react'
 import edit from '../assets/img/edit.svg'
+import trash from '../assets/img/trash.svg'
 import copy from '../assets/img/copy.svg'
 import start from '../assets/img/start.svg'
 import pause from '../assets/img/pause.svg'
@@ -14,6 +15,10 @@ type Props = {
 
 export const EditIcon: React.FC<Props> = (props) => {
   return <Component {...props} alt="editIcon" src={edit} />
+}
+
+export const TrashIcon: React.FC<Props> = (props) => {
+  return <Component {...props} alt="trashIcon" src={trash} />
 }
 
 export const CopyIcon: React.FC<Props> = (props) => {

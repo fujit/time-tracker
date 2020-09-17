@@ -165,6 +165,24 @@ function reducer(state: State, action: Actions): State {
       }
     }
 
+    case types.DELETE_TIMER: {
+      const trackers = state.trackers.map((tracker) =>
+        tracker.id === action.payload.trackerId
+          ? {
+              ...tracker,
+              timers: tracker.timers.filter((timer) => timer.id !== action.payload.timerId),
+            }
+          : tracker
+      )
+
+      store.save(trackers)
+
+      return {
+        ...state,
+        trackers,
+      }
+    }
+
     case types.REMOVE_TRACKER: {
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.trackerId
