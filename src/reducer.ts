@@ -220,7 +220,7 @@ function reducer(state: State, action: Actions): State {
     }
 
     default:
-      throw new Error()
+      return state
   }
 }
 
