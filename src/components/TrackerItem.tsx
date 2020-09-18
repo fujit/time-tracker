@@ -32,9 +32,11 @@ export const TrackerItem: React.FC<Props> = (props) => {
     [sum, props.currentCount, props.tracker.inProgress]
   )
 
+  const nameRef = React.useRef(trackerName)
   const updateTrackerName = () => {
-    if (isValid) {
+    if (isValid && nameRef.current !== trackerName) {
       dispatch(updateName(props.tracker.id, trackerName))
+      nameRef.current = trackerName
     }
   }
 
