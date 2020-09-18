@@ -1,8 +1,8 @@
+import { v4 as uuidv4 } from 'uuid'
 import * as types from './actionTypes'
 import * as creators from './actionCreators'
 import { CreatorsToActions } from './creatorsToActions'
 import { Store } from './Store'
-import * as StringUtil from './utils/StringUtil'
 import * as DateUtil from './utils/DateUtil'
 
 const store = Store.instance
@@ -34,7 +34,7 @@ function reducer(state: State, action: Actions): State {
         return state
       }
 
-      const id = StringUtil.generateTrackerId()
+      const id = uuidv4()
       const newTracker: Tracker = {
         id,
         name: action.payload.name,
