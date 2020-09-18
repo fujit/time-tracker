@@ -75,7 +75,7 @@ describe('TrackerBreakdown Component', () => {
       })
 
       test('閉じるアイコンが表示されていること', () => {
-        expect(screen.getByAltText('closeIcon')).toBeInTheDocument()
+        expect(screen.getByTestId('closeIcon')).toBeInTheDocument()
       })
 
       test('リストが2つ表示されていること', () => {
@@ -151,7 +151,7 @@ describe('TrackerBreakdown Component', () => {
     })
 
     test('閉じるボタンを押すとモーダルが閉じること', () => {
-      userEvent.click(screen.getByAltText('closeIcon'))
+      userEvent.click(screen.getByTestId('closeIcon'))
       expect(closeBreakdown).toHaveBeenCalledTimes(1)
     })
 
