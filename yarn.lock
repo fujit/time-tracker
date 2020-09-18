@@ -1336,6 +1336,13 @@
     "@babel/runtime" "^7.11.2"
     "@testing-library/dom" "^7.23.0"
 
+"@testing-library/user-event@^12.1.5":
+  version "12.1.5"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-12.1.5.tgz#b2a94b8b3c1a908cc1c425623b11de63b20bb837"
+  integrity sha512-FzTnKvb0KC4T84G6uTx971ja8OOqLlsprzWbeRyd8f1MDwbcLIFgx0Hyr56izY9m9y2KwHGVKeVEkTPslw32lw==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+
 "@types/anymatch@*":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
@@ -6171,6 +6178,13 @@ jest-snapshot@^26.4.2:
     natural-compare "^1.4.0"
     pretty-format "^26.4.2"
     semver "^7.3.2"
+
+jest-url-loader@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/jest-url-loader/-/jest-url-loader-0.1.0.tgz#8c508f26ae8e0140b24e323604f6ba35364ba983"
+  integrity sha512-XbYYGUuejpKe7bnAwIcNqy3lBFn2Ml7dtBCnZk0qOgAOBgsU4/M0hcq5mgW+l9gRjT6QAH/2eCtRN135Y6pcKw==
+  dependencies:
+    mime "^2.4.4"
 
 jest-util@26.x, jest-util@^26.3.0:
   version "26.3.0"
