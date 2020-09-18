@@ -7,7 +7,7 @@
     "fix:css": "stylelint --fix src/**/*.{scss,css}",
     "lint": "eslint src -c .eslintrc.json --ext ts,tsx",
     "lint:css": "stylelint src/**/*.{scss,css}",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "classnames": "^2.2.6",

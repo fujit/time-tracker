@@ -18,7 +18,9 @@ const Component: React.FC<Props> = ({ children, ...props }) => (
 )
 
 export const Modal: React.FC<ContainerProps> = ({ id, ...props }) => {
-  ReactModal.setAppElement(id)
+  if (process.env.NODE_ENV !== 'test') {
+    ReactModal.setAppElement(id)
+  }
 
   return <Component {...props} />
 }
