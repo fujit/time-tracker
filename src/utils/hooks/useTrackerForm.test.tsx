@@ -17,13 +17,15 @@ const Wrapper = () => {
 }
 
 describe('useTrackerForm', () => {
-  test('引数に渡した文字列が初期値となること', () => {
+  beforeEach(() => {
     render(<Wrapper />)
+  })
+
+  test('引数に渡した文字列が初期値となること', () => {
     expect(screen.getByRole('textbox')).toHaveValue('initial')
   })
 
   test('テキストボックスの変更が反映されること', () => {
-    render(<Wrapper />)
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'FireEvent' },
     })
@@ -31,7 +33,6 @@ describe('useTrackerForm', () => {
   })
 
   test('全角スペースが半角スペースへ変換されること', () => {
-    render(<Wrapper />)
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'Fire Event' },
     })
@@ -39,7 +40,6 @@ describe('useTrackerForm', () => {
   })
 
   test('連続する2つの半角スペースが1つの半角スペースへ変換されること', () => {
-    render(<Wrapper />)
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'Fire  Event' },
     })
@@ -47,7 +47,6 @@ describe('useTrackerForm', () => {
   })
 
   test('複数箇所にある全角スペースがすべて半角スペースへ変換されること', () => {
-    render(<Wrapper />)
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: 'Fi re E  vent' },
     })
@@ -55,7 +54,6 @@ describe('useTrackerForm', () => {
   })
 
   test('入力がなにもないときバリデーションエラーとなること', () => {
-    render(<Wrapper />)
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: '' },
     })
@@ -63,7 +61,6 @@ describe('useTrackerForm', () => {
   })
 
   test('入力が30文字より長い場合バリデーションエラーとなること', () => {
-    render(<Wrapper />)
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: '寿限無寿限無五劫の擦切海砂利水魚の水行末雲来末風来末食う寝ると' },
     })
@@ -71,7 +68,6 @@ describe('useTrackerForm', () => {
   })
 
   test('入力が30文字の場合バリデーションにならないこと', () => {
-    render(<Wrapper />)
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: '寿限無寿限無五劫の擦切海砂利水魚の水行末雲来末風来末食う寝る' },
     })
