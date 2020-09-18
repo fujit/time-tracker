@@ -88,10 +88,10 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "eslint src -c .eslintrc.json --ext ts,ts"
+      "eslint --fix src -c .eslintrc.json --ext ts,ts"
     ],
     "src/**/*.{.css,scss}": [
-      "stylelint src/**/*.{scss,css}"
+      "stylelint --fix src/**/*.{scss,css}"
     ]
   }
 }
