@@ -126,7 +126,8 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props
       right: 'auto',
       bottom: 'auto',
       minHeight: '400px',
-      maxHeight: '600px',
+      maxHeight: '500px',
+      minWidth: '400px',
       maxWidth: '100%',
     },
   }
