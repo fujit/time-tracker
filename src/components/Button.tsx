@@ -4,11 +4,12 @@ type Props = {
   children: string
 } & JSX.IntrinsicElements['button']
 
-const Component: React.FC<Props> = ({ children, className, ...props }) => (
+const Component: React.FC<Props> = ({ children, className = '', ...props }) => (
   <button
     type="button"
     // eslint-disable-next-line max-len
-    className={`${className} inline-block text-sm text-white cursor-pointer select-none outline-none rounded shadow p-2 disabled:cursor-not-allowed disabled:opacity-50`}
+    className={`${className} text-white active:bg-green-600 select-none font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 disabled:cursor-not-allowed disabled:opacity-50`}
+    style={{ transition: 'all .15s ease' }}
     {...props}
   >
     {children}
