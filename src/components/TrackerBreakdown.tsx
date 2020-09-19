@@ -121,14 +121,13 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props
 
   const modalStyles: ReactModal.Styles = {
     content: {
-      top: '20%',
-      left: '20%',
+      top: '16%',
+      left: '16%',
       right: 'auto',
       bottom: 'auto',
-      minWidth: '400px',
       minHeight: '400px',
       maxHeight: '600px',
-      maxWidth: '900px',
+      maxWidth: '100%',
     },
   }
 

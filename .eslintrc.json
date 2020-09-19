@@ -27,7 +27,7 @@
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "no-plusplus": "off",
-    "max-len": ["error", { "code": 140 }],
+    "max-len": ["warn", { "code": 140 }],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-filename-extension": "off",

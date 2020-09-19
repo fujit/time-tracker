@@ -37,7 +37,9 @@ const Component: React.FC<Props> = ({
   totalTime,
 }) => (
   <>
-    {deletedTracker && <Alert restore={restore} />}
+    {deletedTracker && (
+      <Alert restore={restore} className="w-4/6 sm:w-2/5 md:w-2/5 lg:w-1/4 xl:w-1/4" />
+    )}
     <div className="mt-12">
       {breakdownTracker && (
         <TrackerBreakdown
@@ -52,19 +54,21 @@ const Component: React.FC<Props> = ({
         <TrackerCopy />
       </div>
       <div>
-        {trackers
-          .filter((tracker) => tracker.isActive)
-          .map((tracker) => (
-            <TrackerItem
-              key={tracker.id}
-              tracker={tracker}
-              currentCount={currentCount}
-              calculateCurrentCount={calculateCurrentCount}
-              pauseTimer={pauseTimer}
-              openBreakdown={openBreakdown}
-              removeTracker={remove}
-            />
-          ))}
+        <ul>
+          {trackers
+            .filter((tracker) => tracker.isActive)
+            .map((tracker) => (
+              <TrackerItem
+                key={tracker.id}
+                tracker={tracker}
+                currentCount={currentCount}
+                calculateCurrentCount={calculateCurrentCount}
+                pauseTimer={pauseTimer}
+                openBreakdown={openBreakdown}
+                removeTracker={remove}
+              />
+            ))}
+        </ul>
       </div>
     </div>
   </>

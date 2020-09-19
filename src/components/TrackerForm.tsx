@@ -43,9 +43,8 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
           changeTrackerName(event.target.value)
         }
         onKeyDown={keyDown}
-        className="mr-4"
+        className="w-3/4 mr-4 lg:w-1/2 xl:w-1/2"
         disabled={!!state.inProgressId}
-        size={60}
         maxLength={30}
         {...props}
       />

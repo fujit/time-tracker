@@ -66,8 +66,8 @@ export const TrackerItem: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="flex flex-col h-16">
-      <div className="flex items-center mb-4">
+    <div className="flex flex-col h-16 mb-8">
+      <div className="flex items-center">
         <Input
           type="text"
           value={trackerName}
@@ -76,26 +76,27 @@ export const TrackerItem: React.FC<Props> = (props) => {
           }
           onBlur={updateTrackerName}
           onKeyDown={keyDown}
-          className="mr-4"
-          size={60}
+          className="w-2/5 mr-4"
           maxLength={30}
           isError={!isValid}
           hasFrame={false}
         />
-        <Button
-          className="mr-4"
-          onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
-        >
-          内訳を見る
-        </Button>
-        <Button
-          className="mr-4"
-          colorType="danger"
-          onClick={removeTracker}
-          disabled={props.tracker.inProgress}
-        >
-          削除する
-        </Button>
+        <div className="flex flex-col xl:flex-row lg:flex-row">
+          <Button
+            className="mr-4"
+            onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
+          >
+            内訳を見る
+          </Button>
+          <Button
+            className="mr-4"
+            colorType="danger"
+            onClick={removeTracker}
+            disabled={props.tracker.inProgress}
+          >
+            削除する
+          </Button>
+        </div>
         <DecimalText className="w-8 mr-4" value={totalTime / 60} digits={1} unit="h" />
         {props.tracker.inProgress ? (
           <PauseIcon width={36} height={36} onClick={pauseMeasure} />
