@@ -13,7 +13,7 @@ type Props = {
 }
 
 const Component: React.FC<Props> = ({ calculateCurrentCount, today, currentCount, pauseTimer }) => (
-  <div className="pl-4">
+  <>
     <TrackerForm calculateCurrentCount={calculateCurrentCount} today={today} />
     <TrackerList
       currentCount={currentCount}
@@ -21,7 +21,7 @@ const Component: React.FC<Props> = ({ calculateCurrentCount, today, currentCount
       pauseTimer={pauseTimer}
       today={today}
     />
-  </div>
+  </>
 )
 
 type ContainerProps = {

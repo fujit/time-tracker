@@ -10,10 +10,12 @@ const App: React.FC = () => {
   const todaysTrackers = store.fetchAllByDay(today)
 
   return (
-    <div className="container mx-auto">
+    <>
       <Header title="timer" />
-      <Home todaysTrackers={todaysTrackers} today={today} />
-    </div>
+      <div className="container mx-auto">
+        <Home todaysTrackers={todaysTrackers} today={today} />
+      </div>
+    </>
   )
 }
 
