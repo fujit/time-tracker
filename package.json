@@ -90,7 +90,8 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "eslint --fix src -c .eslintrc.json --ext ts,ts"
+      "eslint --fix src -c .eslintrc.json --ext ts,ts",
+      "jest --findRelatedTests"
     ],
     "src/**/*.{.css,scss}": [
       "stylelint --fix src/**/*.{scss,css}"
