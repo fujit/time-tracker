@@ -7,7 +7,7 @@ import * as DateUtil from '../utils/DateUtil'
 import { StartIcon, PauseIcon } from './Icon'
 import { Button } from './Button'
 import { DecimalText } from './Number'
-import { Input } from './Input'
+import { ForwardedInput } from './Input'
 import { keycode } from '../utils/Constants'
 
 type Props = {
@@ -32,11 +32,10 @@ export const TrackerItem: React.FC<Props> = (props) => {
     [sum, props.currentCount, props.tracker.inProgress]
   )
 
-  const nameRef = React.useRef(trackerName)
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
   const updateTrackerName = () => {
-    if (isValid && nameRef.current !== trackerName) {
+    if (isValid) {
       dispatch(updateName(props.tracker.id, trackerName))
-      nameRef.current = trackerName
     }
   }
 
@@ -55,7 +54,9 @@ export const TrackerItem: React.FC<Props> = (props) => {
 
   const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.keyCode === keycode.enter) {
-      updateTrackerName()
+      if (isValid && inputRef.current) {
+        inputRef.current.blur()
+      }
     }
   }
 
@@ -68,7 +69,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
   return (
     <div className="flex flex-col h-16 mb-8">
       <div className="flex items-center">
-        <Input
+        <ForwardedInput
           type="text"
           value={trackerName}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -76,15 +77,16 @@ export const TrackerItem: React.FC<Props> = (props) => {
           }
           onBlur={updateTrackerName}
           onKeyDown={keyDown}
-          className="w-2/5 mr-4"
+          className="w-2/5 mr-4 border-0"
           maxLength={30}
           isError={!isValid}
-          hasFrame={false}
+          ref={inputRef}
         />
         <div className="flex flex-col xl:flex-row lg:flex-row">
           <Button
             className="mr-4"
             onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
+            data-testid="breakdown-button"
           >
             内訳を見る
           </Button>
@@ -93,6 +95,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
             colorType="danger"
             onClick={removeTracker}
             disabled={props.tracker.inProgress}
+            data-testid="remove-button"
           >
             削除する
           </Button>
@@ -109,7 +112,11 @@ export const TrackerItem: React.FC<Props> = (props) => {
           />
         )}
       </div>
-      {!isValid && <p className="mt-2 text-red-500">validate error</p>}
+      {!isValid && (
+        <p className="mt-2 text-red-500" role="alert">
+          validate error
+        </p>
+      )}
     </div>
   )
 }

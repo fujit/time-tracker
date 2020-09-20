@@ -1,9 +1,36 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
 
 .timer-start::after {
   content: '~';
+
   @apply mr-1;
   @apply ml-1;
 }
+
+.input {
+  @apply h-10;
+  @apply p-4;
+  @apply text-base;
+  @apply border;
+  @apply border-solid;
+  @apply rounded-lg;
+  @apply outline-none;
+  @apply box-border;
+}
+
+.input:disabled {
+  @apply cursor-not-allowed;
+}
+
+.input:focus {
+  @apply border;
+  @apply border-gray-500;
+}
+
+.input.error {
+  @apply border-red-500;
+  @apply border;
+}
+
+@import 'tailwindcss/utilities';
