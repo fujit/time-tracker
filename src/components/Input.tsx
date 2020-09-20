@@ -11,7 +11,7 @@ export const Input: React.FC<ContainerProps> = ({ isError = false, className = '
 
 export const ForwardedInput = React.forwardRef(
   (props: ContainerProps, ref: React.Ref<HTMLInputElement> | null) => {
-    const { isError = false, className, ...inputProps } = props
+    const { isError, className, ...inputProps } = props
 
     return (
       <input
@@ -22,3 +22,7 @@ export const ForwardedInput = React.forwardRef(
     )
   }
 )
+
+ForwardedInput.defaultProps = {
+  isError: false,
+}
