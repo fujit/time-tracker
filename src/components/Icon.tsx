@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import edit from '../assets/img/edit.svg'
 import trash from '../assets/img/trash.svg'
 import copy from '../assets/img/copy.svg'
@@ -6,7 +7,11 @@ import start from '../assets/img/start.svg'
 import pause from '../assets/img/pause.svg'
 
 const Component: React.FC<JSX.IntrinsicElements['img']> = ({ alt, className, ...props }) => (
-  <img {...props} alt={alt} className={`${className} no-underline cursor-pointer select-none`} />
+  <img
+    {...props}
+    alt={alt}
+    className={classNames(className, 'no-underline cursor-pointer select-none')}
+  />
 )
 
 type Props = {

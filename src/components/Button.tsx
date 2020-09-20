@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 type Props = {
   children: string
@@ -7,8 +8,12 @@ type Props = {
 const Component: React.FC<Props> = ({ children, className = '', ...props }) => (
   <button
     type="button"
-    // eslint-disable-next-line max-len
-    className={`${className} text-white active:bg-green-600 select-none font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 disabled:cursor-not-allowed disabled:opacity-50`}
+    className={classNames(
+      'text-white active:bg-green-600 select-none font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 mb-1',
+      'hover:shadow-md',
+      'disabled:cursor-not-allowed disabled:opacity-50',
+      className
+    )}
     style={{ transition: 'all .15s ease' }}
     {...props}
   >
@@ -29,7 +34,7 @@ export const Button: React.FC<ContainerProps> = ({
 }) => {
   const backgroundColor = colorType === 'danger' ? 'bg-red-500' : 'bg-green-500'
   return (
-    <Component {...props} className={`${className} ${backgroundColor}`}>
+    <Component {...props} className={classNames(className, backgroundColor)}>
       {children}
     </Component>
   )

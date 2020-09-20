@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 type Props = {
   restore: () => void
@@ -7,7 +8,10 @@ type Props = {
 
 export const Alert: React.FC<Props> = ({ restore, className = '' }) => (
   <div
-    className={`absolute top-0 right-0 mt-4 mr-4 bg-red-500 rounded transition-all duration-100 ${className}`}
+    className={classNames(
+      'absolute top-0 right-0 mt-4 mr-4 bg-red-500 rounded transition-all duration-100',
+      className
+    )}
     role="alert"
   >
     <div className="px-4 py-3 text-red-700 border border-red-400 rounded">
