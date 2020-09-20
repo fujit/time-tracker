@@ -70,14 +70,20 @@ describe('TrackerItem', () => {
         expect(screen.getByRole('textbox')).toHaveValue('React')
       })
 
-      test('内訳を見るボタンが表示されていること', () => {
+      test('内訳を見るボタンが存在していること', () => {
         expect(screen.getByTestId('breakdown-button')).toHaveTextContent('内訳を見る')
       })
 
-      test('削除するボタンが表示されていること', () => {
+      test('削除するボタンが存在していること', () => {
         expect(screen.getByTestId('remove-button')).toHaveTextContent('削除する')
         expect(screen.getByTestId('remove-button')).toBeEnabled()
       })
+
+      test('「内訳を見る」と「削除」ボタンは見えないようになっていること', () => {
+        expect(screen.getByTestId('button-list')).toHaveClass('opacity-0')
+      })
+
+      test.todo('アイテムにホバーした時に「内訳を見る」「削除」ボタンが見えるようになる')
 
       test('バリデーションエラーのメッセージが表示されていない', () => {
         expect(screen.queryByRole('alert')).toBeNull()

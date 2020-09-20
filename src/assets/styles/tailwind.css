@@ -33,4 +33,8 @@
   @apply border;
 }
 
+.hover-opacity-parent:hover .hover-opacity-child {
+  @apply opacity-100;
+}
+
 @import 'tailwindcss/utilities';

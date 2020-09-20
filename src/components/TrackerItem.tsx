@@ -68,7 +68,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
 
   return (
     <div className="flex flex-col h-16 mb-8">
-      <div className="flex items-center">
+      <div className="flex items-center hover-opacity-parent" data-testid="items">
         <ForwardedInput
           type="text"
           value={trackerName}
@@ -82,7 +82,10 @@ export const TrackerItem: React.FC<Props> = (props) => {
           isError={!isValid}
           ref={inputRef}
         />
-        <div className="flex flex-col xl:flex-row lg:flex-row">
+        <div
+          className="flex flex-col opacity-0 xl:flex-row lg:flex-row hover-opacity-child"
+          data-testid="button-list"
+        >
           <Button
             className="mr-4"
             onClick={() => props.openBreakdown(props.tracker.id)}
