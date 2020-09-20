@@ -13,11 +13,11 @@ type Props = {
   deletedTracker: string | undefined
   restore: () => void
   trackers: Tracker[]
-  openBreakdown: (tracker: Tracker) => void
+  openBreakdown: (trackerId: string) => void
   remove: (trackerId: string) => void
   closeBreakdown: () => void
   isOpen: boolean
-  breakdownTracker?: Tracker
+  breakdownTrackerId: string
   totalTime: number
 } & ContainerProps
 
@@ -27,7 +27,7 @@ const Component: React.FC<Props> = ({
   isOpen,
   openBreakdown,
   remove,
-  breakdownTracker,
+  breakdownTrackerId,
   closeBreakdown,
   trackers,
   currentCount,
@@ -41,10 +41,10 @@ const Component: React.FC<Props> = ({
       <Alert restore={restore} className="w-4/6 sm:w-2/5 md:w-2/5 lg:w-1/4 xl:w-1/4" />
     )}
     <div className="mt-12">
-      {breakdownTracker && (
+      {breakdownTrackerId && (
         <TrackerBreakdown
           isBreakdownOpen={isOpen}
-          trackerId={breakdownTracker.id}
+          trackerId={breakdownTrackerId}
           closeBreakdown={closeBreakdown}
         />
       )}
@@ -82,7 +82,7 @@ type ContainerProps = {
 }
 
 export const TrackerList: React.FC<ContainerProps> = (props) => {
-  const [breakdownTracker, setBreakdownTracker] = React.useState<Tracker | undefined>(undefined)
+  const [breakdownTrackerId, setBreakdownTrackerId] = React.useState('')
   const [deletedTracker, setDeletedTracker] = React.useState<string | undefined>(undefined)
   const [isOpen, toggleModal] = useModal()
   const calcSum = useTrackerCalc()
@@ -94,14 +94,14 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
     [state.trackers, calcSum]
   )
 
-  const openBreakdown = (tracker: Tracker) => {
+  const openBreakdown = (trackerId: string) => {
     toggleModal(true)
-    setBreakdownTracker(tracker)
+    setBreakdownTrackerId(trackerId)
   }
 
   const closeBreakdown = () => {
     toggleModal(false)
-    setBreakdownTracker(undefined)
+    setBreakdownTrackerId('')
   }
 
   const timeoutRef = React.useRef(0)
@@ -132,7 +132,7 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
       openBreakdown={openBreakdown}
       remove={remove}
       closeBreakdown={closeBreakdown}
-      breakdownTracker={breakdownTracker}
+      breakdownTrackerId={breakdownTrackerId}
       isOpen={isOpen}
       totalTime={totalTime}
     />

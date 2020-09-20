@@ -15,7 +15,7 @@ type Props = {
   currentCount?: number
   calculateCurrentCount: (currentDate: Date) => void
   pauseTimer: () => void
-  openBreakdown: (tracker: Tracker) => void
+  openBreakdown: (trackerId: string) => void
   removeTracker: (trackerId: string) => void
 }
 
@@ -85,7 +85,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
         <div className="flex flex-col xl:flex-row lg:flex-row">
           <Button
             className="mr-4"
-            onClick={() => props.openBreakdown({ ...props.tracker, name: trackerName })}
+            onClick={() => props.openBreakdown(props.tracker.id)}
             data-testid="breakdown-button"
           >
             内訳を見る

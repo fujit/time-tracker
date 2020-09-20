@@ -203,17 +203,7 @@ describe('TrackerItem', () => {
       test('内訳を見るボタンを押すと、イベントが発火すること', () => {
         userEvent.click(screen.getByTestId('breakdown-button'))
         expect(openBreakdown).toHaveBeenCalledTimes(1)
-        expect(openBreakdown).toHaveBeenCalledWith(testData)
-      })
-
-      test('名前を変更して、内訳を見るボタンを押した時、変更後の名前が反映されること', () => {
-        userEvent.type(screen.getByRole('textbox'), ' vs Svelte')
-        userEvent.click(screen.getByTestId('breakdown-button'))
-        expect(openBreakdown).toHaveBeenCalledTimes(1)
-        expect(openBreakdown).toHaveBeenCalledWith({
-          ...testData,
-          name: `${testData.name} vs Svelte`,
-        })
+        expect(openBreakdown).toHaveBeenCalledWith(testData.id)
       })
 
       test('削除するボタンを押すと、イベントが発火すること', () => {
