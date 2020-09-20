@@ -13,7 +13,6 @@ type Props = {
   update: () => void
   isOpen: boolean
   closeModal: () => void
-  modalStyles: ReactModal.Styles
 }
 
 const Component: React.FC<Props> = ({
@@ -24,10 +23,9 @@ const Component: React.FC<Props> = ({
   isValid,
   update,
   isOpen,
-  modalStyles,
   closeModal,
 }) => (
-  <Modal id="#app" isOpen={isOpen} style={modalStyles} onRequestClose={closeModal}>
+  <Modal isOpen={isOpen} onRequestClose={closeModal}>
     <div className="flex items-center justify-around">
       <Input
         type="time"
@@ -68,21 +66,5 @@ export const TimerEdit: React.FC<ContainerProps> = ({ timer, updatePastTime, ...
     updatePastTime(start, end)
   }
 
-  const modalStyles: ReactModal.Styles = {
-    content: {
-      top: '30%',
-      left: '30%',
-      right: 'auto',
-      bottom: 'auto',
-      width: '300px',
-      height: '150px',
-    },
-  }
-
-  return (
-    <Component
-      {...{ start, changeStart, end, changeEnd, isValid, update, modalStyles }}
-      {...props}
-    />
-  )
+  return <Component {...{ start, changeStart, end, changeEnd, isValid, update }} {...props} />
 }

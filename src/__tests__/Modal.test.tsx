@@ -8,12 +8,13 @@ import { Modal } from '../components/Modal'
 type WrapperProps = {
   isOpen: boolean
   onRequestClose: () => void
+  styles?: React.CSSProperties
 }
 
-const Wrapper: React.FC<WrapperProps> = ({ isOpen, onRequestClose }) => {
+const Wrapper: React.FC<WrapperProps> = ({ isOpen, onRequestClose, styles }) => {
   ReactModal.setAppElement(document.createElement('div'))
   return (
-    <Modal id="#app" isOpen={isOpen} onRequestClose={onRequestClose}>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} styles={styles}>
       <div data-testid="modalContent">
         <h1>Test</h1>
       </div>
@@ -39,6 +40,20 @@ describe('Modal Component', () => {
 
     test.todo('ESC キーでモーダルが閉じること')
     test.todo('画面外をクリックすることで、モーダルが閉じること')
+  })
+
+  describe('パラメータ', () => {
+    beforeEach(() => {
+      onRequestClose = jest.fn()
+      const customStyles: React.CSSProperties = {
+        backgroundColor: 'green',
+      }
+      render(<Wrapper isOpen onRequestClose={onRequestClose} styles={customStyles} />)
+    })
+
+    test('指定したスタイルを適用できること', () => {
+      expect(screen.getByRole('dialog')).toHaveStyle('background-color: green')
+    })
   })
 
   describe('モーダルが閉じている時', () => {

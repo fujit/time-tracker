@@ -9,7 +9,6 @@ import * as DateUtil from '../utils/DateUtil'
 import { updateTimer, deleteTimer } from '../actionCreators'
 
 type Props = {
-  modalStyles: ReactModal.Styles
   isOpen: boolean
   openTimerEdit: (timer: CalculatedTimer) => void
   closeTimerEdit: () => void
@@ -23,7 +22,6 @@ type Props = {
 }
 
 const Component: React.FC<Props> = ({
-  modalStyles,
   closeBreakdown,
   isBreakdownOpen,
   tracker,
@@ -35,7 +33,7 @@ const Component: React.FC<Props> = ({
   isCalculatedTimer,
   deleteTrackerTimer,
 }) => (
-  <Modal id="#app" isOpen={isBreakdownOpen} style={modalStyles} onRequestClose={closeBreakdown}>
+  <Modal isOpen={isBreakdownOpen} onRequestClose={closeBreakdown}>
     {editableTimer && (
       <TimerEdit
         isOpen={isOpen}
@@ -119,19 +117,6 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props
     [editableTimer, trackerId, closeTimerEdit, dispatch]
   )
 
-  const modalStyles: ReactModal.Styles = {
-    content: {
-      top: '16%',
-      left: '16%',
-      right: 'auto',
-      bottom: 'auto',
-      minHeight: '400px',
-      maxHeight: '500px',
-      minWidth: '400px',
-      maxWidth: '100%',
-    },
-  }
-
   const isCalculatedTimer = (timer: Timer): timer is CalculatedTimer => {
     return timer.end !== undefined && timer.minute !== undefined
   }
@@ -144,7 +129,6 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props
     <Component
       {...props}
       tracker={selectedTracker}
-      modalStyles={modalStyles}
       isOpen={isOpen}
       openTimerEdit={openTimerEdit}
       closeTimerEdit={closeTimerEdit}
