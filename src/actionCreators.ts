@@ -8,8 +8,8 @@ export function restart(id: string, startTime: Date) {
   return { type: types.RESTART, payload: { id, startTime } }
 }
 
-export function pause(id: string) {
-  return { type: types.PAUSE, payload: { id } }
+export function pause(id: string, endTime: Date) {
+  return { type: types.PAUSE, payload: { id, endTime } }
 }
 
 export function updateName(id: string, name: string) {

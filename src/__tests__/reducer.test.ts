@@ -163,7 +163,7 @@ describe('store reducer', () => {
     test('should handle PAUSE', () => {
       const state = reducer(initialState(initialStateInProgress), {
         type: types.PAUSE,
-        payload: { id: '202009181111345' },
+        payload: { id: '202009181111345', endTime: new Date('2020-09-18 18:00:00') },
       })
 
       expect(state).toMatchObject({
@@ -189,7 +189,7 @@ describe('store reducer', () => {
     test('進行していない場合は、現在の state を返す', () => {
       const state = reducer(initialState(initialStateStopping), {
         type: types.PAUSE,
-        payload: { id: '202009181111345' },
+        payload: { id: '202009181111345', endTime: new Date('2020-09-18 18:00:00') },
       })
 
       expect(state).toStrictEqual(state)

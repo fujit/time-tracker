@@ -251,10 +251,6 @@ describe('TrackerItem', () => {
         userEvent.click(screen.getByAltText('pauseIcon'))
         expect(pauseTimer).toHaveBeenCalledTimes(1)
         expect(dispatch).toHaveBeenCalledTimes(1)
-        expect(dispatch).toHaveBeenCalledWith({
-          type: 'PAUSE_MEASURE',
-          payload: { id: testData.id },
-        })
       })
     })
   })

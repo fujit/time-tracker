@@ -48,7 +48,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
   }
 
   const pauseMeasure = () => {
-    dispatch(pause(props.tracker.id))
+    dispatch(pause(props.tracker.id, DateUtil.getCurrentDate()))
     props.pauseTimer()
   }
 

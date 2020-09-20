@@ -27,12 +27,13 @@ describe('actions', () => {
 
   test('計測を中断するアクションが作成されること', () => {
     const id = 'test'
+    const endTime = new Date('2020-09-18 19:00')
 
     const expectedAction = {
       type: types.PAUSE,
-      payload: { id },
+      payload: { id, endTime },
     }
-    expect(creators.pause(id)).toStrictEqual(expectedAction)
+    expect(creators.pause(id, endTime)).toStrictEqual(expectedAction)
   })
 
   test('トラッカー名を更新するアクションが作成されること', () => {
