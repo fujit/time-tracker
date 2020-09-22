@@ -50,7 +50,13 @@ const Component: React.FC<Props> = ({
       )}
       <div className="flex items-center mb-8">
         <h2 className="mx-4 text-xl">{today} のタスク</h2>
-        <DecimalText value={totalTime / 60} digits={1} unit="h" className="mr-4" />
+        <DecimalText
+          value={totalTime / 60}
+          digits={1}
+          unit="h"
+          className="mr-4"
+          data-testid="total"
+        />
         <TrackerCopy />
       </div>
       <div>

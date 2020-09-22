@@ -17,7 +17,7 @@ export const Alert: React.FC<Props> = ({ restore, className = '' }) => (
     <div className="px-4 py-3 text-red-700 border border-red-400 rounded">
       <div className="flex items-center justify-between text-white">
         <p>タスクを削除しました</p>
-        <button className="text-xs font-bold" onClick={restore}>
+        <button className="text-xs font-bold" data-testid="restore-button" onClick={restore}>
           元に戻す
         </button>
       </div>
