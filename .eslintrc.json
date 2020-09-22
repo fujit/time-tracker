@@ -23,7 +23,6 @@
     "prettier/prettier": "error",
     "no-underscore-dangle": "off",
     "no-nested-ternary": "off",
-    "no-unused-vars": "error",
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "no-plusplus": "off",
