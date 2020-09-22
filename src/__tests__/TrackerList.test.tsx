@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactModal from 'react-modal'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
@@ -61,6 +62,7 @@ describe('TrackerList', () => {
   let calculateCurrentCount: jest.Mock
   let pauseTimer: jest.Mock
   beforeEach(() => {
+    ReactModal.setAppElement(document.createElement('div'))
     calculateCurrentCount = jest.fn()
     pauseTimer = jest.fn()
     render(<Wrapper currentCount={10} {...{ calculateCurrentCount, pauseTimer }} />)
