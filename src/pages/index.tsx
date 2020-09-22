@@ -15,7 +15,6 @@ const IndexPage = ({ todaysTrackers, today }: Props) => (
 )
 
 export const getStaticProps: GetStaticProps = async () => {
-  // const response = await fetch('http://0.0.0.0:8888/trackers')
   const url = process.env.apiPath
   const response = await fetch(`${url}/trackers`)
   const todaysTrackers: Tracker[] = response.ok ? await response.json() : []
