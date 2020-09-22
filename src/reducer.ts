@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import * as types from './actionTypes'
 import * as creators from './actionCreators'
 import { CreatorsToActions } from './creatorsToActions'
@@ -31,9 +30,8 @@ function reducer(state: State, action: Actions): State {
         return state
       }
 
-      const id = uuidv4()
       const newTracker: Tracker = {
-        id,
+        id: action.payload.id,
         name: action.payload.name,
         inProgress: true,
         day: action.payload.day,
@@ -51,7 +49,7 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
-        inProgressId: id,
+        inProgressId: action.payload.id,
       }
     }
 

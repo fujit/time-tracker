@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { start } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
@@ -23,8 +24,9 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
     }
     changeTrackerName('')
 
+    const id = uuidv4()
     const currentDate = DateUtil.getCurrentDate()
-    dispatch(start(trackerName, today, currentDate))
+    dispatch(start(id, trackerName, today, currentDate))
     calculateCurrentCount(currentDate)
   }
 

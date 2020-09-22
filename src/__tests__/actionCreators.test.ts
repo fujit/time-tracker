@@ -3,15 +3,16 @@ import * as types from '../actionTypes'
 
 describe('actions', () => {
   test('計測を開始するアクションが作成されること', () => {
+    const id = 'test'
     const name = 'test'
     const day = '2020-09-18'
     const startTime = new Date('2020-09-18 10:00')
 
     const expectedAction = {
       type: types.START,
-      payload: { name, day, startTime },
+      payload: { id, name, day, startTime },
     }
-    expect(creators.start(name, day, startTime)).toStrictEqual(expectedAction)
+    expect(creators.start(id, name, day, startTime)).toStrictEqual(expectedAction)
   })
 
   test('計測を再開するアクションが作成されること', () => {

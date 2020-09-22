@@ -1,7 +1,7 @@
 import * as types from './actionTypes'
 
-export function start(name: string, day: string, startTime: Date) {
-  return { type: types.START, payload: { name, day, startTime } }
+export function start(id: string, name: string, day: string, startTime: Date) {
+  return { type: types.START, payload: { id, name, day, startTime } }
 }
 
 export function restart(id: string, startTime: Date) {

@@ -90,15 +90,17 @@ describe('store reducer', () => {
       const state = reducer(initialState(), {
         type: types.START,
         payload: {
+          id: 'test',
           name: 'test',
           day: '2020-09-18',
           startTime: new Date('2020-09-18 11:00:00'),
         },
       })
 
-      expect(state).toMatchObject({
+      expect(state).toStrictEqual({
         trackers: [
           {
+            id: 'test',
             name: 'test',
             day: '2020-09-18',
             inProgress: true,
@@ -111,8 +113,8 @@ describe('store reducer', () => {
             isActive: true,
           },
         ],
+        inProgressId: 'test',
       })
-      expect(state).toHaveProperty('inProgressId')
     })
   })
 
