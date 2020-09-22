@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useMemo, useRef } from 'react'
 import { DispatchContext, StateContext } from '../utils/contexts/StoreContext'
 import { restart, updateName, pause } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
@@ -22,17 +22,17 @@ type Props = {
 export const TrackerItem: React.FC<Props> = (props) => {
   const [trackerName, isValid, changeTrackerName] = useTrackerForm(props.tracker.name)
   const calcSum = useTrackerCalc()
-  const dispatch = React.useContext(DispatchContext)
-  const state = React.useContext(StateContext)
+  const dispatch = useContext(DispatchContext)
+  const state = useContext(StateContext)
 
-  const sum = React.useMemo(() => calcSum(props.tracker.timers), [props.tracker.timers, calcSum])
+  const sum = useMemo(() => calcSum(props.tracker.timers), [props.tracker.timers, calcSum])
 
-  const totalTime = React.useMemo(
+  const totalTime = useMemo(
     () => (props.tracker.inProgress && props.currentCount ? sum + props.currentCount : sum),
     [sum, props.currentCount, props.tracker.inProgress]
   )
 
-  const inputRef = React.useRef<HTMLInputElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
   const updateTrackerName = () => {
     if (isValid) {
       dispatch(updateName(props.tracker.id, trackerName))

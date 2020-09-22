@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import classNames from 'classnames/'
 
 type ContainerProps = {
@@ -9,7 +9,7 @@ export const Input: React.FC<ContainerProps> = ({ isError = false, className = '
   <input className={classNames('input', className, isError ? 'error' : '')} {...props} />
 )
 
-export const ForwardedInput = React.forwardRef(
+export const ForwardedInput = forwardRef(
   (props: ContainerProps, ref: React.Ref<HTMLInputElement> | null) => {
     const { isError, className, ...inputProps } = props
 

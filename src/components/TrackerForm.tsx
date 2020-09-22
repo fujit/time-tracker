@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { start } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
@@ -14,8 +14,8 @@ type Props = {
 
 export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...props }) => {
   const [trackerName, isValid, changeTrackerName] = useTrackerForm('')
-  const state = React.useContext(StateContext)
-  const dispatch = React.useContext(DispatchContext)
+  const state = useContext(StateContext)
+  const dispatch = useContext(DispatchContext)
 
   const startMeasure = () => {
     if (state.inProgressId || !isValid) {

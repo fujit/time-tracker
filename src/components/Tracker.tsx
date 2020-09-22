@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef, useEffect, useReducer } from 'react'
 import { reducer, initialState } from '../reducer'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { TrackerForm } from './TrackerForm'
@@ -30,7 +30,7 @@ type ContainerProps = {
 }
 
 export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => {
-  const [state, dispatch] = React.useReducer(
+  const [state, dispatch] = useReducer(
     reducer,
     initialState({
       trackers: todaysTrackers,
@@ -38,8 +38,8 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     })
   )
 
-  const [currentCount, setCurrentCount] = React.useState(0)
-  const intervalRef = React.useRef<number | undefined>(undefined)
+  const [currentCount, setCurrentCount] = useState(0)
+  const intervalRef = useRef<number | undefined>(undefined)
 
   const calculateCurrentCount = (currentDate: Date) => {
     setCurrentCount(DateUtil.getTimeFromNow(currentDate, 'minute', true))
@@ -56,7 +56,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
   }
 
   // title を更新
-  React.useEffect(() => {
+  useEffect(() => {
     if (state.inProgressId) {
       const inProgressTracker = state.trackers.find((tracker) => tracker.inProgress)
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -66,7 +66,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     }
   }, [state.trackers, state.inProgressId])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!state.inProgressId || intervalRef.current) {
       return
     }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Input, ForwardedInput } from '../components/Input'
@@ -27,7 +27,7 @@ describe('Input Component', () => {
 describe('ForwardedInput', () => {
   let inputRef: React.RefObject<HTMLInputElement>
   const Wrapper: React.FC<WrapperProps> = (props) => {
-    inputRef = React.useRef<HTMLInputElement>(null)
+    inputRef = useRef<HTMLInputElement>(null)
     return <ForwardedInput {...props} ref={inputRef} />
   }
 

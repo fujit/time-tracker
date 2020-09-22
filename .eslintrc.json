@@ -30,6 +30,7 @@
     "max-len": ["warn", { "code": 140 }],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
@@ -63,7 +64,7 @@
       },
       {
         "selector": "parameter",
-        "format": ["camelCase"]
+        "format": ["camelCase", "PascalCase"]
       }
     ]
   },

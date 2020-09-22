@@ -1,11 +1,11 @@
-import React from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 type UseClipBoardReturn = [(value: string) => void, boolean]
 
 export const useClipBoard = (): UseClipBoardReturn => {
-  const [isCopied, setIsCopied] = React.useState(false)
+  const [isCopied, setIsCopied] = useState(false)
 
-  const onCopy = React.useCallback((value: string) => {
+  const onCopy = useCallback((value: string) => {
     const textarea = document.createElement('textarea')
     textarea.value = value
     document.body.appendChild(textarea)
@@ -20,7 +20,7 @@ export const useClipBoard = (): UseClipBoardReturn => {
     textarea.remove()
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isCopied) {
       setTimeout(() => {
         setIsCopied(false)

@@ -2,10 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import * as types from './actionTypes'
 import * as creators from './actionCreators'
 import { CreatorsToActions } from './creatorsToActions'
-import { Store } from './Store'
 import * as DateUtil from './utils/DateUtil'
-
-const store = Store.instance
 
 export type State = {
   trackers: Tracker[]
@@ -51,8 +48,6 @@ function reducer(state: State, action: Actions): State {
 
       const trackers = [...state.trackers, newTracker]
 
-      store.save(trackers)
-
       return {
         ...state,
         trackers,
@@ -77,8 +72,6 @@ function reducer(state: State, action: Actions): State {
             }
           : tracker
       )
-
-      store.save(trackers)
 
       return {
         ...state,
@@ -111,8 +104,6 @@ function reducer(state: State, action: Actions): State {
           : tracker
       )
 
-      store.save(trackers)
-
       return {
         ...state,
         trackers,
@@ -124,8 +115,6 @@ function reducer(state: State, action: Actions): State {
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id ? { ...tracker, name: action.payload.name } : tracker
       )
-
-      store.save(trackers)
 
       return {
         ...state,
@@ -157,8 +146,6 @@ function reducer(state: State, action: Actions): State {
           : tracker
       )
 
-      store.save(trackers)
-
       return {
         ...state,
         trackers,
@@ -174,8 +161,6 @@ function reducer(state: State, action: Actions): State {
             }
           : tracker
       )
-
-      store.save(trackers)
 
       return {
         ...state,
@@ -193,8 +178,6 @@ function reducer(state: State, action: Actions): State {
           : tracker
       )
 
-      store.save(trackers)
-
       return {
         ...state,
         trackers,
@@ -210,8 +193,6 @@ function reducer(state: State, action: Actions): State {
             }
           : tracker
       )
-
-      store.save(trackers)
 
       return {
         ...state,

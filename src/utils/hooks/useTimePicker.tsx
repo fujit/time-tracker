@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import * as DateUtil from '../DateUtil'
 
 type UseTimerPickerResult = [
@@ -10,18 +10,18 @@ type UseTimerPickerResult = [
 ]
 
 export const useTimePicker = (startTime?: Date, endTime?: Date): UseTimerPickerResult => {
-  const [start, setStart] = React.useState(startTime ? DateUtil.format(startTime, 'HH:mm') : '')
-  const [end, setEnd] = React.useState(endTime ? DateUtil.format(endTime, 'HH:mm') : '')
+  const [start, setStart] = useState(startTime ? DateUtil.format(startTime, 'HH:mm') : '')
+  const [end, setEnd] = useState(endTime ? DateUtil.format(endTime, 'HH:mm') : '')
 
-  const changeStart = React.useCallback((startValue: string) => {
+  const changeStart = useCallback((startValue: string) => {
     setStart(startValue)
   }, [])
 
-  const changeEnd = React.useCallback((endValue: string) => {
+  const changeEnd = useCallback((endValue: string) => {
     setEnd(endValue)
   }, [])
 
-  const isValid = React.useMemo(() => !!(start && end && start <= end), [start, end])
+  const isValid = useMemo(() => !!(start && end && start <= end), [start, end])
 
   return [start, changeStart, end, changeEnd, isValid]
 }

@@ -1,10 +1,5 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import classNames from 'classnames'
-import edit from '../assets/img/edit.svg'
-import trash from '../assets/img/trash.svg'
-import copy from '../assets/img/copy.svg'
-import start from '../assets/img/start.svg'
-import pause from '../assets/img/pause.svg'
 
 const Component: React.FC<JSX.IntrinsicElements['img']> = ({ alt, className, ...props }) => (
   <img
@@ -19,28 +14,24 @@ type Props = {
 } & JSX.IntrinsicElements['img']
 
 export const EditIcon: React.FC<Props> = (props) => {
-  return <Component {...props} alt="editIcon" src={edit} />
+  return <Component {...props} alt="editIcon" src="/images/edit.svg" />
 }
 
 export const TrashIcon: React.FC<Props> = (props) => {
-  return <Component {...props} alt="trashIcon" src={trash} />
+  return <Component {...props} alt="trashIcon" src="/images/trash.svg" />
 }
 
 export const CopyIcon: React.FC<Props> = (props) => {
-  return <Component {...props} alt="copy" src={copy} />
+  return <Component {...props} alt="copy" src="/images/copy.svg" />
 }
 
 export const StartIcon: React.FC<Props> = ({ disabled, ...props }) => {
-  const className = React.useMemo(() => (disabled ? 'cursor-not-allowed opacity-50' : ''), [
-    disabled,
-  ])
-  return <Component {...props} className={className} alt="startIcon" src={start} />
+  const className = useMemo(() => (disabled ? 'cursor-not-allowed opacity-50' : ''), [disabled])
+  return <Component {...props} className={className} alt="startIcon" src="/images/start.svg" />
 }
 
 export const PauseIcon: React.FC<Props> = ({ disabled, ...props }) => {
-  const className = React.useMemo(() => (disabled ? 'cursor-not-allowed opacity-50' : ''), [
-    disabled,
-  ])
+  const className = useMemo(() => (disabled ? 'cursor-not-allowed opacity-50' : ''), [disabled])
 
-  return <Component {...props} className={className} alt="pauseIcon" src={pause} />
+  return <Component {...props} className={className} alt="pauseIcon" src="/images/pause.svg" />
 }

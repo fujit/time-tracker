@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useContext, useCallback } from 'react'
 import { StateContext } from '../utils/contexts/StoreContext'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
 import { useClipBoard } from '../utils/hooks/useClipBoard'
@@ -24,9 +24,9 @@ const Component: React.FC<Props> = ({ isCopied, onCopy }) => (
 export const TrackerCopy: React.FC = () => {
   const calcSum = useTrackerCalc()
   const [onCopy, isCopied] = useClipBoard()
-  const state = React.useContext(StateContext)
+  const state = useContext(StateContext)
 
-  const summary: TrackerSummary[] = React.useMemo(
+  const summary: TrackerSummary[] = useMemo(
     () =>
       state.trackers.map((tracker) => ({
         name: tracker.name,
@@ -35,7 +35,7 @@ export const TrackerCopy: React.FC = () => {
     [state.trackers, calcSum]
   )
 
-  const arrangeTrackerData = React.useCallback((trackerSummary: TrackerSummary[]) => {
+  const arrangeTrackerData = useCallback((trackerSummary: TrackerSummary[]) => {
     const copyData = trackerSummary.reduce(
       (previous, current) => `${previous}・ ${current.name}: ${current.time} \n`,
       ''
@@ -43,7 +43,7 @@ export const TrackerCopy: React.FC = () => {
     return copyData
   }, [])
 
-  const copySummary = React.useCallback(() => {
+  const copySummary = useCallback(() => {
     onCopy(arrangeTrackerData(summary))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [summary, arrangeTrackerData])

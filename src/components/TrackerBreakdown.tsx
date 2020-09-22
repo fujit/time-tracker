@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { useModal } from '../utils/hooks/useModal'
 import { Modal } from './Modal'
@@ -82,10 +82,10 @@ type ContainerProps = {
 }
 
 export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props }) => {
-  const [editableTimer, setEditableTimer] = React.useState<undefined | CalculatedTimer>(undefined)
+  const [editableTimer, setEditableTimer] = useState<undefined | CalculatedTimer>(undefined)
   const [isOpen, toggleModal] = useModal()
-  const state = React.useContext(StateContext)
-  const dispatch = React.useContext(DispatchContext)
+  const state = useContext(StateContext)
+  const dispatch = useContext(DispatchContext)
 
   // TODO: as 修正
   const selectedTracker = state.trackers.find((tracker) => tracker.id === trackerId) as Tracker
@@ -97,12 +97,12 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props
     }
   }
 
-  const closeTimerEdit = React.useCallback(() => {
+  const closeTimerEdit = useCallback(() => {
     toggleModal(false)
     setEditableTimer(undefined)
   }, [toggleModal])
 
-  const updatePastTime = React.useCallback(
+  const updatePastTime = useCallback(
     (start: string, end: string) => {
       if (!editableTimer) {
         return

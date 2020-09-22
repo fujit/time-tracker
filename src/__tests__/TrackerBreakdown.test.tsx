@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
@@ -15,7 +15,7 @@ type WrapperProps = {
 }
 
 const Wrapper: React.FC<WrapperProps> = ({ isBreakdownOpen, closeBreakdown, testData }) => {
-  const [state, dispatch] = React.useReducer(
+  const [state, dispatch] = useReducer(
     reducer,
     initialState({
       trackers: testData,
