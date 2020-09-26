@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Layout from '../components/Layout'
 import { Tracker } from '../components/Tracker'
 import { getCurrentDay } from '../utils/DateUtil'
@@ -14,7 +14,7 @@ const IndexPage = ({ todaysTrackers, today }: Props) => (
   </Layout>
 )
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const url = process.env.apiPath
   const response = await fetch(`${url}/trackers`)
   const todaysTrackers: Tracker[] = response.ok ? await response.json() : []
