@@ -32,3 +32,8 @@ export const updatePauseTimer = (tracker: Tracker, endTime: Date) => {
 
   return newTimer
 }
+
+export const getNextTimerId = (timers: Timer[]) =>
+  (
+    timers.reduce((previous, current) => Math.max(previous, parseInt(current.id, 10)), 0) + 1
+  ).toString()

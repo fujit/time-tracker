@@ -116,7 +116,11 @@ describe('store reducer', () => {
     test('should handle RESTART', () => {
       const state = reducer(initialState(initialStateStopping), {
         type: types.RESTART,
-        payload: { id: '202009181111345', startTime: new Date('2020-09-18 14:00:00') },
+        payload: {
+          trackerId: '202009181111345',
+          nextTimerId: '1',
+          startTime: new Date('2020-09-18 14:00:00'),
+        },
       })
 
       expect(state).toStrictEqual({
@@ -148,7 +152,11 @@ describe('store reducer', () => {
     test('進行中の場合は、現在の state を返す', () => {
       const state = reducer(initialState(initialStateInProgress), {
         type: types.RESTART,
-        payload: { id: '202009181111345', startTime: new Date('2020-09-18 14:00:00') },
+        payload: {
+          trackerId: '202009181111345',
+          nextTimerId: '1',
+          startTime: new Date('2020-09-18 14:00:00'),
+        },
       })
 
       expect(state).toStrictEqual(state)

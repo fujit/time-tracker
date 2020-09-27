@@ -3,7 +3,7 @@ import { DispatchContext, StateContext } from '../utils/contexts/StoreContext'
 import { restart, updateName, pause } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
-import { updatePauseTimer } from '../utils/TrackerLogic'
+import { updatePauseTimer, getNextTimerId } from '../utils/TrackerLogic'
 import * as DateUtil from '../utils/DateUtil'
 import { fetchPost } from '../utils/Fetch'
 import { StartIcon, PauseIcon } from './Icon'
@@ -44,8 +44,18 @@ export const TrackerItem: React.FC<Props> = (props) => {
   const restartMeasure = () => {
     if (isValid) {
       const currentDate = DateUtil.getCurrentDate()
-      dispatch(restart(props.tracker.id, currentDate))
+      const nextTimerId = getNextTimerId(props.tracker.timers)
+
+      dispatch(restart(props.tracker.id, nextTimerId, currentDate))
       props.calculateCurrentCount(currentDate)
+
+      fetchPost('/api/restartTracker', {
+        body: JSON.stringify({
+          trackerId: props.tracker.id,
+          nextTimerId,
+          startTime: currentDate,
+        }),
+      })
     }
   }
 

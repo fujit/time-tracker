@@ -10,11 +10,6 @@ export type State = {
 
 export type Actions = CreatorsToActions<typeof creators>
 
-const getNextTimerId = (timers: Timer[]) =>
-  (
-    timers.reduce((previous, current) => Math.max(previous, parseInt(current.id, 10)), 0) + 1
-  ).toString()
-
 function initialState(injects?: Partial<State>): State {
   return {
     trackers: [] as Tracker[],
@@ -45,13 +40,13 @@ function reducer(state: State, action: Actions): State {
       }
 
       const trackers = state.trackers.map((tracker) =>
-        tracker.id === action.payload.id
+        tracker.id === action.payload.trackerId
           ? {
               ...tracker,
               inProgress: true,
               timers: [
                 ...tracker.timers,
-                { id: getNextTimerId(tracker.timers), start: action.payload.startTime },
+                { id: action.payload.nextTimerId, start: action.payload.startTime },
               ],
             }
           : tracker
@@ -60,7 +55,7 @@ function reducer(state: State, action: Actions): State {
       return {
         ...state,
         trackers,
-        inProgressId: action.payload.id,
+        inProgressId: action.payload.trackerId,
       }
     }
 

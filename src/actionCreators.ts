@@ -4,8 +4,8 @@ export function start(newTracker: Tracker) {
   return { type: types.START, payload: { newTracker } }
 }
 
-export function restart(id: string, startTime: Date) {
-  return { type: types.RESTART, payload: { id, startTime } }
+export function restart(trackerId: string, nextTimerId: string, startTime: Date) {
+  return { type: types.RESTART, payload: { trackerId, nextTimerId, startTime } }
 }
 
 export function pause(trackerId: string, updatedTimer: Timer) {

@@ -1,4 +1,4 @@
-import { createNewTracker, updatePauseTimer } from './TrackerLogic'
+import { createNewTracker, updatePauseTimer, getNextTimerId } from './TrackerLogic'
 
 describe('createNewTracker', () => {
   test('Tracker の形式で変換されること', () => {
@@ -58,5 +58,24 @@ describe('updatePauseTimer', () => {
     }
     const actual = updatePauseTimer(tracker, new Date('2009-05-29 13:00:00'))
     expect(actual).toBe(undefined)
+  })
+})
+
+describe('getNextTimerId', () => {
+  test('インクリメント後のタイマー ID を返却すること', () => {
+    const timers: Timer[] = [
+      {
+        id: '0',
+        start: new Date('2000-01-01 01:00:00'),
+        end: new Date('2000-01-01 02:00:00'),
+        minute: 60,
+      },
+    ]
+    const actual = getNextTimerId(timers)
+    expect(actual).toBe('1')
+  })
+
+  test('タイマーが何もない場合は1を返すこと', () => {
+    expect(getNextTimerId([])).toBe('1')
   })
 })

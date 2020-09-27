@@ -257,12 +257,14 @@ describe('TrackerItem', () => {
         userEvent.click(screen.getByAltText('startIcon'))
         expect(calculateCurrentCount).toHaveBeenCalledTimes(1)
         expect(dispatch).toBeCalledTimes(1)
+        expect(fetchMock).toHaveBeenCalledTimes(1)
       })
 
       test('バリデーションエラーの時に、開始ボタンを押しても計測が開始しないこと', () => {
         userEvent.clear(screen.getByRole('textbox'))
         userEvent.click(screen.getByAltText('startIcon'))
         expect(calculateCurrentCount).toHaveBeenCalledTimes(0)
+        expect(fetchMock).toHaveBeenCalledTimes(0)
       })
     })
 
