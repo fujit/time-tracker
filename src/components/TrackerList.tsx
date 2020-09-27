@@ -3,6 +3,7 @@ import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { removeTracker, restoreTracker } from '../actionCreators'
 import { useModal } from '../utils/hooks/useModal'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
+import { fetchPost } from '../utils/Fetch'
 import { TrackerItem } from './TrackerItem'
 import { TrackerBreakdown } from './TrackerBreakdown'
 import { TrackerCopy } from './TrackerCopy'
@@ -117,6 +118,10 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
 
     const id = window.setTimeout(() => {
       setDeletedTracker(undefined)
+
+      fetchPost('/api/removeTracker', {
+        body: JSON.stringify({ trackerId }),
+      })
     }, 1000 * 10)
     timeoutRef.current = id
   }

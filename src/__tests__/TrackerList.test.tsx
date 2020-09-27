@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactModal from 'react-modal'
+import { FetchMock } from 'jest-fetch-mock'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
@@ -62,6 +63,8 @@ describe('TrackerList', () => {
   let calculateCurrentCount: jest.Mock
   let pauseTimer: jest.Mock
   beforeEach(() => {
+    fetchMock.resetMocks()
+
     ReactModal.setAppElement(document.createElement('div'))
     calculateCurrentCount = jest.fn()
     pauseTimer = jest.fn()
@@ -107,6 +110,7 @@ describe('TrackerList', () => {
       expect(screen.getByRole('alert')).toBeInTheDocument()
       setTimeout(() => {
         expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+        expect(fetchMock).toHaveBeenCalledTimes(1)
       }, 1000 * 10)
     })
 
