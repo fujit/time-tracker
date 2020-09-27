@@ -1,14 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { fetchPost } from '../../utils/Fetch'
+import { Mongo } from '../../utils/Mongo'
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
-  // TODO: 直接 MongoDB を呼ぶように変えても良いかも
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    // TODO: エラー時の処理
-    fetchPost(`${process.env.apiPath}/tracker`, {
-      body: JSON.stringify(req.body),
-    })
-      .then(() => res.status(200).json({ status: 'OK' }))
-      .catch(() => res.status(500).json({ status: 'NG' }))
+    const mongo = new Mongo(
+      process.env.MONGO_USER ?? '',
+      process.env.MONGO_PASSWORD ?? '',
+      process.env.MONGO_HOST ?? '',
+      process.env.MONGO_AUTH_SOURCE ?? '',
+      process.env.MONGO_PORT
+    )
+    const client = await mongo.connect()
+    const collection = mongo.getCollection<Tracker>(client, 'time-tracker', 'trackers')
+    await collection.insertOne(req.body)
+
+    res.status(200).json({ status: 'ok' })
   }
 }
