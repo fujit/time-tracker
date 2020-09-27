@@ -84,7 +84,7 @@ function reducer(state: State, action: Actions): State {
       }
     }
 
-    case types.UPDATE_NAME: {
+    case types.RENAME: {
       const trackers = state.trackers.map((tracker) =>
         tracker.id === action.payload.id ? { ...tracker, name: action.payload.name } : tracker
       )

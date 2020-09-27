@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef } from 'react'
 import { DispatchContext, StateContext } from '../utils/contexts/StoreContext'
-import { restart, updateName, pause } from '../actionCreators'
+import { restart, rename, pause } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
 import { updatePauseTimer, getNextTimerId } from '../utils/TrackerLogic'
@@ -37,7 +37,11 @@ export const TrackerItem: React.FC<Props> = (props) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const updateTrackerName = () => {
     if (isValid) {
-      dispatch(updateName(props.tracker.id, trackerName))
+      dispatch(rename(props.tracker.id, trackerName))
+
+      fetchPost('/api/renameTracker', {
+        body: JSON.stringify({ trackerId: props.tracker.id, newName: trackerName }),
+      })
     }
   }
 

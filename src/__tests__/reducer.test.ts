@@ -217,7 +217,7 @@ describe('store reducer', () => {
   describe('UPDATE_NAME', () => {
     test('should handle UPDATE_NAME', () => {
       const state = reducer(initialState(initialStateStopping), {
-        type: types.UPDATE_NAME,
+        type: types.RENAME,
         payload: { id: '202009181111345', name: 'neo test' },
       })
 

@@ -56,9 +56,9 @@ describe('actions', () => {
     const name = 'test02'
 
     const expectedAction = {
-      type: types.UPDATE_NAME,
+      type: types.RENAME,
       payload: { id, name },
     }
-    expect(creators.updateName(id, name)).toStrictEqual(expectedAction)
+    expect(creators.rename(id, name)).toStrictEqual(expectedAction)
   })
 })

@@ -6,6 +6,7 @@ import '@testing-library/jest-dom'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { TrackerItem } from '../components/TrackerItem'
 import { State } from '../reducer'
+import * as types from '../actionTypes'
 
 const trackerStopped: Tracker = {
   id: 'abc',
@@ -216,8 +217,19 @@ describe('TrackerItem', () => {
         expect(screen.getByRole('textbox')).not.toHaveFocus()
         expect(dispatch).toHaveBeenCalledTimes(1)
         expect(dispatch).toHaveBeenCalledWith({
-          type: 'UPDATE_TRACKER_NAME',
+          type: types.RENAME,
           payload: { id: trackerStopped.id, name: `${trackerStopped.name}.js` },
+        })
+        expect(fetchMock).toHaveBeenCalledTimes(1)
+        expect(fetchMock).toHaveBeenCalledWith('/api/renameTracker', {
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            trackerId: trackerStopped.id,
+            newName: `${trackerStopped.name}.js`,
+          }),
         })
       })
 
@@ -227,8 +239,19 @@ describe('TrackerItem', () => {
         expect(screen.getByRole('textbox')).not.toHaveFocus()
         expect(dispatch).toHaveBeenCalledTimes(1)
         expect(dispatch).toHaveBeenCalledWith({
-          type: 'UPDATE_TRACKER_NAME',
+          type: types.RENAME,
           payload: { id: trackerStopped.id, name: `${trackerStopped.name}a` },
+        })
+        expect(fetchMock).toHaveBeenCalledTimes(1)
+        expect(fetchMock).toHaveBeenCalledWith('/api/renameTracker', {
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            trackerId: trackerStopped.id,
+            newName: `${trackerStopped.name}a`,
+          }),
         })
       })
 
