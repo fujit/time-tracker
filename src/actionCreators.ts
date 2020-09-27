@@ -1,15 +1,15 @@
 import * as types from './actionTypes'
 
-export function start(id: string, name: string, day: string, startTime: Date) {
-  return { type: types.START, payload: { id, name, day, startTime } }
+export function start(newTracker: Tracker) {
+  return { type: types.START, payload: { newTracker } }
 }
 
 export function restart(id: string, startTime: Date) {
   return { type: types.RESTART, payload: { id, startTime } }
 }
 
-export function pause(id: string, endTime: Date) {
-  return { type: types.PAUSE, payload: { id, endTime } }
+export function pause(trackerId: string, updatedTimer: Timer) {
+  return { type: types.PAUSE, payload: { trackerId, updatedTimer } }
 }
 
 export function updateName(id: string, name: string) {

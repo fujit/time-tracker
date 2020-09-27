@@ -7,6 +7,8 @@ module.exports = {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
+  automock: false,
+  setupFiles: ['./setupJest'],
   globals: {
     'ts-jest': {
       tsConfig: 'tsconfig.jest.json',

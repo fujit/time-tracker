@@ -14,8 +14,8 @@
     "classnames": "^2.2.6",
     "dayjs": "^1.8.29",
     "next": "^9.5.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^0.0.0-experimental-94c0244ba",
+    "react-dom": "^0.0.0-experimental-94c0244ba",
     "react-modal": "^3.11.2",
     "tailwindcss": "^1.7.3",
     "uuid": "^8.3.0"
@@ -48,6 +48,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "husky": "^4.2.5",
     "jest": "^26.4.2",
+    "jest-fetch-mock": "^3.0.3",
     "lint-staged": "^10.2.11",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",

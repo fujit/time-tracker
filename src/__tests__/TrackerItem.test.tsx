@@ -1,12 +1,54 @@
 import React from 'react'
+import { FetchMock } from 'jest-fetch-mock'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { TrackerItem } from '../components/TrackerItem'
+import { State } from '../reducer'
+
+const trackerStopped: Tracker = {
+  id: 'abc',
+  name: 'GHOST BUSTERS',
+  day: '1984-12-02',
+  timers: [
+    {
+      id: '0',
+      start: new Date('1984-12-02 09:00:00'),
+      end: new Date('1982-12-02 10:45:00'),
+      minute: 105,
+    },
+  ],
+  isActive: true,
+  inProgress: false,
+}
+
+const trackerInProgress: Tracker = {
+  id: 'efg',
+  name: 'MASK',
+  day: '1995-02-25',
+  timers: [
+    {
+      id: '0',
+      start: new Date('1995-02-25 09:00:00'),
+    },
+  ],
+  isActive: true,
+  inProgress: true,
+}
+
+const initialStateStopped: State = {
+  trackers: [trackerStopped],
+  inProgressId: undefined,
+}
+
+const initialStateInProgress: State = {
+  trackers: [trackerInProgress, trackerStopped],
+  inProgressId: 'abc',
+}
 
 type WrapperProps = {
-  inProgressId?: string
+  initialState: State
   tracker: Tracker
   calculateCurrentCount: jest.Mock
   pauseTimer: jest.Mock
@@ -14,22 +56,9 @@ type WrapperProps = {
   removeTracker: jest.Mock
 }
 
-const testData: Tracker = {
-  id: 'abc',
-  name: 'React',
-  day: '2020-09-20',
-  timers: [],
-  isActive: true,
-  inProgress: false,
-}
-
 let dispatch: jest.Mock
-const Wrapper: React.FC<WrapperProps> = (props) => {
-  const state = {
-    trackers: [testData],
-    inProgressId: props.inProgressId,
-  }
-
+const Wrapper: React.FC<WrapperProps> = ({ initialState, ...props }) => {
+  const state = initialState
   dispatch = jest.fn()
 
   return (
@@ -42,6 +71,10 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
 }
 
 describe('TrackerItem', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks()
+  })
+
   let calculateCurrentCount: jest.Mock
   let pauseTimer: jest.Mock
   let openBreakdown: jest.Mock
@@ -57,7 +90,8 @@ describe('TrackerItem', () => {
 
         render(
           <Wrapper
-            tracker={testData}
+            initialState={initialStateStopped}
+            tracker={trackerStopped}
             calculateCurrentCount={calculateCurrentCount}
             pauseTimer={pauseTimer}
             openBreakdown={openBreakdown}
@@ -67,7 +101,7 @@ describe('TrackerItem', () => {
       })
 
       test('トラッカー名が入力されたテキストボックスが表示されていること', () => {
-        expect(screen.getByRole('textbox')).toHaveValue('React')
+        expect(screen.getByRole('textbox')).toHaveValue(trackerStopped.name)
       })
 
       test('内訳を見るボタンが存在していること', () => {
@@ -113,12 +147,12 @@ describe('TrackerItem', () => {
 
         render(
           <Wrapper
-            tracker={testData}
+            initialState={initialStateInProgress}
+            tracker={trackerStopped}
             calculateCurrentCount={calculateCurrentCount}
             pauseTimer={pauseTimer}
             openBreakdown={openBreakdown}
             removeTracker={removeTracker}
-            inProgressId="xxx"
           />
         )
       })
@@ -137,7 +171,8 @@ describe('TrackerItem', () => {
 
         render(
           <Wrapper
-            tracker={{ ...testData, inProgress: true }}
+            initialState={initialStateStopped}
+            tracker={trackerInProgress}
             calculateCurrentCount={calculateCurrentCount}
             pauseTimer={pauseTimer}
             openBreakdown={openBreakdown}
@@ -166,7 +201,8 @@ describe('TrackerItem', () => {
 
         render(
           <Wrapper
-            tracker={testData}
+            initialState={initialStateStopped}
+            tracker={trackerStopped}
             calculateCurrentCount={calculateCurrentCount}
             pauseTimer={pauseTimer}
             openBreakdown={openBreakdown}
@@ -181,7 +217,7 @@ describe('TrackerItem', () => {
         expect(dispatch).toHaveBeenCalledTimes(1)
         expect(dispatch).toHaveBeenCalledWith({
           type: 'UPDATE_TRACKER_NAME',
-          payload: { id: testData.id, name: `${testData.name}.js` },
+          payload: { id: trackerStopped.id, name: `${trackerStopped.name}.js` },
         })
       })
 
@@ -192,7 +228,7 @@ describe('TrackerItem', () => {
         expect(dispatch).toHaveBeenCalledTimes(1)
         expect(dispatch).toHaveBeenCalledWith({
           type: 'UPDATE_TRACKER_NAME',
-          payload: { id: testData.id, name: `${testData.name}a` },
+          payload: { id: trackerStopped.id, name: `${trackerStopped.name}a` },
         })
       })
 
@@ -208,13 +244,13 @@ describe('TrackerItem', () => {
       test('内訳を見るボタンを押すと、イベントが発火すること', () => {
         userEvent.click(screen.getByTestId('breakdown-button'))
         expect(openBreakdown).toHaveBeenCalledTimes(1)
-        expect(openBreakdown).toHaveBeenCalledWith(testData.id)
+        expect(openBreakdown).toHaveBeenCalledWith(trackerStopped.id)
       })
 
       test('削除するボタンを押すと、イベントが発火すること', () => {
         userEvent.click(screen.getByTestId('remove-button'))
         expect(removeTracker).toHaveBeenCalledTimes(1)
-        expect(removeTracker).toHaveBeenCalledWith(testData.id)
+        expect(removeTracker).toHaveBeenCalledWith(trackerStopped.id)
       })
 
       test('開始ボタンを押すと計測が開始すること', () => {
@@ -239,7 +275,8 @@ describe('TrackerItem', () => {
 
         render(
           <Wrapper
-            tracker={{ ...testData, inProgress: true }}
+            initialState={initialStateStopped}
+            tracker={trackerInProgress}
             calculateCurrentCount={calculateCurrentCount}
             pauseTimer={pauseTimer}
             openBreakdown={openBreakdown}
@@ -251,6 +288,7 @@ describe('TrackerItem', () => {
         userEvent.click(screen.getByAltText('pauseIcon'))
         expect(pauseTimer).toHaveBeenCalledTimes(1)
         expect(dispatch).toHaveBeenCalledTimes(1)
+        expect(fetchMock).toHaveBeenCalledTimes(1)
       })
     })
   })

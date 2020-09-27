@@ -1,4 +1,5 @@
 import React from 'react'
+import { FetchMock } from 'jest-fetch-mock'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
@@ -27,6 +28,10 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
 }
 
 describe('TrackerForm', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks()
+  })
+
   describe('初期状態', () => {
     let calculateCurrentCount: jest.Mock
     beforeEach(() => {
@@ -58,6 +63,7 @@ describe('TrackerForm', () => {
       expect(screen.getByRole('textbox')).toHaveValue('')
       expect(calculateCurrentCount).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(fetchMock).toHaveBeenCalledTimes(1)
     })
 
     test('フォームに何も入力されていない場合、計測は開始しないこと', () => {

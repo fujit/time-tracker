@@ -30,26 +30,12 @@ function reducer(state: State, action: Actions): State {
         return state
       }
 
-      const newTracker: Tracker = {
-        id: action.payload.id,
-        name: action.payload.name,
-        inProgress: true,
-        day: action.payload.day,
-        timers: [
-          {
-            id: '0',
-            start: action.payload.startTime,
-          },
-        ],
-        isActive: true,
-      }
-
-      const trackers = [...state.trackers, newTracker]
+      const trackers = [...state.trackers, action.payload.newTracker]
 
       return {
         ...state,
         trackers,
-        inProgressId: action.payload.id,
+        inProgressId: action.payload.newTracker.id,
       }
     }
 
@@ -83,20 +69,14 @@ function reducer(state: State, action: Actions): State {
         return state
       }
 
-      const { id, endTime } = action.payload
+      const { trackerId, updatedTimer } = action.payload
       const trackers = state.trackers.map((tracker) =>
-        tracker.id === id && tracker.inProgress
+        tracker.id === trackerId && tracker.inProgress
           ? {
               ...tracker,
               inProgress: false,
               timers: tracker.timers.map((timer) =>
-                !timer.end
-                  ? {
-                      ...timer,
-                      end: endTime,
-                      minute: DateUtil.getDiff(timer.start, endTime, 'minute', true),
-                    }
-                  : timer
+                timer.id === updatedTimer.id ? updatedTimer : timer
               ),
             }
           : tracker

@@ -2,7 +2,9 @@ import React, { useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { start } from '../actionCreators'
+import { createNewTracker } from '../utils/TrackerLogic'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
+import { fetchPost } from '../utils/Fetch'
 import { keycode } from '../utils/Constants'
 import * as DateUtil from '../utils/DateUtil'
 import { StartIcon } from './Icon'
@@ -24,10 +26,14 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
     }
     changeTrackerName('')
 
-    const id = uuidv4()
     const currentDate = DateUtil.getCurrentDate()
-    dispatch(start(id, trackerName, today, currentDate))
+    const newTracker = createNewTracker(uuidv4(), trackerName, today, currentDate)
+    dispatch(start(newTracker))
     calculateCurrentCount(currentDate)
+
+    fetchPost('/api/tracker', {
+      body: JSON.stringify(newTracker),
+    })
   }
 
   const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

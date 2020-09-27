@@ -3,7 +3,9 @@ import { DispatchContext, StateContext } from '../utils/contexts/StoreContext'
 import { restart, updateName, pause } from '../actionCreators'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
+import { updatePauseTimer } from '../utils/TrackerLogic'
 import * as DateUtil from '../utils/DateUtil'
+import { fetchPost } from '../utils/Fetch'
 import { StartIcon, PauseIcon } from './Icon'
 import { Button } from './Button'
 import { DecimalText } from './Number'
@@ -48,8 +50,22 @@ export const TrackerItem: React.FC<Props> = (props) => {
   }
 
   const pauseMeasure = () => {
-    dispatch(pause(props.tracker.id, DateUtil.getCurrentDate()))
+    const updatedTimer = updatePauseTimer(props.tracker, DateUtil.getCurrentDate())
+    if (!updatedTimer) {
+      return
+    }
+
+    dispatch(pause(props.tracker.id, updatedTimer))
     props.pauseTimer()
+
+    fetchPost('/api/pauseTracker', {
+      body: JSON.stringify({
+        trackerId: props.tracker.id,
+        timerId: updatedTimer.id,
+        endTime: updatedTimer.end,
+        minute: updatedTimer.minute,
+      }),
+    })
   }
 
   const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

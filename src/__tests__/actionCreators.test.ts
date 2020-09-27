@@ -3,16 +3,24 @@ import * as types from '../actionTypes'
 
 describe('actions', () => {
   test('計測を開始するアクションが作成されること', () => {
-    const id = 'test'
-    const name = 'test'
-    const day = '2020-09-18'
-    const startTime = new Date('2020-09-18 10:00')
-
+    const newTracker: Tracker = {
+      id: 'test',
+      name: 'test',
+      day: '2020-09-18',
+      timers: [
+        {
+          id: '1',
+          start: new Date('2020-09-18 10:00'),
+        },
+      ],
+      inProgress: true,
+      isActive: true,
+    }
     const expectedAction = {
       type: types.START,
-      payload: { id, name, day, startTime },
+      payload: { newTracker },
     }
-    expect(creators.start(id, name, day, startTime)).toStrictEqual(expectedAction)
+    expect(creators.start(newTracker)).toStrictEqual(expectedAction)
   })
 
   test('計測を再開するアクションが作成されること', () => {
@@ -27,14 +35,19 @@ describe('actions', () => {
   })
 
   test('計測を中断するアクションが作成されること', () => {
-    const id = 'test'
-    const endTime = new Date('2020-09-18 19:00')
+    const updatedTimer: Timer = {
+      id: '2',
+      start: new Date('2020-09-18 10:00'),
+      end: new Date('2020-09-18 19:00'),
+      minute: 540,
+    }
+    const trackerId = 'test'
 
     const expectedAction = {
       type: types.PAUSE,
-      payload: { id, endTime },
+      payload: { trackerId, updatedTimer },
     }
-    expect(creators.pause(id, endTime)).toStrictEqual(expectedAction)
+    expect(creators.pause(trackerId, updatedTimer)).toStrictEqual(expectedAction)
   })
 
   test('トラッカー名を更新するアクションが作成されること', () => {
