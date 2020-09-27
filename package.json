@@ -15,7 +15,7 @@
     "dayjs": "^1.8.29",
     "mongodb": "^3.6.2",
     "next": "^9.5.3",
-    "react": "^0.0.0-experimental-94c0244ba",
+    "react": "^0.14.0",
     "react-dom": "^0.0.0-experimental-94c0244ba",
     "react-modal": "^3.11.2",
     "tailwindcss": "^1.7.3",
