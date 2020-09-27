@@ -6,6 +6,7 @@ import { TimerEdit } from './TimerEdit'
 import { CloseIcon } from './CloseIcon'
 import { EditIcon, TrashIcon } from './Icon'
 import * as DateUtil from '../utils/DateUtil'
+import { fetchPost } from '../utils/Fetch'
 import { updateTimer, deleteTimer } from '../actionCreators'
 
 type Props = {
@@ -110,9 +111,19 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props
 
       const updatedStart = DateUtil.updateTime(editableTimer.start, start)
       const updatedEnd = DateUtil.updateTime(editableTimer.end, end)
+      const updatedTimer: Timer = {
+        id: editableTimer.id,
+        start: updatedStart,
+        end: updatedEnd,
+        minute: DateUtil.getDiff(updatedStart, updatedEnd, 'minute', true),
+      }
 
-      dispatch(updateTimer(trackerId, editableTimer.id, updatedStart, updatedEnd))
+      dispatch(updateTimer(trackerId, updatedTimer))
       closeTimerEdit()
+
+      fetchPost('/api/updateTimer', {
+        body: JSON.stringify({ trackerId, updatedTimer }),
+      })
     },
     [editableTimer, trackerId, closeTimerEdit, dispatch]
   )
@@ -123,6 +134,10 @@ export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props
 
   const deleteTrackerTimer = (timerId: string) => {
     dispatch(deleteTimer(trackerId, timerId))
+
+    fetchPost('/api/deleteTimer', {
+      body: JSON.stringify({ trackerId, timerId }),
+    })
   }
 
   return (

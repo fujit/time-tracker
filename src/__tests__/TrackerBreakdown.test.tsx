@@ -1,4 +1,5 @@
 import React from 'react'
+import { FetchMock } from 'jest-fetch-mock'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
@@ -41,6 +42,10 @@ const Wrapper: React.FC<WrapperProps> = ({
 }
 
 describe('TrackerBreakdown Component', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks()
+  })
+
   let closeBreakdown: jest.Mock
 
   describe('Component', () => {
@@ -184,6 +189,15 @@ describe('TrackerBreakdown Component', () => {
       expect(dispatch).toHaveBeenLastCalledWith({
         type: 'DELETE_TRACKER_TIMER',
         payload: { trackerId: 'test01', timerId: '0' },
+      })
+
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+      expect(fetchMock).toHaveBeenLastCalledWith('/api/deleteTimer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify({ trackerId: 'test01', timerId: '0' }),
       })
     })
 

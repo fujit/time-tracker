@@ -214,8 +214,8 @@ describe('store reducer', () => {
     })
   })
 
-  describe('UPDATE_NAME', () => {
-    test('should handle UPDATE_NAME', () => {
+  describe('RENAME', () => {
+    test('should handle RENAME', () => {
       const state = reducer(initialState(initialStateStopping), {
         type: types.RENAME,
         payload: { id: '202009181111345', name: 'neo test' },
@@ -246,13 +246,17 @@ describe('store reducer', () => {
 
   describe('UPDATE_TIMER', () => {
     test('should handle UPDATE_TIMER', () => {
+      const updatedTimer: Timer = {
+        id: '0',
+        start: new Date('2020-09-18 10:00:00'),
+        end: new Date('2020-09-18 13:00:00'),
+        minute: 180,
+      }
       const state = reducer(initialState(initialStateStopping), {
         type: types.UPDATE_TIMER,
         payload: {
           trackerId: '202009181111345',
-          timerId: '0',
-          startTimer: new Date('2020-09-18 10:00:00'),
-          endTimer: new Date('2020-09-18 13:00:00'),
+          updatedTimer,
         },
       })
 

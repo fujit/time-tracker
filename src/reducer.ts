@@ -101,19 +101,7 @@ function reducer(state: State, action: Actions): State {
           ? {
               ...tracker,
               timers: tracker.timers.map((timer) =>
-                timer.id === action.payload.timerId
-                  ? {
-                      ...timer,
-                      start: action.payload.startTimer,
-                      end: action.payload.endTimer,
-                      minute: DateUtil.getDiff(
-                        action.payload.startTimer,
-                        action.payload.endTimer,
-                        'minute',
-                        true
-                      ),
-                    }
-                  : timer
+                timer.id === action.payload.updatedTimer.id ? action.payload.updatedTimer : timer
               ),
             }
           : tracker

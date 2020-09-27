@@ -16,8 +16,8 @@ export function rename(id: string, name: string) {
   return { type: types.RENAME, payload: { id, name } }
 }
 
-export function updateTimer(trackerId: string, timerId: string, startTimer: Date, endTimer: Date) {
-  return { type: types.UPDATE_TIMER, payload: { trackerId, timerId, startTimer, endTimer } }
+export function updateTimer(trackerId: string, updatedTimer: Timer) {
+  return { type: types.UPDATE_TIMER, payload: { trackerId, updatedTimer } }
 }
 
 export function deleteTimer(trackerId: string, timerId: string) {
