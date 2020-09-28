@@ -28,10 +28,12 @@ export const TrackerCopy: React.FC = () => {
 
   const summary: TrackerSummary[] = useMemo(
     () =>
-      state.trackers.map((tracker) => ({
-        name: tracker.name,
-        time: (calcSum(tracker.timers) / 60).toFixed(1),
-      })),
+      state.trackers
+        .filter((tracker) => tracker.isActive)
+        .map((tracker) => ({
+          name: tracker.name,
+          time: (calcSum(tracker.timers) / 60).toFixed(1),
+        })),
     [state.trackers, calcSum]
   )
 
