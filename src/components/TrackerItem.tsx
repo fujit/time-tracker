@@ -10,7 +10,7 @@ import { StartIcon, PauseIcon } from './Icon'
 import { Button } from './Button'
 import { DecimalText } from './Number'
 import { ForwardedInput } from './Input'
-import { keycode } from '../utils/Constants'
+import { keycode, validate } from '../utils/Constants'
 
 type Props = {
   tracker: Tracker
@@ -108,7 +108,7 @@ export const TrackerItem: React.FC<Props> = (props) => {
           onBlur={updateTrackerName}
           onKeyDown={keyDown}
           className="w-2/5 mr-4 border-0"
-          maxLength={30}
+          maxLength={validate.trackerName.length}
           isError={!isValid}
           ref={inputRef}
         />

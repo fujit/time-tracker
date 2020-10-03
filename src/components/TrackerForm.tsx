@@ -5,7 +5,7 @@ import { start } from '../actionCreators'
 import { createNewTracker } from '../utils/TrackerLogic'
 import { useTrackerForm } from '../utils/hooks/useTrackerForm'
 import { fetchPost } from '../utils/Fetch'
-import { keycode } from '../utils/Constants'
+import { keycode, validate } from '../utils/Constants'
 import * as DateUtil from '../utils/DateUtil'
 import { StartIcon } from './Icon'
 import { Input } from './Input'
@@ -53,7 +53,7 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
         onKeyDown={keyDown}
         className="w-3/4 mr-4 lg:w-1/2 xl:w-1/2"
         disabled={!!state.inProgressId}
-        maxLength={30}
+        maxLength={validate.trackerName.length}
         {...props}
       />
       <StartIcon
