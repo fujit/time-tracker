@@ -1,7 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { ExNextApiRequest, NextApiResponse } from 'next'
 import { Mongo } from '../../utils/Mongo'
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+type ReqBody = {
+  trackerId: string
+  timerId: string
+  endTime: Date
+  minute: number
+}
+
+export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const mongo = new Mongo(
       process.env.MONGO_USER ?? '',
