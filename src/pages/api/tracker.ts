@@ -1,7 +1,7 @@
 import { ExNextApiRequest, NextApiResponse } from 'next'
 import { Mongo } from '../../utils/Mongo'
 
-export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse) => {
+export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse<PostResponse>) => {
   if (req.method === 'POST') {
     const mongo = new Mongo(
       process.env.MONGO_USER ?? '',
@@ -14,6 +14,6 @@ export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse) => {
     const collection = mongo.getCollection<Tracker>(client, 'time-tracker', 'trackers')
     await collection.insertOne(req.body)
 
-    res.status(200).json({ status: 'ok' })
+    res.status(200).json({ message: 'OK' })
   }
 }

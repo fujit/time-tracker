@@ -6,7 +6,7 @@ type ReqBody = {
   timerId: string
 }
 
-export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse) => {
+export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse<PostResponse>) => {
   if (req.method === 'POST') {
     const mongo = new Mongo(
       process.env.MONGO_USER ?? '',
@@ -21,6 +21,6 @@ export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse) => {
     const { trackerId, timerId } = req.body
     await collection.updateOne({ id: trackerId }, { $pull: { timers: { id: timerId } } })
 
-    res.status(200).json({ status: 'ok' })
+    res.status(200).json({ message: 'OK' })
   }
 }

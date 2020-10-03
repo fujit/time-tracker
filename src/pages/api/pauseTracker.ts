@@ -8,7 +8,7 @@ type ReqBody = {
   minute: number
 }
 
-export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse) => {
+export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse<PostResponse>) => {
   if (req.method === 'POST') {
     const mongo = new Mongo(
       process.env.MONGO_USER ?? '',
@@ -34,6 +34,6 @@ export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse) => {
       { arrayFilters: [{ 'element.id': timerId }] }
     )
 
-    res.status(200).json({ status: 'ok' })
+    res.status(200).json({ message: 'OK' })
   }
 }
