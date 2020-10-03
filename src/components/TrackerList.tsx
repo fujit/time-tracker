@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { removeTracker, restoreTracker } from '../actionCreators'
 import { useModal } from '../utils/hooks/useModal'
@@ -11,7 +11,7 @@ import { DecimalText } from './Number'
 import { Alert } from './Alert'
 
 type Props = {
-  deletedTracker: string | undefined
+  removedTrackerId: string | undefined
   restore: () => void
   trackers: Tracker[]
   openBreakdown: (trackerId: string) => void
@@ -23,7 +23,7 @@ type Props = {
 } & ContainerProps
 
 const Component: React.FC<Props> = ({
-  deletedTracker,
+  removedTrackerId,
   restore,
   isOpen,
   openBreakdown,
@@ -38,7 +38,7 @@ const Component: React.FC<Props> = ({
   totalTime,
 }) => (
   <>
-    {deletedTracker && (
+    {removedTrackerId && (
       <Alert restore={restore} className="w-4/6 sm:w-2/5 md:w-2/5 lg:w-1/4 xl:w-1/4" />
     )}
     <div className="mt-12">
@@ -90,7 +90,7 @@ type ContainerProps = {
 
 export const TrackerList: React.FC<ContainerProps> = (props) => {
   const [breakdownTrackerId, setBreakdownTrackerId] = React.useState('')
-  const [deletedTracker, setDeletedTracker] = React.useState<string | undefined>(undefined)
+  const [removedTrackerId, setRemovedTrackerId] = React.useState<string | undefined>(undefined)
   const [isOpen, toggleModal] = useModal()
   const calcSum = useTrackerCalc()
   const state = React.useContext(StateContext)
@@ -111,33 +111,52 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
     setBreakdownTrackerId('')
   }
 
-  const timeoutRef = React.useRef(0)
+  const timeoutRef = useRef(0)
+  const removedIdRef = useRef('')
+
   const remove = (trackerId: string) => {
-    setDeletedTracker(trackerId)
+    setRemovedTrackerId(trackerId)
     dispatch(removeTracker(trackerId))
+    removedIdRef.current = trackerId
 
     const id = window.setTimeout(() => {
-      setDeletedTracker(undefined)
+      setRemovedTrackerId(undefined)
 
       fetchPost('/api/removeTracker', {
         body: JSON.stringify({ trackerId }),
       })
-    }, 1000 * 10)
+      timeoutRef.current = 0
+    }, 1000 * 100)
     timeoutRef.current = id
   }
 
   const restore = () => {
-    if (deletedTracker) {
-      dispatch(restoreTracker(deletedTracker))
-      setDeletedTracker(undefined)
+    if (removedTrackerId) {
+      dispatch(restoreTracker(removedTrackerId))
+      setRemovedTrackerId(undefined)
       clearTimeout(timeoutRef.current)
+      timeoutRef.current = 0
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current && removedIdRef.current) {
+        fetchPost('/api/removeTracker', {
+          body: JSON.stringify({ trackerId: removedIdRef.current }),
+        })
+        clearTimeout(timeoutRef.current)
+        timeoutRef.current = 0
+        removedIdRef.current = ''
+        setRemovedTrackerId(undefined)
+      }
+    }
+  }, [])
 
   return (
     <Component
       {...props}
-      deletedTracker={deletedTracker}
+      removedTrackerId={removedTrackerId}
       restore={restore}
       trackers={state.trackers}
       openBreakdown={openBreakdown}

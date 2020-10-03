@@ -114,6 +114,8 @@ describe('TrackerList', () => {
       }, 1000 * 10)
     })
 
+    test.todo('削除ボタンを押して、別ページへ遷移するとき、削除が実行されること')
+
     test('元に戻すを押すと、アラートが消えること', () => {
       userEvent.click(screen.getAllByTestId('remove-button')[0])
       userEvent.click(screen.getByTestId('restore-button'))
