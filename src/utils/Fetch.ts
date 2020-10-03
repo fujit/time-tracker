@@ -1,4 +1,4 @@
-export const wrapper = <T>(task: Promise<Response>): Promise<T> => {
+const wrapper = <T>(task: Promise<Response>): Promise<T> => {
   return new Promise((resolve, reject) => {
     task
       .then((response) => {
