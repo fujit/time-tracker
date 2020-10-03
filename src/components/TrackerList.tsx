@@ -126,7 +126,7 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
         body: JSON.stringify({ trackerId }),
       })
       timeoutRef.current = 0
-    }, 1000 * 100)
+    }, 1000 * 10)
     timeoutRef.current = id
   }
 
