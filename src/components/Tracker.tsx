@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useReducer } from 'react'
 import { reducer, initialState } from '../reducer'
+import { ErrorBoundary } from './ErrorBoundary'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { TrackerForm } from './TrackerForm'
 import { TrackerList } from './TrackerList'
@@ -13,7 +14,7 @@ type Props = {
 }
 
 const Component: React.FC<Props> = ({ calculateCurrentCount, today, currentCount, pauseTimer }) => (
-  <>
+  <ErrorBoundary>
     <TrackerForm calculateCurrentCount={calculateCurrentCount} today={today} />
     <TrackerList
       currentCount={currentCount}
@@ -21,7 +22,7 @@ const Component: React.FC<Props> = ({ calculateCurrentCount, today, currentCount
       pauseTimer={pauseTimer}
       today={today}
     />
-  </>
+  </ErrorBoundary>
 )
 
 type ContainerProps = {
