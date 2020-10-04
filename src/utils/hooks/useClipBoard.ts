@@ -21,11 +21,13 @@ export const useClipBoard = (): UseClipBoardReturn => {
   }, [])
 
   useEffect(() => {
+    let id: number
     if (isCopied) {
-      setTimeout(() => {
+      id = window.setTimeout(() => {
         setIsCopied(false)
       }, 1000 * 5)
     }
+    return () => clearTimeout(id)
   }, [isCopied])
 
   return [onCopy, isCopied]
