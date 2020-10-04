@@ -14,7 +14,7 @@ type Props = {
   onCopy: () => void
 }
 
-const Component: React.FC<Props> = ({ isCopied, onCopy }) => (
+export const Component: React.FC<Props> = ({ isCopied, onCopy }) => (
   <>
     <CopyIcon width={35} height={35} onClick={onCopy} />
     {isCopied && <p className="text-sm">Copied</p>}
