@@ -66,7 +66,8 @@
         "selector": "parameter",
         "format": ["camelCase", "PascalCase"]
       }
-    ]
+    ],
+    "jest/no-disabled-tests": "off"
   },
   "overrides": [
     {

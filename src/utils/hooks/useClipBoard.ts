@@ -6,18 +6,10 @@ export const useClipBoard = (): UseClipBoardReturn => {
   const [isCopied, setIsCopied] = useState(false)
 
   const onCopy = useCallback((value: string) => {
-    const textarea = document.createElement('textarea')
-    textarea.value = value
-    document.body.appendChild(textarea)
-    textarea.focus()
-    textarea.select()
-    const res = document.execCommand('copy')
-
-    if (res) {
+    // TODO: 許可されていることの確認
+    navigator.clipboard.writeText(value).then(() => {
       setIsCopied(true)
-    }
-
-    textarea.remove()
+    })
   }, [])
 
   useEffect(() => {
