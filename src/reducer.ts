@@ -1,7 +1,6 @@
 import * as types from './actionTypes'
 import * as creators from './actionCreators'
 import { CreatorsToActions } from './creatorsToActions'
-import * as DateUtil from './utils/DateUtil'
 
 export type State = {
   trackers: Tracker[]

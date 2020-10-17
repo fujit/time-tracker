@@ -1,4 +1,5 @@
 import React from 'react'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FetchMock } from 'jest-fetch-mock'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/react'
