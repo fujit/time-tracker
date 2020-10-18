@@ -12,7 +12,7 @@ const Layout: React.FC<Props> = ({ title = 'time-tracker', children }) => (
       <meta name="viewport" content="initial-scale=1.0" />
     </Head>
     <Header title="time-tracker" />
-    <div className="container mx-auto">{children}</div>
+    <div className="container mx-auto my-6">{children}</div>
   </div>
 )
 

@@ -1,4 +1,4 @@
-import { getDiff, format, updateTime } from './DateUtil'
+import { getDiff, format, updateTime, add } from './DateUtil'
 
 describe('Diff', () => {
   test('2020-01-01 と 2020-01-01 の差は1日であること', () => {
@@ -43,5 +43,15 @@ describe('updateTime', () => {
     expect(updateTime(new Date('2020-01-01 09:00:00'), '12:00')).toStrictEqual(
       new Date('2020-01-01 12:00:00')
     )
+  })
+})
+
+describe('add', () => {
+  test('1日後の日付に変更できること', () => {
+    expect(add('2020-01-01 10:00:00', 1, 'day')).toStrictEqual(new Date('2020-01-02 10:00:00'))
+  })
+
+  test('1ヶ月前の日付にできること', () => {
+    expect(add('2020-10-10 10:00:00', -1, 'month')).toEqual(new Date('2020-09-10 10:00:00'))
   })
 })

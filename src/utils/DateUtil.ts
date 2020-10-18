@@ -27,3 +27,6 @@ export const updateTime = (date: Date, time: string) => {
     .set('minute', parseInt(times[1], 10))
     .toDate()
 }
+
+export const add = (date: string | Date, value: number, unit: dayjs.OpUnitType) =>
+  dayjs(date).add(value, unit).toDate()
