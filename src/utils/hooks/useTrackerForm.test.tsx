@@ -39,20 +39,6 @@ describe('useTrackerForm', () => {
     expect(screen.getByRole('textbox')).toHaveValue('Fire Event')
   })
 
-  test('連続する2つの半角スペースが1つの半角スペースへ変換されること', () => {
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'Fire  Event' },
-    })
-    expect(screen.getByRole('textbox')).toHaveValue('Fire Event')
-  })
-
-  test('複数箇所にある全角スペースがすべて半角スペースへ変換されること', () => {
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: 'Fi re E  vent' },
-    })
-    expect(screen.getByRole('textbox')).toHaveValue('Fi re E vent')
-  })
-
   test('入力がなにもないときバリデーションエラーとなること', () => {
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: '' },
