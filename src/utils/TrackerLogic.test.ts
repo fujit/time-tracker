@@ -10,10 +10,31 @@ describe('createNewTracker', () => {
     )
     const expected = {
       id: 'a',
+      key: undefined,
       name: 'reservoir dogs',
       inProgress: true,
       day: '1993-04-24',
       timers: [{ id: '0', start: new Date('1993-04-24 18:00:00') }],
+      isActive: true,
+    }
+    expect(actual).toStrictEqual(expected)
+  })
+
+  test('キー番号で始まる場合は、キーを設定すること', () => {
+    const actual = createNewTracker(
+      'abc',
+      '#100 Joker',
+      '2019-12-01',
+      new Date('2019-12-01 09:00:00')
+    )
+
+    const expected = {
+      id: 'abc',
+      key: 100,
+      name: '#100 Joker',
+      inProgress: true,
+      day: '2019-12-01',
+      timers: [{ id: '0', start: new Date('2019-12-01 09:00:00') }],
       isActive: true,
     }
     expect(actual).toStrictEqual(expected)
