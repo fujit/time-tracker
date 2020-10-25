@@ -1,17 +1,21 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
 import { DecimalText } from './Number'
 
 type Props = {
   pastTrackers: { key: string; value: PastTracker[] }[]
+  calcTotalTime: (trackers: PastTracker[]) => number
   calcSum: (timers: Timer[]) => number
 }
 
-const Component: FC<Props> = ({ pastTrackers, calcSum }) => (
+const Component: FC<Props> = ({ pastTrackers, calcTotalTime, calcSum }) => (
   <div>
     {pastTrackers.map((obj) => (
       <div key={obj.key}>
-        <h4 className="p-4 mt-4 text-2xl bg-green-100">{obj.key}</h4>
+        <h4 className="p-4 mt-4 text-2xl bg-green-100 grid grid-cols-2">
+          {obj.key}
+          <DecimalText value={calcTotalTime(obj.value) / 60} digits={1} unit="h" />
+        </h4>
         <ul className="pl-6 mt-3">
           {obj.value.map((tracker) => (
             <li key={tracker.id} className="grid grid-cols-2">
@@ -28,6 +32,13 @@ const Component: FC<Props> = ({ pastTrackers, calcSum }) => (
 export const TrackerHistory: FC<{ trackers: PastTracker[] }> = ({ trackers }) => {
   const calcSum = useTrackerCalc()
 
+  const calcTotalTime = useCallback(
+    (pastTrackers: PastTracker[]) => {
+      return pastTrackers.reduce((previous, current) => previous + calcSum(current.timers), 0)
+    },
+    [calcSum]
+  )
+
   const pastTrackers: { key: string; value: PastTracker[] }[] = []
   trackers.forEach((tracker) => {
     const trackerGroup = pastTrackers.find((element) => element.key === tracker.day)
@@ -38,5 +49,5 @@ export const TrackerHistory: FC<{ trackers: PastTracker[] }> = ({ trackers }) =>
     }
   })
 
-  return <Component pastTrackers={pastTrackers} calcSum={calcSum} />
+  return <Component pastTrackers={pastTrackers} calcSum={calcSum} calcTotalTime={calcTotalTime} />
 }
