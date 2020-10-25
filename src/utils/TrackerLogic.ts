@@ -1,29 +1,15 @@
 import { getDiff } from './DateUtil'
 
-const extractKey = (name: string) => {
-  const regexKey = name.match(/^#[0-9]+ /)
-  if (!regexKey) {
-    return
-  }
-
-  const key = Number.parseInt(regexKey[0].replace('#', '').trim(), 10)
-
-  if (Number.isNaN(key)) {
-    return
-  }
-
-  return key
-}
-
 export const createNewTracker = (
   id: string,
   trackerName: string,
   today: string,
-  start: Date
+  start: Date,
+  key?: number
 ): Tracker => {
   return {
     id,
-    key: extractKey(trackerName),
+    key,
     name: trackerName,
     inProgress: true,
     day: today,

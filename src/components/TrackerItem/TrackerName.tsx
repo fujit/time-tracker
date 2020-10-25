@@ -38,6 +38,7 @@ export const TrackerNameComponent: FC<Props> = ({
 type ContainerProps = {
   trackerId: string
   trackerName: string
+  trackerKey?: number
   isValid: boolean
   changeTrackerName: (value: string) => void
 }
@@ -45,6 +46,7 @@ type ContainerProps = {
 export const TrackerName: FC<ContainerProps> = ({
   trackerId,
   trackerName,
+  trackerKey,
   isValid,
   changeTrackerName,
 }) => {
@@ -52,10 +54,10 @@ export const TrackerName: FC<ContainerProps> = ({
 
   const updateTrackerName = () => {
     if (isValid) {
-      dispatch(rename(trackerId, trackerName))
+      dispatch(rename(trackerId, trackerName, trackerKey))
 
       fetchPost('/api/renameTracker', {
-        body: JSON.stringify({ trackerId, newName: trackerName }),
+        body: JSON.stringify({ trackerId, newName: trackerName, newKey: trackerKey }),
       })
     }
   }

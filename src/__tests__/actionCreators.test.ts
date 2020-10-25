@@ -53,12 +53,13 @@ describe('actions', () => {
 
   test('トラッカー名を更新するアクションが作成されること', () => {
     const id = 'test'
-    const name = 'test02'
+    const name = '#100 test02'
+    const key = 100
 
     const expectedAction = {
       type: types.RENAME,
-      payload: { id, name },
+      payload: { id, name, key },
     }
-    expect(creators.rename(id, name)).toStrictEqual(expectedAction)
+    expect(creators.rename(id, name, key)).toStrictEqual(expectedAction)
   })
 })

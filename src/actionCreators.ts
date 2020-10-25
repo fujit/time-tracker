@@ -12,8 +12,8 @@ export function pause(trackerId: string, updatedTimer: Timer) {
   return { type: types.PAUSE, payload: { trackerId, updatedTimer } }
 }
 
-export function rename(id: string, name: string) {
-  return { type: types.RENAME, payload: { id, name } }
+export function rename(id: string, name: string, key?: number) {
+  return { type: types.RENAME, payload: { id, name, key } }
 }
 
 export function updateTimer(trackerId: string, updatedTimer: Timer) {

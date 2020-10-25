@@ -16,7 +16,7 @@ type Props = {
 } & JSX.IntrinsicElements['input']
 
 export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...props }) => {
-  const [trackerName, isValid, changeTrackerName] = useTrackerForm('')
+  const [formValue, isValid, changeTrackerName] = useTrackerForm('')
   const state = useContext(StateContext)
   const dispatch = useContext(DispatchContext)
 
@@ -27,7 +27,7 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
     changeTrackerName('')
 
     const currentDate = DateUtil.getCurrentDate()
-    const newTracker = createNewTracker(uuidv4(), trackerName, today, currentDate)
+    const newTracker = createNewTracker(uuidv4(), formValue.name, today, currentDate, formValue.key)
     dispatch(start(newTracker))
     calculateCurrentCount(currentDate)
 
@@ -45,7 +45,7 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
   return (
     <div className="flex items-start">
       <Input
-        value={trackerName}
+        value={formValue.name}
         type="text"
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           changeTrackerName(event.target.value)

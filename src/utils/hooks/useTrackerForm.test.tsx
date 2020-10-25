@@ -4,11 +4,11 @@ import '@testing-library/jest-dom'
 import { useTrackerForm } from './useTrackerForm'
 
 const Wrapper = () => {
-  const [trackerName, isValid, setTrackerName] = useTrackerForm('initial')
+  const [formValue, isValid, setTrackerName] = useTrackerForm('initial')
   return (
     <>
       <input
-        value={trackerName}
+        value={formValue.name}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTrackerName(e.target.value)}
       />
       <button disabled={!isValid}>Test</button>

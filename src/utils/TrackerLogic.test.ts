@@ -25,7 +25,8 @@ describe('createNewTracker', () => {
       'abc',
       '#100 Joker',
       '2019-12-01',
-      new Date('2019-12-01 09:00:00')
+      new Date('2019-12-01 09:00:00'),
+      100
     )
 
     const expected = {

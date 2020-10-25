@@ -4,6 +4,7 @@ import { Mongo } from '../../utils/Mongo'
 type ReqBody = {
   trackerId: string
   newName: string
+  newKey?: number
 }
 
 export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse<PostResponse>) => {
@@ -18,8 +19,8 @@ export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse<PostR
     const client = await mongo.connect()
     const collection = mongo.getCollection<Tracker>(client, 'time-tracker', 'trackers')
 
-    const { trackerId, newName } = req.body
-    await collection.updateOne({ id: trackerId }, { $set: { name: newName } })
+    const { trackerId, newName, newKey } = req.body
+    await collection.updateOne({ id: trackerId }, { $set: { name: newName, key: newKey } })
 
     res.status(200).json({ message: 'OK' })
   }
