@@ -7,19 +7,21 @@ import { Component, TrackerCopy } from '../components/TrackerCopy'
 
 type ComponentProps = {
   isCopied: boolean
-  onCopy: jest.Mock
+  onCopyDaily: jest.Mock
+  onCopyWork: jest.Mock
 }
 
 const ComponentWrapper: FC<ComponentProps> = (props) => <Component {...props} />
 
 describe('TrackerCopyComponent', () => {
-  let onCopy: jest.Mock
+  let onCopyDaily: jest.Mock
+  let onCopyWork: jest.Mock
   beforeEach(() => {
-    render(<ComponentWrapper isCopied={false} onCopy={onCopy} />)
+    render(<ComponentWrapper isCopied={false} onCopyDaily={onCopyDaily} onCopyWork={onCopyWork} />)
   })
 
   test('コピーアイコンが表示されていること', () => {
-    expect(screen.getByAltText('copy')).toBeInTheDocument()
+    expect(screen.getAllByAltText('copy')).toHaveLength(2)
   })
 
   test('コピー後のメッセージが表示されていないこと', () => {
@@ -46,7 +48,7 @@ describe('TrackerCopy', () => {
   })
 
   test.skip('コピーアイコンを押した時、コピーしたことが表示される', () => {
-    userEvent.click(screen.getByAltText('copy'))
+    userEvent.click(screen.getAllByAltText('copy')[0])
     expect(screen.getByText('Copied')).toBeInTheDocument()
   })
 })
