@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useReducer } from 'react'
+import Head from 'next/head'
 import { reducer, initialState } from '../reducer'
 import { ErrorBoundary } from './ErrorBoundary'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
@@ -11,18 +12,30 @@ type Props = {
   today: string
   currentCount: number
   pauseTimer: () => void
+  title: string
 }
 
-const Component: React.FC<Props> = ({ calculateCurrentCount, today, currentCount, pauseTimer }) => (
-  <ErrorBoundary>
-    <TrackerForm calculateCurrentCount={calculateCurrentCount} today={today} />
-    <TrackerList
-      currentCount={currentCount}
-      calculateCurrentCount={calculateCurrentCount}
-      pauseTimer={pauseTimer}
-      today={today}
-    />
-  </ErrorBoundary>
+const Component: React.FC<Props> = ({
+  calculateCurrentCount,
+  today,
+  currentCount,
+  pauseTimer,
+  title,
+}) => (
+  <>
+    <Head>
+      <title>{title}</title>
+    </Head>
+    <ErrorBoundary>
+      <TrackerForm calculateCurrentCount={calculateCurrentCount} today={today} />
+      <TrackerList
+        currentCount={currentCount}
+        calculateCurrentCount={calculateCurrentCount}
+        pauseTimer={pauseTimer}
+        today={today}
+      />
+    </ErrorBoundary>
+  </>
 )
 
 type ContainerProps = {
@@ -39,6 +52,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     })
   )
 
+  const [title, setTitle] = useState('time-tracker')
   const [currentCount, setCurrentCount] = useState(0)
   const intervalRef = useRef<number | undefined>(undefined)
 
@@ -61,9 +75,9 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
     if (state.inProgressId) {
       const inProgressTracker = state.trackers.find((tracker) => tracker.inProgress)
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      document.title = inProgressTracker!.name
+      setTitle(inProgressTracker!.name)
     } else {
-      document.title = 'timer'
+      setTitle('timer')
     }
   }, [state.trackers, state.inProgressId])
 
@@ -91,6 +105,7 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
           today={today}
           currentCount={currentCount}
           pauseTimer={pauseTimer}
+          title={title}
         />
       </DispatchContext.Provider>
     </StateContext.Provider>
