@@ -28,7 +28,7 @@ export const useTrackerForm = (name: string, key?: number): UseTrackerFormResult
   }
 
   const changeTrackerName = useCallback((value: string) => {
-    const trimValue = value.replace(/\s/g, ' ')
+    const trimValue = value.replace(/\s/g, ' ').trim()
     setTrackerName(trimValue)
     setTrackerKey(extractKey(trimValue))
   }, [])
