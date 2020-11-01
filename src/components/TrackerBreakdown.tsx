@@ -2,7 +2,7 @@ import React, { useState, useContext, useCallback } from 'react'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { useModal } from '../utils/hooks/useModal'
 import { Modal } from './Modal'
-import { TimerEdit } from './TimerEdit'
+import { TimeEditor } from './TimeEditor'
 import { CloseIcon } from './CloseIcon'
 import { EditIcon, TrashIcon } from './Icon'
 import * as DateUtil from '../utils/DateUtil'
@@ -36,7 +36,7 @@ const Component: React.FC<Props> = ({
 }) => (
   <Modal isOpen={isBreakdownOpen} onRequestClose={closeBreakdown}>
     {editableTimer && (
-      <TimerEdit
+      <TimeEditor
         isOpen={isOpen}
         closeModal={closeTimerEdit}
         timer={editableTimer}

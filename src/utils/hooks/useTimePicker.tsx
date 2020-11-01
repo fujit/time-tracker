@@ -1,27 +1,47 @@
 import { useState, useCallback, useMemo } from 'react'
-import * as DateUtil from '../DateUtil'
+import { getHour, getMinute } from '../DateUtil'
 
-type UseTimerPickerResult = [
-  string,
-  (start: string) => void,
-  string,
-  (end: string) => void,
-  boolean
-]
+export type UseTimerPickerResult = [Time, (value: string) => void, (value: string) => void, boolean]
 
-export const useTimePicker = (startTime?: Date, endTime?: Date): UseTimerPickerResult => {
-  const [start, setStart] = useState(startTime ? DateUtil.format(startTime, 'HH:mm') : '')
-  const [end, setEnd] = useState(endTime ? DateUtil.format(endTime, 'HH:mm') : '')
+export const useTimePicker = (time?: Date): UseTimerPickerResult => {
+  const [hour, setHour] = useState(getHour(time).toString())
+  const [minute, setMinute] = useState(getMinute(time).toString())
 
-  const changeStart = useCallback((startValue: string) => {
-    setStart(startValue)
+  const changeHour = useCallback((value: string) => {
+    if (value === '') {
+      setHour('')
+      return
+    }
+
+    const normalizedValue = value.replace(/[^\d]/g, '')
+    const numValue = Number.parseInt(normalizedValue, 10)
+    if (Number.isNaN(numValue)) {
+      return
+    }
+
+    if (numValue >= 1 && numValue <= 24) {
+      setHour(normalizedValue)
+    }
   }, [])
 
-  const changeEnd = useCallback((endValue: string) => {
-    setEnd(endValue)
+  const changeMinute = useCallback((value: string) => {
+    if (value === '') {
+      setMinute('')
+      return
+    }
+
+    const normalizedValue = value.replace(/[^\d]/g, '')
+    const numValue = Number.parseInt(normalizedValue, 10)
+    if (Number.isNaN(numValue) || normalizedValue.length > 2) {
+      return
+    }
+
+    if (numValue >= 0 && numValue <= 59) {
+      setMinute(normalizedValue)
+    }
   }, [])
 
-  const isValid = useMemo(() => !!(start && end && start <= end), [start, end])
+  const isValid = useMemo(() => hour !== '' && minute !== '', [hour, minute])
 
-  return [start, changeStart, end, changeEnd, isValid]
+  return [{ hour, minute }, changeHour, changeMinute, isValid]
 }

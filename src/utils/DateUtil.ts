@@ -30,3 +30,6 @@ export const updateTime = (date: Date, time: string) => {
 
 export const add = (date: string | Date, value: number, unit: dayjs.OpUnitType) =>
   dayjs(date).add(value, unit).toDate()
+
+export const getHour = (date?: string | Date) => dayjs(date).hour()
+export const getMinute = (date?: string | Date) => dayjs(date).minute()

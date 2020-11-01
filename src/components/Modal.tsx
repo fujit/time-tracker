@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import ReactModal from 'react-modal'
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   style: ReactModal.Styles
 }
 
-const Component: React.FC<Props> = ({ children, ...props }) => (
+const Component: FC<Props> = ({ children, ...props }) => (
   <ReactModal {...props} shouldCloseOnEsc shouldCloseOnOverlayClick>
     {children}
   </ReactModal>
@@ -19,7 +19,7 @@ type ContainerProps = {
   styles?: React.CSSProperties
 }
 
-export const Modal: React.FC<ContainerProps> = ({ isOpen, onRequestClose, styles, children }) => {
+export const Modal: FC<ContainerProps> = ({ isOpen, onRequestClose, styles, children }) => {
   if (process.env.NODE_ENV !== 'test') {
     ReactModal.setAppElement('#app')
   }
