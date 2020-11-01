@@ -54,10 +54,11 @@ export const TrackerName: FC<ContainerProps> = ({
 
   const updateTrackerName = () => {
     if (isValid) {
-      dispatch(rename(trackerId, trackerName, trackerKey))
+      const newName = trackerName.trim()
+      dispatch(rename(trackerId, newName, trackerKey))
 
       fetchPost('/api/renameTracker', {
-        body: JSON.stringify({ trackerId, newName: trackerName, newKey: trackerKey }),
+        body: JSON.stringify({ trackerId, newName, newKey: trackerKey }),
       })
     }
   }

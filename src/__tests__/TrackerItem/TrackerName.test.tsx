@@ -112,11 +112,19 @@ describe('TrackerName', () => {
       render(
         <ContainerWrapper
           trackerId="ABC"
-          trackerName="THE SILENCE OF THE LAMBS"
+          trackerName="THE SILENCE OF THE LAMBS "
           isValid
           changeTrackerName={changeTrackerName}
         />
       )
+    })
+
+    test('更新するとき、前後の空白が削除されること', () => {
+      userEvent.type(screen.getByRole('textbox'), '{enter}')
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'RENAME_TRACKER',
+        payload: { id: 'ABC', name: 'THE SILENCE OF THE LAMBS', key: undefined },
+      })
     })
 
     test('Enter キーを押した時、フォーカスが外れ、更新イベントが発生すること', () => {

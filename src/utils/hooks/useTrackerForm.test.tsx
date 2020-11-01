@@ -39,13 +39,6 @@ describe('useTrackerForm', () => {
     expect(screen.getByRole('textbox')).toHaveValue('Fire Event')
   })
 
-  test('前後のスペースは削除されること', () => {
-    fireEvent.change(screen.getByRole('textbox'), {
-      target: { value: ' Fire Event ' },
-    })
-    expect(screen.getByRole('textbox')).toHaveValue('Fire Event')
-  })
-
   test('入力がなにもないときバリデーションエラーとなること', () => {
     fireEvent.change(screen.getByRole('textbox'), {
       target: { value: '' },

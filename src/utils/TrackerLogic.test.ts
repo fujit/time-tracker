@@ -40,6 +40,27 @@ describe('createNewTracker', () => {
     }
     expect(actual).toStrictEqual(expected)
   })
+
+  test('名前の前後の空白は削除されること', () => {
+    const actual = createNewTracker(
+      'QED',
+      '#200 The Dark Knight ',
+      '2008-08-09',
+      new Date('2008-08-09 09:00:00'),
+      200
+    )
+
+    const expected = {
+      id: 'QED',
+      key: 200,
+      name: '#200 The Dark Knight',
+      inProgress: true,
+      day: '2008-08-09',
+      timers: [{ id: '0', start: new Date('2008-08-09 09:00:00') }],
+      isActive: true,
+    }
+    expect(actual).toStrictEqual(expected)
+  })
 })
 
 describe('updatePauseTimer', () => {

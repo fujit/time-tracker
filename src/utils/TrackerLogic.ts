@@ -10,7 +10,7 @@ export const createNewTracker = (
   return {
     id,
     key,
-    name: trackerName,
+    name: trackerName.trim(),
     inProgress: true,
     day: today,
     timers: [{ id: '0', start }],
