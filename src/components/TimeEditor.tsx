@@ -1,5 +1,6 @@
 import React, { FC, useMemo } from 'react'
 import { useTimePicker } from '../utils/hooks/useTimePicker'
+import { isValidTimeDuration } from '../utils/TrackerLogic'
 import { TimePicker } from './TimePicker'
 import { Modal } from './Modal'
 import { Button } from './Button'
@@ -66,15 +67,12 @@ export const TimeEditor: FC<ContainerProps> = ({ timer, updatePastTime, ...props
   const [start, changeStartHour, changeStartMinute, isValidStart] = useTimePicker(timer.start)
   const [end, changeEndHour, changeEndMinute, isValidEnd] = useTimePicker(timer.end)
 
-  const isValid = useMemo(
-    () =>
-      !!(
-        isValidStart &&
-        isValidEnd &&
-        `${start.hour}:${start.minute}` <= `${end.hour}:${end.minute}`
-      ),
-    [start, end, isValidStart, isValidEnd]
-  )
+  const isValid = useMemo(() => !!(isValidStart && isValidEnd && isValidTimeDuration(start, end)), [
+    start,
+    end,
+    isValidStart,
+    isValidEnd,
+  ])
 
   const update = () => {
     if (!isValid || !timer.end) {

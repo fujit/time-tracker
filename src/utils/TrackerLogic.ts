@@ -41,3 +41,20 @@ export const getNextTimerId = (timers: Timer[]) =>
   (
     timers.reduce((previous, current) => Math.max(previous, parseInt(current.id, 10)), 0) + 1
   ).toString()
+
+export const isValidTimeDuration = (start: Time, end: Time) => {
+  const startHour = parseInt(start.hour, 10)
+  const startMinute = parseInt(start.minute, 10)
+  const endHour = parseInt(end.hour, 10)
+  const endMinute = parseInt(end.minute, 10)
+
+  if (startHour > endHour) {
+    return false
+  }
+
+  if (startHour === endHour && startMinute > endMinute) {
+    return false
+  }
+
+  return true
+}

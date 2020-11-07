@@ -1,4 +1,9 @@
-import { createNewTracker, updatePauseTimer, getNextTimerId } from './TrackerLogic'
+import {
+  createNewTracker,
+  updatePauseTimer,
+  getNextTimerId,
+  isValidTimeDuration,
+} from './TrackerLogic'
 
 describe('createNewTracker', () => {
   test('Tracker の形式で変換されること', () => {
@@ -120,5 +125,95 @@ describe('getNextTimerId', () => {
 
   test('タイマーが何もない場合は1を返すこと', () => {
     expect(getNextTimerId([])).toBe('1')
+  })
+})
+
+describe('isValidTimeDuration', () => {
+  describe('NG', () => {
+    test('開始時間の方が遅い', () => {
+      const start: Time = {
+        hour: '11',
+        minute: '10',
+      }
+
+      const end: Time = {
+        hour: '8',
+        minute: '10',
+      }
+
+      expect(isValidTimeDuration(start, end)).toBeFalsy()
+    })
+
+    test('時間が同じで、開始分の方が遅い', () => {
+      const start: Time = {
+        hour: '10',
+        minute: '30',
+      }
+
+      const end: Time = {
+        hour: '10',
+        minute: '29',
+      }
+
+      expect(isValidTimeDuration(start, end)).toBeFalsy()
+    })
+  })
+
+  describe('OK', () => {
+    test('開始時間の方が早い', () => {
+      const start: Time = {
+        hour: '8',
+        minute: '10',
+      }
+
+      const end: Time = {
+        hour: '11',
+        minute: '10',
+      }
+
+      expect(isValidTimeDuration(start, end)).toBeTruthy()
+    })
+
+    test('時間が同じで、開始分の方が早い', () => {
+      const start: Time = {
+        hour: '8',
+        minute: '9',
+      }
+
+      const end: Time = {
+        hour: '8',
+        minute: '10',
+      }
+
+      expect(isValidTimeDuration(start, end)).toBeTruthy()
+    })
+
+    test('開始と終了が同じ', () => {
+      const start: Time = {
+        hour: '8',
+        minute: '9',
+      }
+
+      const end: Time = {
+        hour: '8',
+        minute: '9',
+      }
+
+      expect(isValidTimeDuration(start, end)).toBeTruthy()
+    })
+
+    test('開始時間の方が早くて、開始分の方が遅い', () => {
+      const start: Time = {
+        hour: '8',
+        minute: '50',
+      }
+
+      const end: Time = {
+        hour: '10',
+        minute: '9',
+      }
+
+      expect(isValidTimeDuration(start, end)).toBeTruthy()
+    })
   })
 })
