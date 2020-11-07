@@ -1,5 +1,4 @@
 import React, { FC, useMemo } from 'react'
-import type { ChangeEvent } from 'react'
 import { useTimePicker } from '../utils/hooks/useTimePicker'
 import { TimePicker } from './TimePicker'
 import { Modal } from './Modal'
@@ -48,7 +47,7 @@ const Component: FC<Props> = ({
         isValid={isValid}
       />
     </div>
-    <div className="flex items-center justfy-around mt-4">
+    <div className="flex items-center mt-4 justfy-around">
       <Button disabled={!isValid} onClick={update}>
         更新する
       </Button>
