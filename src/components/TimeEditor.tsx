@@ -4,6 +4,7 @@ import { isValidTimeDuration } from '../utils/TrackerLogic'
 import { TimePicker } from './TimePicker'
 import { Modal } from './Modal'
 import { Button } from './Button'
+import { Input } from './Input'
 
 type Props = {
   start: Time
@@ -30,16 +31,16 @@ const Component: FC<Props> = ({
   isOpen,
   closeModal,
 }) => (
-  <Modal isOpen={isOpen} onRequestClose={closeModal}>
+  <Modal isOpen={isOpen} onRequestClose={closeModal} styles={{ maxHeight: 200, minHeight: 200 }}>
     <div className="flex items-center justify-content">
       <TimePicker
-        className="mr-6"
         hour={start.hour}
         minute={start.minute}
         changeHour={(event) => changeStartHour(event.target.value)}
         changeMinute={(event) => changeStartMinute(event.target.value)}
         isValid={isValid}
       />
+      <span className="mx-2 text-2xl">〜</span>
       <TimePicker
         hour={end.hour}
         minute={end.minute}
@@ -48,7 +49,7 @@ const Component: FC<Props> = ({
         isValid={isValid}
       />
     </div>
-    <div className="flex items-center mt-4 justfy-around">
+    <div className="mt-4 text-right">
       <Button disabled={!isValid} onClick={update}>
         更新する
       </Button>

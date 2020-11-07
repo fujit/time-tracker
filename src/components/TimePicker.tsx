@@ -26,7 +26,6 @@ export const TimePicker: FC<Props> = ({
       size={2}
       value={hour}
       onChange={changeHour}
-      required
       isError={!isValid}
     />
     <span className="text-5xl">:</span>
@@ -36,7 +35,6 @@ export const TimePicker: FC<Props> = ({
       size={2}
       value={minute}
       onChange={changeMinute}
-      required
       isError={!isValid}
     />
   </div>
