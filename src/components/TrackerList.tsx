@@ -14,6 +14,7 @@ type Props = {
   removedTrackerId: string | undefined
   restore: () => void
   trackers: Tracker[]
+  activeTrackers: ActiveTracker[]
   openBreakdown: (trackerId: string) => void
   remove: (trackerId: string) => void
   closeBreakdown: () => void
@@ -31,6 +32,7 @@ const Component: React.FC<Props> = ({
   breakdownTrackerId,
   closeBreakdown,
   trackers,
+  activeTrackers,
   currentCount,
   calculateCurrentCount,
   pauseTimer,
@@ -58,7 +60,7 @@ const Component: React.FC<Props> = ({
           className="mr-4"
           data-testid="total"
         />
-        <TrackerCopy />
+        <TrackerCopy trackers={activeTrackers} />
       </div>
       <div>
         <ul>
@@ -156,12 +158,23 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
     }
   }, [])
 
+  const activeTrackers: ActiveTracker[] = state.trackers
+    .filter((tracker) => tracker.isActive)
+    .map((tracker) => ({
+      id: tracker.id,
+      name: tracker.name,
+      timers: tracker.timers,
+      key: tracker.key,
+      isActive: tracker.isActive,
+    }))
+
   return (
     <Component
       {...props}
       removedTrackerId={removedTrackerId}
       restore={restore}
       trackers={state.trackers}
+      activeTrackers={activeTrackers}
       openBreakdown={openBreakdown}
       remove={remove}
       closeBreakdown={closeBreakdown}

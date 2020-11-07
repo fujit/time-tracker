@@ -17,7 +17,14 @@ type Timer = {
 
 type CalculatedTimer = Required<Timer>
 
-type PastTracker = Pick<Tracker, 'id' | 'day' | 'name' | 'timers'>
+type PastTracker = Pick<Tracker, 'id' | 'day' | 'name' | 'timers' | 'key'>
+
+type ActiveTracker = {
+  id: string
+  name: string
+  key?: number
+  timers: Timer[]
+}
 
 type Time = {
   hour: string

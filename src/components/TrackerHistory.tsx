@@ -1,6 +1,7 @@
 import { FC, useCallback } from 'react'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
 import { DecimalText } from './Number'
+import { TrackerCopy } from './TrackerCopy'
 
 type Props = {
   pastTrackers: { key: string; value: PastTracker[] }[]
@@ -12,9 +13,12 @@ const Component: FC<Props> = ({ pastTrackers, calcTotalTime, calcSum }) => (
   <div>
     {pastTrackers.map((obj) => (
       <div key={obj.key}>
-        <h4 className="p-4 mt-4 text-2xl bg-green-100 grid grid-cols-2">
+        <h4 className="p-4 mt-4 text-2xl bg-green-100 grid grid-cols-3">
           {obj.key}
           <DecimalText value={calcTotalTime(obj.value) / 60} digits={1} unit="h" />
+          <div className="flex items-center">
+            <TrackerCopy trackers={obj.value} />
+          </div>
         </h4>
         <ul className="pl-6 mt-3">
           {obj.value.map((tracker) => (

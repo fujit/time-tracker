@@ -37,7 +37,7 @@ const TrackerCopyWrapper: FC = () => {
 
   return (
     <StateContext.Provider value={state}>
-      <TrackerCopy />
+      <TrackerCopy trackers={state.trackers} />
     </StateContext.Provider>
   )
 }
