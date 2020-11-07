@@ -97,7 +97,10 @@ export const TrackerList: React.FC<ContainerProps> = (props) => {
   const dispatch = React.useContext(DispatchContext)
 
   const totalTime = React.useMemo(
-    () => state.trackers.reduce((previous, current) => previous + calcSum(current.timers), 0),
+    () =>
+      state.trackers
+        .filter((tracker) => tracker.isActive)
+        .reduce((previous, current) => previous + calcSum(current.timers), 0),
     [state.trackers, calcSum]
   )
 

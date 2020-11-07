@@ -45,6 +45,19 @@ const Wrapper: React.FC<WrapperProps> = (props) => {
         ],
         isActive: true,
       },
+      {
+        id: 'c',
+        name: 'PLANET OF THE APES',
+        day: '1968-02-08',
+        inProgress: true,
+        timers: [
+          {
+            id: '0',
+            start: new Date('1968-02-08 09:00:00'),
+          },
+        ],
+        isActive: false,
+      },
     ],
     inProgressId: 'b',
   }
@@ -81,7 +94,7 @@ describe('TrackerList', () => {
     })
 
     test('コピーアイコンが表示されていること', () => {
-      expect(screen.getByAltText('copy')).toBeInTheDocument()
+      expect(screen.getAllByAltText('copy')).toHaveLength(2)
     })
   })
 
