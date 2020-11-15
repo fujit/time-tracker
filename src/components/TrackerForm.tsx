@@ -55,7 +55,15 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
         disabled={!!state.inProgressId}
         maxLength={validate.trackerName.length}
         {...props}
+        autoComplete="on"
+        list="projectName"
       />
+      <datalist id="projectName">
+        {formValue.suggestProjects.map((suggestProject) => (
+          // eslint-disable-next-line jsx-a11y/control-has-associated-label
+          <option value={suggestProject.name} key={suggestProject.key} />
+        ))}
+      </datalist>
       <StartIcon
         width={42}
         height={42}

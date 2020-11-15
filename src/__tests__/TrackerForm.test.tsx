@@ -1,7 +1,7 @@
 import React from 'react'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FetchMock } from 'jest-fetch-mock'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
@@ -41,7 +41,7 @@ describe('TrackerForm', () => {
     })
 
     test('フォームは空であること', () => {
-      expect(screen.getByRole('textbox')).toHaveValue('')
+      expect(screen.getByRole('combobox')).toHaveValue('')
     })
 
     test('アイコンが非活性であること', () => {
@@ -53,31 +53,33 @@ describe('TrackerForm', () => {
     let calculateCurrentCount: jest.Mock
     beforeEach(() => {
       calculateCurrentCount = jest.fn()
-      render(<Wrapper calculateCurrentCount={calculateCurrentCount} />)
+      act(() => {
+        render(<Wrapper calculateCurrentCount={calculateCurrentCount} />)
+      })
     })
 
     test('Enter キーで計測が開始すること', () => {
-      userEvent.type(screen.getByRole('textbox'), 'Test')
-      expect(screen.getByRole('textbox')).toHaveValue('Test')
+      userEvent.type(screen.getByRole('combobox'), 'Test')
+      expect(screen.getByRole('combobox')).toHaveValue('Test')
 
-      userEvent.type(screen.getByRole('textbox'), '{enter}')
-      expect(screen.getByRole('textbox')).toHaveValue('')
+      userEvent.type(screen.getByRole('combobox'), '{enter}')
+      expect(screen.getByRole('combobox')).toHaveValue('')
       expect(calculateCurrentCount).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledTimes(1)
-      expect(fetchMock).toHaveBeenCalledTimes(1)
+      expect(fetchMock).toHaveBeenCalledTimes(3)
     })
 
     test('フォームに何も入力されていない場合、計測は開始しないこと', () => {
-      userEvent.type(screen.getByRole('textbox'), '{enter}')
+      userEvent.type(screen.getByRole('combobox'), '{enter}')
       expect(calculateCurrentCount).toHaveBeenCalledTimes(0)
-      expect(screen.getByRole('textbox')).toBeEnabled()
+      expect(screen.getByRole('combobox')).toBeEnabled()
     })
 
     test('アイコンをクリックすると計測が開始すること', () => {
-      userEvent.type(screen.getByRole('textbox'), 'Test')
+      userEvent.type(screen.getByRole('combobox'), 'Test')
       userEvent.click(screen.getByRole('img'))
 
-      expect(screen.getByRole('textbox')).toHaveValue('')
+      expect(screen.getByRole('combobox')).toHaveValue('')
       expect(calculateCurrentCount).toHaveBeenCalledTimes(1)
       expect(screen.getByRole('img')).toHaveClass('cursor-not-allowed opacity-50')
       expect(dispatch).toHaveBeenCalledTimes(1)
@@ -98,8 +100,8 @@ describe('TrackerForm', () => {
       })
 
       test('31文字目以降は入力できないこと', () => {
-        userEvent.type(screen.getByRole('textbox'), 'aaaaaaaaaabbbbbbbbbbccccccccccd')
-        expect(screen.getByRole('textbox')).toHaveValue('aaaaaaaaaabbbbbbbbbbcccccccccc')
+        userEvent.type(screen.getByRole('combobox'), 'aaaaaaaaaabbbbbbbbbbccccccccccd')
+        expect(screen.getByRole('combobox')).toHaveValue('aaaaaaaaaabbbbbbbbbbcccccccccc')
       })
 
       test('フォームに何も入力されていない場合、アイコンは非活性であること', () => {
@@ -115,7 +117,7 @@ describe('TrackerForm', () => {
       })
 
       test('計測中はフォームが非活性であること', () => {
-        expect(screen.getByRole('textbox')).toBeDisabled()
+        expect(screen.getByRole('combobox')).toBeDisabled()
       })
     })
   })

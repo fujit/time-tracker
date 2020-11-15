@@ -20,7 +20,19 @@ export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse<PostR
     const collection = mongo.getCollection<Tracker>(client, 'time-tracker', 'trackers')
 
     const { trackerId, newName, newKey } = req.body
-    await collection.updateOne({ id: trackerId }, { $set: { name: newName, key: newKey } })
+    const result = await collection.updateOne(
+      { id: trackerId },
+      { $set: { name: newName, key: newKey } }
+    )
+
+    if (result.result.ok === 1 && newKey) {
+      const projectCollection = mongo.getCollection<Project>(client, 'time-tracker', 'projects')
+      await projectCollection.updateOne(
+        { key: newKey },
+        { $set: { name: newName, key: newKey } },
+        { upsert: true }
+      )
+    }
 
     res.status(200).json({ message: 'OK' })
   }

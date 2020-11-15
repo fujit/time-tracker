@@ -12,7 +12,12 @@ export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse<PostR
     )
     const client = await mongo.connect()
     const collection = mongo.getCollection<Tracker>(client, 'time-tracker', 'trackers')
-    await collection.insertOne(req.body)
+    const result = await collection.insertOne(req.body)
+
+    if (result.result.ok === 1 && req.body.key) {
+      const projectCollection = mongo.getCollection<Project>(client, 'time-tracker', 'projects')
+      await projectCollection.insertOne({ key: req.body.key, name: req.body.name })
+    }
 
     res.status(200).json({ message: 'OK' })
   }

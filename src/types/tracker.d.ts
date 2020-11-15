@@ -30,3 +30,8 @@ type Time = {
   hour: string
   minute: string
 }
+
+type Project = {
+  key: number
+  name: string
+}
