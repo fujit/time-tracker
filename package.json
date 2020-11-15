@@ -15,7 +15,7 @@
     "classnames": "^2.2.6",
     "dayjs": "^1.8.29",
     "mongodb": "^3.6.2",
-    "next": "^9.5.3",
+    "next": "^10.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-modal": "^3.11.2",
