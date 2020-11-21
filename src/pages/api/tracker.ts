@@ -1,4 +1,5 @@
 import { ExNextApiRequest, NextApiResponse } from 'next'
+import { MongoError } from 'mongodb'
 import { Mongo } from '../../utils/Mongo'
 
 export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse<PostResponse>) => {
@@ -14,9 +15,16 @@ export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse<PostR
     const collection = mongo.getCollection<Tracker>(client, 'time-tracker', 'trackers')
     const result = await collection.insertOne(req.body)
 
-    if (result.result.ok === 1 && req.body.key) {
-      const projectCollection = mongo.getCollection<Project>(client, 'time-tracker', 'projects')
-      await projectCollection.insertOne({ key: req.body.key, name: req.body.name })
+    try {
+      if (result.result.ok === 1 && req.body.key) {
+        const projectCollection = mongo.getCollection<Project>(client, 'time-tracker', 'projects')
+        await projectCollection.insertOne({ key: req.body.key, name: req.body.name })
+      }
+    } catch (e) {
+      if (e instanceof MongoError) {
+        console.log(e.errmsg)
+        console.log(e.stack)
+      }
     }
 
     res.status(200).json({ message: 'OK' })

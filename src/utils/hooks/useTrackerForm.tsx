@@ -53,8 +53,6 @@ export const useTrackerForm = (name: string, key?: number): UseTrackerFormResult
       const trimValue = value.replace(/\s/g, ' ')
       const formValue = splitName(trimValue)
 
-      console.log('value ->', value)
-      console.log('trimValue -> ', trimValue)
       setTrackerName(trimValue)
       setTrackerKey(formValue.key)
 
