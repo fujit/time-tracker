@@ -83,19 +83,19 @@ export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => 
 
   useEffect(() => {
     if (!state.inProgressId || intervalRef.current) {
-      return
+      return () => clearInterval(intervalRef.current)
     }
 
     const inProgressTimer = state.trackers
       .find((tracker) => tracker.inProgress)
       ?.timers.find((timer) => !timer.end)
     if (!inProgressTimer) {
-      return
+      return () => clearInterval(intervalRef.current)
     }
 
     calculateCurrentCount(inProgressTimer.start)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    return () => clearInterval(intervalRef.current)
+  }, [state.inProgressId, state.trackers])
 
   return (
     <StateContext.Provider value={state}>
