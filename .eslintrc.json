@@ -56,17 +56,6 @@
         "devDependencies": ["**/*.test.tsx", "**/*.test.ts", "**/*.js"]
       }
     ],
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "variable",
-        "format": ["PascalCase", "camelCase", "UPPER_CASE"]
-      },
-      {
-        "selector": "parameter",
-        "format": ["camelCase", "PascalCase"]
-      }
-    ],
     "jest/no-disabled-tests": "off"
   },
   "overrides": [
