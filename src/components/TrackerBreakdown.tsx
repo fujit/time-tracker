@@ -55,18 +55,12 @@ const Component: React.FC<Props> = ({
             <span>{timer.end && DateUtil.format(timer.end, 'HH:mm')}</span>
             {isCalculatedTimer(timer) && (
               <div className="flex items-center">
-                <EditIcon
-                  className="ml-4"
-                  width={16}
-                  height={16}
-                  onClick={() => openTimerEdit(timer)}
-                />
-                <TrashIcon
-                  className="ml-4"
-                  width={16}
-                  height={16}
-                  onClick={() => deleteTrackerTimer(timer.id)}
-                />
+                <button onClick={() => openTimerEdit(timer)}>
+                  <EditIcon className="ml-4" width={16} height={16} />
+                </button>
+                <button onClick={() => deleteTrackerTimer(timer.id)}>
+                  <TrashIcon className="ml-4" width={16} height={16} />
+                </button>
               </div>
             )}
           </li>

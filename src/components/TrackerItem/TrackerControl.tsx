@@ -13,16 +13,15 @@ type StartProps = {
 }
 
 export const StartComponent: FC<StartProps> = ({ restartMeasure, inProgressId, isValid }) => (
-  <StartIcon
-    width={36}
-    height={36}
-    onClick={restartMeasure}
-    disabled={!!(inProgressId || !isValid)}
-  />
+  <button onClick={restartMeasure}>
+    <StartIcon width={36} height={36} disabled={!!(inProgressId || !isValid)} />
+  </button>
 )
 
 export const PauseComponent: FC<{ pauseMeasure: () => void }> = ({ pauseMeasure }) => (
-  <PauseIcon width={36} height={36} onClick={pauseMeasure} />
+  <button onClick={pauseMeasure}>
+    <PauseIcon width={36} height={36} />
+  </button>
 )
 
 type ContainerProps = {

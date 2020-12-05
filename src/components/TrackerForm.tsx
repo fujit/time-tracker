@@ -64,12 +64,9 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
           <option value={suggestProject.name} key={suggestProject.key} />
         ))}
       </datalist>
-      <StartIcon
-        width={42}
-        height={42}
-        onClick={startMeasure}
-        disabled={!!(state.inProgressId || !isValid)}
-      />
+      <button onClick={startMeasure}>
+        <StartIcon width={42} height={42} disabled={!!(state.inProgressId || !isValid)} />
+      </button>
     </div>
   )
 }
