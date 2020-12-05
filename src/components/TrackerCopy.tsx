@@ -10,9 +10,9 @@ type Props = {
 }
 
 export const Component: FC<Props> = ({ onCopyDaily, onCopyWork }) => (
-  <div className="hover-opacity-parent relative w-48">
+  <div className="hover-visibility-parent relative w-48">
     <ClipboardIcon width={35} height={35} />
-    <Popovers className="hover-opacity-child opacity-0 top-0 -right-1">
+    <Popovers className="hover-visibility-child invisible top-0 -right-1">
       <ul>
         <li className="p-2 hover:bg-gray-100">
           <div className="flex item-center mr-2">

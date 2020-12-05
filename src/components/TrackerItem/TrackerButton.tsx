@@ -15,7 +15,7 @@ export const TrackerButtonComponent: FC<Props> = ({
   inProgress,
 }) => (
   <div
-    className="flex flex-col opacity-0 xl:flex-row lg:flex-row hover-opacity-child"
+    className="flex flex-col invisible xl:flex-row lg:flex-row hover-visibility-child"
     data-testid="button-list"
   >
     <Button

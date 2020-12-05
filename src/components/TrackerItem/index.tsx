@@ -31,7 +31,7 @@ const TrackerItemComponent: FC<Props> = ({
   totalTime,
 }) => (
   <div className="flex flex-col h-16 mb-8">
-    <div className="flex items-center hover-opacity-parent" data-testid="items">
+    <div className="flex items-center hover-visibility-parent" data-testid="items">
       <TrackerName
         trackerId={tracker.id}
         trackerName={tracker.name}

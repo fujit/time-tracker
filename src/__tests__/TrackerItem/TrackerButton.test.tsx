@@ -47,7 +47,7 @@ describe('TrackerButtonComponent', () => {
     })
 
     test('ボタンは見えない状態であること', () => {
-      expect(screen.getByTestId('button-list')).toHaveClass('opacity-0')
+      expect(screen.getByTestId('button-list')).toHaveClass('invisible')
     })
 
     test.todo('アイテムにホバーした時に「内訳を見る」「削除」ボタンが見えるようになる')

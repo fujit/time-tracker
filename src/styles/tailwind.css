@@ -37,8 +37,8 @@ button {
   @apply border;
 }
 
-.hover-opacity-parent:hover .hover-opacity-child {
-  @apply opacity-100;
+.hover-visibility-parent:hover .hover-visibility-child {
+  @apply visible;
 }
 
 @import 'tailwindcss/utilities';
