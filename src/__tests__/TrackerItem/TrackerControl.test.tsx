@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import '@testing-library/jest-dom'
+import { FetchMock } from 'jest-fetch-mock'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {

@@ -1,6 +1,10 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 
+button {
+  @apply cursor-pointer;
+}
+
 .timer-start::after {
   content: '~';
 

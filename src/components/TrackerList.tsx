@@ -51,7 +51,7 @@ const Component: React.FC<Props> = ({
           closeBreakdown={closeBreakdown}
         />
       )}
-      <div className="flex items-center mb-8">
+      <div className="flex items-center mb-20">
         <h2 className="mx-4 text-xl">{today} のタスク</h2>
         <DecimalText
           value={totalTime / 60}
