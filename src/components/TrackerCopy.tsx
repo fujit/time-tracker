@@ -5,12 +5,11 @@ import { CopyIcon, ClipboardIcon } from './Icon'
 import { Popovers } from './Popovers'
 
 type Props = {
-  isCopied: boolean
   onCopyDaily: () => void
   onCopyWork: () => void
 }
 
-export const Component: FC<Props> = ({ isCopied, onCopyDaily, onCopyWork }) => (
+export const Component: FC<Props> = ({ onCopyDaily, onCopyWork }) => (
   <div className="hover-opacity-parent relative w-48">
     <ClipboardIcon width={35} height={35} />
     <Popovers className="hover-opacity-child opacity-0 top-0 -right-1">
@@ -42,7 +41,7 @@ type ContainerProps = {
 
 export const TrackerCopy: React.FC<ContainerProps> = ({ trackers }) => {
   const { arrangeTrackerDataDaily, arrangeTrackerDataWork } = useTrackerCopy(trackers)
-  const [onCopy, isCopied] = useClipBoard()
+  const [onCopy] = useClipBoard()
 
   const copyByDaily = useCallback(() => {
     onCopy(arrangeTrackerDataDaily)
@@ -52,5 +51,5 @@ export const TrackerCopy: React.FC<ContainerProps> = ({ trackers }) => {
     onCopy(arrangeTrackerDataWork)
   }, [onCopy, arrangeTrackerDataWork])
 
-  return <Component isCopied={isCopied} onCopyDaily={copyByDaily} onCopyWork={copyByWork} />
+  return <Component onCopyDaily={copyByDaily} onCopyWork={copyByWork} />
 }

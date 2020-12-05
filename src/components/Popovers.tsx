@@ -8,13 +8,23 @@ type Props = {
 }
 
 const PopoversComponent: FC<Props> = ({ children, className }) => (
-  <div className={classNames('border border-solid border-gray-100 rounded absolute', className)}>
+  <div
+    className={classNames(
+      'border border-solid border-gray-100 rounded absolute bg-white text-sm',
+      className
+    )}
+  >
     {children}
   </div>
 )
 
 const PopoversWithTitleComponent: FC<Props> = ({ title, children, className }) => (
-  <div className={classNames('border border-solid border-gray-100 rounded absolute', className)}>
+  <div
+    className={classNames(
+      'border border-solid border-gray-100 rounded absolute bg-white text-sm',
+      className
+    )}
+  >
     <h3 className="p-2 border-b border-gray-100 bg-gray-50">{title}</h3>
     <div>{children}</div>
   </div>
