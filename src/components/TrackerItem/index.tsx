@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useContext } from 'react'
+import React, { VFC, useMemo, useContext } from 'react'
 import { StateContext } from '../../utils/contexts/StoreContext'
 import { DecimalText } from '../Number'
 import { TrackerName } from './TrackerName'
@@ -19,7 +19,7 @@ type Props = {
   totalTime: number
 }
 
-const TrackerItemComponent: FC<Props> = ({
+const TrackerItemComponent: VFC<Props> = ({
   tracker,
   changeTrackerName,
   isValid,
@@ -65,7 +65,7 @@ type ContainerProps = {
   removeTracker: (trackerId: string) => void
 }
 
-export const TrackerItem: FC<ContainerProps> = ({
+export const TrackerItem: VFC<ContainerProps> = ({
   tracker,
   currentCount,
   calculateCurrentCount,
@@ -78,6 +78,7 @@ export const TrackerItem: FC<ContainerProps> = ({
 
   const calcSum = useTrackerCalc()
   const sum = useMemo(() => calcSum(tracker.timers), [tracker.timers, calcSum])
+  // TODO: カウントアップするたびに更新したい
   const totalTime = useMemo(() => (tracker.inProgress && currentCount ? sum + currentCount : sum), [
     sum,
     currentCount,

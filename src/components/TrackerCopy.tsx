@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import React, { VFC, useCallback } from 'react'
 import { useClipBoard } from '../utils/hooks/useClipBoard'
 import { useTrackerCopy } from '../utils/hooks/useTrackerCopy'
 import { CopyIcon, ClipboardIcon } from './Icon'
@@ -9,7 +9,7 @@ type Props = {
   onCopyWork: () => void
 }
 
-export const Component: FC<Props> = ({ onCopyDaily, onCopyWork }) => (
+export const Component: VFC<Props> = ({ onCopyDaily, onCopyWork }) => (
   <div className="hover-visibility-parent relative w-48">
     <ClipboardIcon width={35} height={35} />
     <Popovers className="hover-visibility-child invisible top-0 -right-1">
@@ -39,7 +39,7 @@ type ContainerProps = {
   trackers: ActiveTracker[]
 }
 
-export const TrackerCopy: React.FC<ContainerProps> = ({ trackers }) => {
+export const TrackerCopy: VFC<ContainerProps> = ({ trackers }) => {
   const { arrangeTrackerDataDaily, arrangeTrackerDataWork } = useTrackerCopy(trackers)
   const [onCopy] = useClipBoard()
 

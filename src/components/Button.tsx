@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 import classNames from 'classnames'
 
 type Props = {
   children: string
 } & JSX.IntrinsicElements['button']
 
-const Component: React.FC<Props> = ({ children, className = '', ...props }) => (
+const Component: FC<Props> = ({ children, className = '', ...props }) => (
   <button
     type="button"
     className={classNames(
@@ -26,7 +26,7 @@ type ContainerProps = {
   children: string
 } & JSX.IntrinsicElements['button']
 
-export const Button: React.FC<ContainerProps> = ({
+export const Button: FC<ContainerProps> = ({
   colorType = 'primary',
   children,
   className,

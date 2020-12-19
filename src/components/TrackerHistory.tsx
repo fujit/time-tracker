@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { VFC, useCallback } from 'react'
 import { useTrackerCalc } from '../utils/hooks/useTrackerCalc'
 import { DecimalText } from './Number'
 import { TrackerCopy } from './TrackerCopy'
@@ -9,7 +9,7 @@ type Props = {
   calcSum: (timers: Timer[]) => number
 }
 
-const Component: FC<Props> = ({ pastTrackers, calcTotalTime, calcSum }) => (
+const Component: VFC<Props> = ({ pastTrackers, calcTotalTime, calcSum }) => (
   <div>
     {pastTrackers.map((obj) => (
       <div key={obj.key}>
@@ -33,7 +33,7 @@ const Component: FC<Props> = ({ pastTrackers, calcTotalTime, calcSum }) => (
   </div>
 )
 
-export const TrackerHistory: FC<{ trackers: PastTracker[] }> = ({ trackers }) => {
+export const TrackerHistory: VFC<{ trackers: PastTracker[] }> = ({ trackers }) => {
   const calcSum = useTrackerCalc()
 
   const calcTotalTime = useCallback(

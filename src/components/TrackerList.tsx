@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { VFC, useState, useEffect, useRef, useContext, useMemo } from 'react'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { removeTracker, restoreTracker } from '../actionCreators'
 import { useModal } from '../utils/hooks/useModal'
@@ -23,7 +23,7 @@ type Props = {
   totalTime: number
 } & ContainerProps
 
-const Component: React.FC<Props> = ({
+const Component: VFC<Props> = ({
   removedTrackerId,
   restore,
   isOpen,
@@ -90,15 +90,15 @@ type ContainerProps = {
   today: string
 }
 
-export const TrackerList: React.FC<ContainerProps> = (props) => {
-  const [breakdownTrackerId, setBreakdownTrackerId] = React.useState('')
-  const [removedTrackerId, setRemovedTrackerId] = React.useState<string | undefined>(undefined)
+export const TrackerList: VFC<ContainerProps> = (props) => {
+  const [breakdownTrackerId, setBreakdownTrackerId] = useState('')
+  const [removedTrackerId, setRemovedTrackerId] = useState<string | undefined>(undefined)
   const [isOpen, toggleModal] = useModal()
   const calcSum = useTrackerCalc()
-  const state = React.useContext(StateContext)
-  const dispatch = React.useContext(DispatchContext)
+  const state = useContext(StateContext)
+  const dispatch = useContext(DispatchContext)
 
-  const totalTime = React.useMemo(
+  const totalTime = useMemo(
     () =>
       state.trackers
         .filter((tracker) => tracker.isActive)

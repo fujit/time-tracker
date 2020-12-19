@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useReducer } from 'react'
+import React, { VFC, useState, useRef, useEffect, useReducer } from 'react'
 import Head from 'next/head'
 import { reducer, initialState } from '../reducer'
 import { ErrorBoundary } from './ErrorBoundary'
@@ -15,7 +15,7 @@ type Props = {
   title: string
 }
 
-const Component: React.FC<Props> = ({
+const Component: VFC<Props> = ({
   calculateCurrentCount,
   today,
   currentCount,
@@ -43,7 +43,7 @@ type ContainerProps = {
   today: string
 }
 
-export const Tracker: React.FC<ContainerProps> = ({ todaysTrackers, today }) => {
+export const Tracker: VFC<ContainerProps> = ({ todaysTrackers, today }) => {
   const [state, dispatch] = useReducer(
     reducer,
     initialState({

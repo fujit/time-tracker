@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react'
+import React, { VFC, useContext } from 'react'
 import { DispatchContext } from '../../utils/contexts/StoreContext'
 import { restart, pause } from '../../actionCreators'
 import { StartIcon, PauseIcon } from '../Icon'
@@ -12,13 +12,13 @@ type StartProps = {
   isValid: boolean
 }
 
-export const StartComponent: FC<StartProps> = ({ restartMeasure, inProgressId, isValid }) => (
+export const StartComponent: VFC<StartProps> = ({ restartMeasure, inProgressId, isValid }) => (
   <button onClick={restartMeasure}>
     <StartIcon width={36} height={36} disabled={!!(inProgressId || !isValid)} />
   </button>
 )
 
-export const PauseComponent: FC<{ pauseMeasure: () => void }> = ({ pauseMeasure }) => (
+export const PauseComponent: VFC<{ pauseMeasure: () => void }> = ({ pauseMeasure }) => (
   <button onClick={pauseMeasure}>
     <PauseIcon width={36} height={36} />
   </button>
@@ -32,7 +32,7 @@ type ContainerProps = {
   pauseTimer: () => void
 }
 
-export const TrackerControl: FC<ContainerProps> = ({
+export const TrackerControl: VFC<ContainerProps> = ({
   tracker,
   inProgressId,
   isValid,

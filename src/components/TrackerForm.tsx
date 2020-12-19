@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { VFC, useContext, KeyboardEvent, ChangeEvent } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { start } from '../actionCreators'
@@ -15,7 +15,7 @@ type Props = {
   today: string
 } & JSX.IntrinsicElements['input']
 
-export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...props }) => {
+export const TrackerForm: VFC<Props> = ({ calculateCurrentCount, today, ...props }) => {
   const [formValue, isValid, changeTrackerName] = useTrackerForm('')
   const state = useContext(StateContext)
   const dispatch = useContext(DispatchContext)
@@ -36,7 +36,7 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
     })
   }
 
-  const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const keyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.keyCode === keycode.enter) {
       startMeasure()
     }
@@ -47,9 +47,7 @@ export const TrackerForm: React.FC<Props> = ({ calculateCurrentCount, today, ...
       <Input
         value={formValue.name}
         type="text"
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          changeTrackerName(event.target.value)
-        }
+        onChange={(event: ChangeEvent<HTMLInputElement>) => changeTrackerName(event.target.value)}
         onKeyDown={keyDown}
         className="w-3/4 mr-4 lg:w-1/2 xl:w-1/2"
         disabled={!!state.inProgressId}

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { VFC } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
@@ -11,7 +11,7 @@ type ComponentProps = {
   onCopyWork: jest.Mock
 }
 
-const ComponentWrapper: FC<ComponentProps> = (props) => <Component {...props} />
+const ComponentWrapper: VFC<ComponentProps> = (props) => <Component {...props} />
 
 describe('TrackerCopyComponent', () => {
   let onCopyDaily: jest.Mock
@@ -29,7 +29,7 @@ describe('TrackerCopyComponent', () => {
   })
 })
 
-const TrackerCopyWrapper: FC = () => {
+const TrackerCopyWrapper: VFC = () => {
   const state = {
     trackers: [],
     inProgressId: undefined,

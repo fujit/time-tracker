@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { VFC, CSSProperties } from 'react'
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
@@ -8,10 +8,10 @@ import { Modal } from '../components/Modal'
 type WrapperProps = {
   isOpen: boolean
   onRequestClose: () => void
-  styles?: React.CSSProperties
+  styles?: CSSProperties
 }
 
-const Wrapper: React.FC<WrapperProps> = ({ isOpen, onRequestClose, styles }) => {
+const Wrapper: VFC<WrapperProps> = ({ isOpen, onRequestClose, styles }) => {
   ReactModal.setAppElement(document.createElement('div'))
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose} styles={styles}>
@@ -45,7 +45,7 @@ describe('Modal Component', () => {
   describe('パラメータ', () => {
     beforeEach(() => {
       onRequestClose = jest.fn()
-      const customStyles: React.CSSProperties = {
+      const customStyles: CSSProperties = {
         backgroundColor: 'green',
       }
       render(<Wrapper isOpen onRequestClose={onRequestClose} styles={customStyles} />)

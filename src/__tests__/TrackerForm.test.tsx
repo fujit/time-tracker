@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { VFC } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FetchMock } from 'jest-fetch-mock'
 import { render, screen, act } from '@testing-library/react'
@@ -13,7 +13,7 @@ type WrapperProps = {
 }
 
 let dispatch: jest.Mock
-const Wrapper: React.FC<WrapperProps> = (props) => {
+const Wrapper: VFC<WrapperProps> = (props) => {
   const state = {
     trackers: [],
     inProgressId: props.inProgressId,

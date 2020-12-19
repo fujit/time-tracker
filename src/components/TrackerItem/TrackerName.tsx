@@ -1,4 +1,4 @@
-import React, { FC, KeyboardEvent, MutableRefObject, useContext, useRef } from 'react'
+import React, { VFC, KeyboardEvent, ChangeEvent, MutableRefObject, useContext, useRef } from 'react'
 import { ForwardedInput } from '../Input'
 import { keycode, validate } from '../../utils/Constants'
 import { DispatchContext } from '../../utils/contexts/StoreContext'
@@ -14,7 +14,7 @@ type Props = {
   inputRef: MutableRefObject<HTMLInputElement | null>
 }
 
-export const TrackerNameComponent: FC<Props> = ({
+export const TrackerNameComponent: VFC<Props> = ({
   trackerName,
   changeTrackerName,
   updateTrackerName,
@@ -25,7 +25,7 @@ export const TrackerNameComponent: FC<Props> = ({
   <ForwardedInput
     type="text"
     value={trackerName}
-    onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeTrackerName(event.target.value)}
+    onChange={(event: ChangeEvent<HTMLInputElement>) => changeTrackerName(event.target.value)}
     onBlur={updateTrackerName}
     onKeyDown={keyDown}
     className="w-2/5 mr-4 border-0"
@@ -43,7 +43,7 @@ type ContainerProps = {
   changeTrackerName: (value: string) => void
 }
 
-export const TrackerName: FC<ContainerProps> = ({
+export const TrackerName: VFC<ContainerProps> = ({
   trackerId,
   trackerName,
   trackerKey,

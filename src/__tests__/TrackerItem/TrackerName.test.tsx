@@ -1,4 +1,5 @@
-import React, { FC, useRef } from 'react'
+import React, { VFC, useRef } from 'react'
+import { FetchMock } from 'jest-fetch-mock'
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -14,7 +15,7 @@ type ComponentWrapperProps = {
   isValid: boolean
 }
 
-const ComponentWrapper: FC<ComponentWrapperProps> = (props) => {
+const ComponentWrapper: VFC<ComponentWrapperProps> = (props) => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   return <TrackerNameComponent {...props} inputRef={inputRef} />
 }
@@ -89,7 +90,7 @@ type ContainerWrapperProps = {
 }
 
 let dispatch: jest.Mock
-const ContainerWrapper: FC<ContainerWrapperProps> = (props) => {
+const ContainerWrapper: VFC<ContainerWrapperProps> = (props) => {
   dispatch = jest.fn()
 
   return (

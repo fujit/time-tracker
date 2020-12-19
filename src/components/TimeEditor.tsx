@@ -1,10 +1,9 @@
-import React, { FC, useMemo } from 'react'
+import React, { VFC, useMemo } from 'react'
 import { useTimePicker } from '../utils/hooks/useTimePicker'
 import { isValidTimeDuration } from '../utils/TrackerLogic'
 import { TimePicker } from './TimePicker'
 import { Modal } from './Modal'
 import { Button } from './Button'
-import { Input } from './Input'
 
 type Props = {
   start: Time
@@ -19,7 +18,7 @@ type Props = {
   closeModal: () => void
 }
 
-const Component: FC<Props> = ({
+const Component: VFC<Props> = ({
   start,
   changeStartHour,
   changeStartMinute,
@@ -64,7 +63,7 @@ type ContainerProps = {
   closeModal: () => void
 }
 
-export const TimeEditor: FC<ContainerProps> = ({ timer, updatePastTime, ...props }) => {
+export const TimeEditor: VFC<ContainerProps> = ({ timer, updatePastTime, ...props }) => {
   const [start, changeStartHour, changeStartMinute, isValidStart] = useTimePicker(timer.start)
   const [end, changeEndHour, changeEndMinute, isValidEnd] = useTimePicker(timer.end)
 

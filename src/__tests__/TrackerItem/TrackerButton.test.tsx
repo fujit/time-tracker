@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { VFC } from 'react'
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -11,7 +11,7 @@ type WrapperProps = {
   removeTracker: jest.Mock
 }
 
-const TrackerButtonComponentWrapper: FC<WrapperProps> = (props) => (
+const TrackerButtonComponentWrapper: VFC<WrapperProps> = (props) => (
   <TrackerButtonComponent {...props} />
 )
 
@@ -81,7 +81,7 @@ type ContainerProps = {
   openBreakdown: jest.Mock
 }
 
-const TrackerButtonWrapper: FC<ContainerProps> = (props) => <TrackerButton {...props} />
+const TrackerButtonWrapper: VFC<ContainerProps> = (props) => <TrackerButton {...props} />
 
 describe('TrackerButton', () => {
   let openBreakdown: jest.Mock

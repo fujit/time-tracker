@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { VFC } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
@@ -37,7 +37,7 @@ type WrapperProps = {
 }
 
 let dispatch: jest.Mock
-const Wrapper: React.FC<WrapperProps> = ({ initialState, ...props }) => {
+const Wrapper: VFC<WrapperProps> = ({ initialState, ...props }) => {
   const state = initialState
   dispatch = jest.fn()
 

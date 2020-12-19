@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react'
+import React, { VFC, useState, useContext, useCallback } from 'react'
 import { StateContext, DispatchContext } from '../utils/contexts/StoreContext'
 import { useModal } from '../utils/hooks/useModal'
 import { Modal } from './Modal'
@@ -22,7 +22,7 @@ type Props = {
   deleteTrackerTimer: (timerId: string) => void
 }
 
-const Component: React.FC<Props> = ({
+const Component: VFC<Props> = ({
   closeBreakdown,
   isBreakdownOpen,
   tracker,
@@ -76,7 +76,7 @@ type ContainerProps = {
   closeBreakdown: () => void
 }
 
-export const TrackerBreakdown: React.FC<ContainerProps> = ({ trackerId, ...props }) => {
+export const TrackerBreakdown: VFC<ContainerProps> = ({ trackerId, ...props }) => {
   const [editableTimer, setEditableTimer] = useState<undefined | CalculatedTimer>(undefined)
   const [isOpen, toggleModal] = useModal()
   const state = useContext(StateContext)

@@ -1,5 +1,5 @@
-import { createContext } from 'react'
+import { createContext, Dispatch } from 'react'
 import { initialState, Actions } from '../../reducer'
 
 export const StateContext = createContext(initialState())
-export const DispatchContext = createContext({} as React.Dispatch<Actions>)
+export const DispatchContext = createContext({} as Dispatch<Actions>)

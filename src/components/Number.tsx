@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { VFC } from 'react'
 
 type Props = {
   className?: string
   value: string
 } & JSX.IntrinsicElements['span']
 
-const Component: React.FC<Props> = ({ className, value, ...props }) => (
+const Component: VFC<Props> = ({ className, value, ...props }) => (
   <span className={className} {...props}>
     {value}
   </span>
@@ -18,13 +18,7 @@ type ContainerProps = {
   unit?: string
 } & JSX.IntrinsicElements['span']
 
-export const DecimalText: React.FC<ContainerProps> = ({
-  className,
-  value,
-  digits,
-  unit,
-  ...props
-}) => {
+export const DecimalText: VFC<ContainerProps> = ({ className, value, digits, unit, ...props }) => {
   const calculatedValue = value.toFixed(digits)
   const displayValue = unit ? `${calculatedValue}${unit}` : calculatedValue
 

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { VFC } from 'react'
 import type { ChangeEvent } from 'react'
 import { Input } from './Input'
 
@@ -11,7 +11,7 @@ type Props = {
   className?: string
 }
 
-export const TimePicker: FC<Props> = ({
+export const TimePicker: VFC<Props> = ({
   hour,
   minute,
   changeHour,

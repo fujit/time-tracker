@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { VFC } from 'react'
 import { Button } from '../Button'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   removeTracker: () => void
 }
 
-export const TrackerButtonComponent: FC<Props> = ({
+export const TrackerButtonComponent: VFC<Props> = ({
   openBreakdown,
   removeTracker,
   trackerId,
@@ -44,7 +44,7 @@ type ContainerProps = {
   openBreakdown: (trackerId: string) => void
 }
 
-export const TrackerButton: FC<ContainerProps> = ({
+export const TrackerButton: VFC<ContainerProps> = ({
   trackerId,
   inProgress,
   removeTracker,

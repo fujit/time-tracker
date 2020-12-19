@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import Head from 'next/head'
 import { Header } from './Header'
 
@@ -5,7 +6,7 @@ type Props = {
   title?: string
 }
 
-const Layout: React.FC<Props> = ({ title = 'time-tracker', children }) => (
+const Layout: FC<Props> = ({ title = 'time-tracker', children }) => (
   <div id="app">
     <Head>
       <title>{title}</title>

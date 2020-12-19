@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { VFC } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FetchMock } from 'jest-fetch-mock'
 import userEvent from '@testing-library/user-event'
@@ -17,7 +17,7 @@ type WrapperProps = {
 }
 
 let dispatch: jest.Mock
-const Wrapper: React.FC<WrapperProps> = ({
+const Wrapper: VFC<WrapperProps> = ({
   isBreakdownOpen,
   closeBreakdown,
   testData,

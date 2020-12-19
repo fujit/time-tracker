@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 type State = {
   hasError: boolean
 }
 
-export class ErrorBoundary extends React.Component<Record<string, unknown>, State> {
+export class ErrorBoundary extends Component<Record<string, unknown>, State> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(props: any) {
     super(props)

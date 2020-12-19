@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { VFC } from 'react'
 import ReactModal from 'react-modal'
 import { FetchMock } from 'jest-fetch-mock'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { TrackerList } from '../components/TrackerList'
@@ -14,7 +14,7 @@ type WrapperProps = {
 }
 
 let dispatch: jest.Mock
-const Wrapper: React.FC<WrapperProps> = (props) => {
+const Wrapper: VFC<WrapperProps> = (props) => {
   const state = {
     trackers: [
       {

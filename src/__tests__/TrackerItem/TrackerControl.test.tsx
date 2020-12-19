@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { VFC } from 'react'
 import '@testing-library/jest-dom'
 import { FetchMock } from 'jest-fetch-mock'
 import { render, screen } from '@testing-library/react'
@@ -16,7 +16,7 @@ type StartComponentProps = {
   isValid: boolean
 }
 
-const StartComponentWrapper: FC<StartComponentProps> = (props) => <StartComponent {...props} />
+const StartComponentWrapper: VFC<StartComponentProps> = (props) => <StartComponent {...props} />
 
 describe('StartComponent', () => {
   let restartMeasure: jest.Mock
@@ -64,7 +64,7 @@ type PauseComponentProps = {
   pauseMeasure: jest.Mock
 }
 
-const PauseComponentWrapper: FC<PauseComponentProps> = (props) => <PauseComponent {...props} />
+const PauseComponentWrapper: VFC<PauseComponentProps> = (props) => <PauseComponent {...props} />
 
 describe('PauseComponent', () => {
   let pauseMeasure: jest.Mock
@@ -94,7 +94,7 @@ type ContainerProps = {
 }
 
 let dispatch: jest.Mock
-const TrackerControlWrapper: FC<ContainerProps> = (props) => {
+const TrackerControlWrapper: VFC<ContainerProps> = (props) => {
   dispatch = jest.fn()
 
   return (

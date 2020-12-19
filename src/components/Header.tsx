@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
-import React, { FC } from 'react'
+import React, { VFC } from 'react'
 import Link from 'next/link'
 import { PersonIcon } from './Icon'
 import { DropDown } from './Dropdown'
@@ -8,7 +8,7 @@ type Props = {
   title: string
 }
 
-export const Header: FC<Props> = ({ title }) => (
+export const Header: VFC<Props> = ({ title }) => (
   <div className="flex items-center justify-between max-w-full p-4 bg-green-300">
     <Link href="/">
       <a>

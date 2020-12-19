@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, CSSProperties } from 'react'
 import ReactModal from 'react-modal'
 
 type Props = {
@@ -16,7 +16,7 @@ const Component: FC<Props> = ({ children, ...props }) => (
 type ContainerProps = {
   isOpen: boolean
   onRequestClose: () => void
-  styles?: React.CSSProperties
+  styles?: CSSProperties
 }
 
 export const Modal: FC<ContainerProps> = ({ isOpen, onRequestClose, styles, children }) => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { VFC } from 'react'
 import classNames from 'classnames'
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   className?: string
 }
 
-export const Alert: React.FC<Props> = ({ restore, className = '' }) => (
+export const Alert: VFC<Props> = ({ restore, className = '' }) => (
   <div
     className={classNames(
       'absolute top-0 right-0 mt-4 mr-4 bg-red-500 rounded transition-all duration-100',
