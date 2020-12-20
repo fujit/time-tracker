@@ -78,7 +78,7 @@ export const TrackerItem: VFC<ContainerProps> = ({
 
   const calcSum = useTrackerCalc()
   const sum = useMemo(() => calcSum(tracker.timers), [tracker.timers, calcSum])
-  // TODO: カウントアップするたびに更新したい
+
   const totalTime = useMemo(() => (tracker.inProgress && currentCount ? sum + currentCount : sum), [
     sum,
     currentCount,

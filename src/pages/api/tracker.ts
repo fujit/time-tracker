@@ -22,8 +22,9 @@ export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse<PostR
       }
     } catch (e) {
       if (e instanceof MongoError) {
-        console.log(e.errmsg)
-        console.log(e.stack)
+        if (e.code !== 11000) {
+          console.log(e)
+        }
       }
     }
 
