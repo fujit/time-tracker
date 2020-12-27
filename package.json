@@ -12,6 +12,7 @@
     "commit": "cz"
   },
   "dependencies": {
+    "@prisma/client": "2",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.29",
     "mongodb": "^3.6.2",
@@ -23,6 +24,7 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
+    "@prisma/cli": "2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.2",
     "@testing-library/react-hooks": "^3.4.1",

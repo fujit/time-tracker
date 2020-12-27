@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./trackers.db"
+}
+
+model Tracker {
+  id         Int      @id @default(autoincrement())
+  name       String
+  projectKey Int?
+  day        String
+  inProgress Boolean  @default(false)
+  isActive   Boolean  @default(true)
+  project    Project? @relation(fields: [projectKey], references: [key])
+}
+
+model Time {
+  id        Int       @id @default(autoincrement())
+  trackerId Int
+  start     DateTime
+  end       DateTime?
+  minute    Int       @default(0)
+  tracker   Tracker   @relation(fields: [trackerId], references: [id])
+}
+
+model Project {
+  key  Int    @unique
+  name String @unique
+}
