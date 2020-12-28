@@ -1,31 +1,47 @@
 import { ExNextApiRequest, NextApiResponse } from 'next'
-import { MongoError } from 'mongodb'
-import { Mongo } from '../../utils/Mongo'
+import prisma, { Prisma } from '../../lib/prisma'
 
 export default async (req: ExNextApiRequest<Tracker>, res: NextApiResponse<PostResponse>) => {
   if (req.method === 'POST') {
-    const mongo = new Mongo(
-      process.env.MONGO_USER ?? '',
-      process.env.MONGO_PASSWORD ?? '',
-      process.env.MONGO_HOST ?? '',
-      process.env.MONGO_AUTH_SOURCE ?? '',
-      process.env.MONGO_PORT
-    )
-    const client = await mongo.connect()
-    const collection = mongo.getCollection<Tracker>(client, 'time-tracker', 'trackers')
-    const result = await collection.insertOne(req.body)
-
     try {
-      if (result.result.ok === 1 && req.body.key) {
-        const projectCollection = mongo.getCollection<Project>(client, 'time-tracker', 'projects')
-        await projectCollection.insertOne({ key: req.body.key, name: req.body.name })
-      }
+      const { name, day, inProgress, isActive, projectKey, timers } = req.body
+      const data: Prisma.TrackerCreateInput = projectKey
+        ? {
+            name,
+            day,
+            inProgress,
+            isActive,
+            project: {
+              create: {
+                key: projectKey,
+                name,
+              },
+            },
+          }
+        : {
+            name,
+            day,
+            inProgress,
+            isActive,
+          }
+
+      const registeredTracker = await prisma.tracker.create({
+        data,
+      })
+
+      await prisma.time.create({
+        data: {
+          start: timers[0].start,
+          tracker: {
+            connect: {
+              id: registeredTracker.id,
+            },
+          },
+        },
+      })
     } catch (e) {
-      if (e instanceof MongoError) {
-        if (e.code !== 11000) {
-          console.log(e)
-        }
-      }
+      console.log(e)
+      res.status(200).json({ message: 'NG' })
     }
 
     res.status(200).json({ message: 'OK' })
