@@ -1,7 +1,7 @@
 type Tracker = {
   id: string
   name: string
-  key?: number
+  projectKey?: number
   day: string
   inProgress: boolean
   timers: Timer[]

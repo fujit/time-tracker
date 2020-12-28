@@ -15,7 +15,7 @@ describe('createNewTracker', () => {
     )
     const expected = {
       id: 'a',
-      key: undefined,
+      projectKey: undefined,
       name: 'reservoir dogs',
       inProgress: true,
       day: '1993-04-24',
@@ -36,7 +36,7 @@ describe('createNewTracker', () => {
 
     const expected = {
       id: 'abc',
-      key: 100,
+      projectKey: 100,
       name: '#100 Joker',
       inProgress: true,
       day: '2019-12-01',
@@ -57,7 +57,7 @@ describe('createNewTracker', () => {
 
     const expected = {
       id: 'QED',
-      key: 200,
+      projectKey: 200,
       name: '#200 The Dark Knight',
       inProgress: true,
       day: '2008-08-09',

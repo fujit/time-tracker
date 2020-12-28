@@ -5,11 +5,11 @@ export const createNewTracker = (
   trackerName: string,
   today: string,
   start: Date,
-  key?: number
+  projectKey?: number
 ): Tracker => {
   return {
     id,
-    key,
+    projectKey,
     name: trackerName.trim(),
     inProgress: true,
     day: today,

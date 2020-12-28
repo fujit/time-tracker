@@ -35,7 +35,7 @@ const TrackerItemComponent: VFC<Props> = ({
       <TrackerName
         trackerId={tracker.id}
         trackerName={tracker.name}
-        trackerKey={tracker.key}
+        trackerKey={tracker.projectKey}
         changeTrackerName={changeTrackerName}
         isValid={isValid}
       />
@@ -74,7 +74,7 @@ export const TrackerItem: VFC<ContainerProps> = ({
   removeTracker,
 }) => {
   const state = useContext(StateContext)
-  const [formValue, isValid, changeTrackerName] = useTrackerForm(tracker.name, tracker.key)
+  const [formValue, isValid, changeTrackerName] = useTrackerForm(tracker.name, tracker.projectKey)
 
   const calcSum = useTrackerCalc()
   const sum = useMemo(() => calcSum(tracker.timers), [tracker.timers, calcSum])
@@ -88,7 +88,7 @@ export const TrackerItem: VFC<ContainerProps> = ({
   return (
     <TrackerItemComponent
       {...{
-        tracker: { ...tracker, ...{ name: formValue.name, key: formValue.key } },
+        tracker: { ...tracker, ...{ name: formValue.name, projectKey: formValue.key } },
         changeTrackerName,
         isValid,
         removeTracker,

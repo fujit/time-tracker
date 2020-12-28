@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const pastTrackers = await collection
     .find(
       { day: { $lt: today, $gt: limitDay }, isActive: true },
-      { projection: { _id: 0, id: 1, name: 1, day: 1, timers: 1, key: 1 } }
+      { projection: { _id: 0, id: 1, name: 1, day: 1, timers: 1, projectKey: 1 } }
     )
     .sort('day', -1)
     .toArray()

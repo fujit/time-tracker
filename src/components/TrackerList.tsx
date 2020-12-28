@@ -164,7 +164,7 @@ export const TrackerList: VFC<ContainerProps> = (props) => {
       id: tracker.id,
       name: tracker.name,
       timers: tracker.timers,
-      key: tracker.key,
+      key: tracker.projectKey,
       isActive: tracker.isActive,
     }))
 

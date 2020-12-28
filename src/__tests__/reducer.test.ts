@@ -218,7 +218,7 @@ describe('store reducer', () => {
     test('should handle RENAME', () => {
       const state = reducer(initialState(initialStateStopping), {
         type: types.RENAME,
-        payload: { id: '202009181111345', name: 'neo test', key: undefined },
+        payload: { id: '202009181111345', name: 'neo test', projectKey: undefined },
       })
 
       expect(state).toStrictEqual({
@@ -226,7 +226,7 @@ describe('store reducer', () => {
           {
             id: '202009181111345',
             name: 'neo test',
-            key: undefined,
+            projectKey: undefined,
             inProgress: false,
             day: '2020-09-18',
             timers: [

@@ -22,7 +22,7 @@ export default async (req: ExNextApiRequest<ReqBody>, res: NextApiResponse<PostR
     const { trackerId, newName, newKey } = req.body
     const result = await collection.updateOne(
       { id: trackerId },
-      { $set: { name: newName, key: newKey } }
+      { $set: { name: newName, projectKey: newKey } }
     )
 
     if (result.result.ok === 1 && newKey) {
