@@ -2,18 +2,6 @@
 
 time-tracker is a tool to measure the worked time on the day
 
-## Use on local server
+## How To Use
 
-```
-yarn install
-yarn build
-yarn start
-```
-
-### develop
-
-```
-yarn install
-yarn dev
-```
-
+[fujitakazuya/time-tracker-docker](https://github.com/fujitakazuya/time-tracker-docker)
